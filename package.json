@@ -1,0 +1,54 @@
+{
+  "name": "@statewalker/fsm-charts",
+  "version": "0.0.0",
+  "description": "HFSM Implementation",
+  "keywords": [],
+  "homepage": "https://github.com/statewalker/statewalker-fsm-charts",
+  "author": {
+    "name": "Mikhail Kotelnikov",
+    "email": "mikhail.kotelnikov@gmail.com"
+  },
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "jsdelivr": "./dist/index.js",
+  "unpkg": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "peerDependencies": {
+    "mermaid": "^10.9.1"
+  },
+  "devDependencies": {
+    "@statewalker/eslint-config": "*",
+    "@statewalker/typescript-config": "*",
+    "eslint": "^9.3.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:statewalker/statewalker-fsm-charts.git"
+  },
+  "scripts": {
+    "build": "yarn test && tsup",
+    "watch": "tsup --watch",
+    "clean": "rm -rf dist",
+    "lint": "eslint \"**/*.(js|ts)\"",
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}
