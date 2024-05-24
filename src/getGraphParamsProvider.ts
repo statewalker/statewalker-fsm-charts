@@ -1,7 +1,7 @@
-import { Dimensions } from "./Dimensions.ts";
+import type { Dimensions } from "./Dimensions.ts";
 import { getLabelDimensions } from "./getLabelDimensions.ts";
-import { GraphParamsProvider } from "./GraphParamsProvider.ts";
-import { Padding } from "./Padding.ts";
+import type { GraphParamsProvider } from "./GraphParamsProvider.ts";
+import type { Padding } from "./Padding.ts";
 
 /**
  * Provides default functions measuring dimensions for state nodes and transition edges in the graph.
@@ -13,9 +13,14 @@ import { Padding } from "./Padding.ts";
  * @param transitionsTextPadding - The padding around the transition labels.
  * @param transitionsLineHeight - The line height for the transition labels.
  */
-
 export function getGraphParamsProvider({
-  fontSize = 14, stateFontSize = fontSize, stateLineHeight = stateFontSize * 1.2, stateTextPadding = 0, transitionsFontSize = fontSize, transitionsLineHeight = transitionsFontSize * 1.2, transitionsTextPadding = 0,
+  fontSize = 14,
+  stateFontSize = fontSize,
+  stateLineHeight = stateFontSize * 1.2,
+  stateTextPadding = 0,
+  transitionsFontSize = fontSize,
+  transitionsLineHeight = transitionsFontSize * 1.2,
+  transitionsTextPadding = 0,
 }: {
   fontSize?: number;
   stateFontSize?: number;

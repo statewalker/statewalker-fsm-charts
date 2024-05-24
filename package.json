@@ -40,7 +40,8 @@
     "build": "yarn test && tsup",
     "watch": "tsup --watch",
     "clean": "rm -rf dist",
-    "lint": "eslint \"**/*.(js|ts)\"",
+    "lint": "eslint",
+    "lint:fix": "yarn lint -- --fix",
     "test": "vitest --run",
     "test:watch": "vitest"
   },
@@ -49,6 +50,6 @@
     "access": "public"
   },
   "dependencies": {
-    "dagre": "^0.8.5"
+    "lodash-es": "^4.17.21"
   }
 }

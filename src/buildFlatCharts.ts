@@ -1,7 +1,11 @@
-import { layout, graphlib } from "dagre";
-import { GraphParamsProvider } from "./GraphParamsProvider.ts";
-import { Transition } from "./Transition.ts";
-import { TransitionsGraph } from "./TransitionsGraph.ts";
+import { layout } from "./dagre";
+import { Graph } from "./graphlib";
+
+import type { GraphParamsProvider } from "./GraphParamsProvider.ts";
+import type { Transition } from "./Transition.ts";
+import type { TransitionsGraph } from "./TransitionsGraph.ts";
+import type { StateGraphNode } from "./StateGraphNode.ts";
+import type { StateGraphEdge } from "./StateGraphEdge.ts";
 
 /**
  * Build graphs corresponding to the specified transitions.
@@ -30,7 +34,7 @@ export function buildFlatCharts({
   finalStateKey?: string;
   vertical?: boolean;
 } & GraphParamsProvider): TransitionsGraph {
-  const graph = new graphlib.Graph({
+  const graph = new Graph({
     directed: true,
   })
     .setGraph({ rankdir: vertical ? "tb" : "lr" })
@@ -59,12 +63,16 @@ export function buildFlatCharts({
       ...params,
     });
   }
-  layout(graph);
+  layout(graph, { rankdir: vertical ? "tb" : "lr" });
   // console.log(graph);
-  const nodes = graph.nodes().map((id: string) => graph.node(id));
+  const nodes = graph
+    .nodes()
+    .map((id: string) => graph.node(id) as StateGraphNode);
   const edges = graph
     .edges()
-    .map((edge: { v: string; w: string }) => graph.edge(edge));
+    .map(
+      (edge: { v: string; w: string }) => graph.edge(edge) as StateGraphEdge
+    );
 
   let width = 0;
   let height = 0;

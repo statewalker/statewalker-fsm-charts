@@ -1,6 +1,6 @@
-import { Dimensions } from "./Dimensions.ts";
+import type { Dimensions } from "./Dimensions.ts";
+import type { Padding } from "./Padding.ts";
 import { getPadding } from "./getPadding.ts";
-import { Padding } from "./Padding.ts";
 
 
 export function getLabelDimensions(
