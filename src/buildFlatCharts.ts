@@ -15,7 +15,7 @@ import { TransitionsGraph } from "./TransitionsGraph.ts";
  * @returns {TransitionsGraph} - The graph with nodes and edges.
  */
 
-export function buildGraph({
+export function buildFlatCharts({
   transitions,
   newId,
   getStateParams,

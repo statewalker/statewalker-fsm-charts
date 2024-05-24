@@ -1,5 +1,5 @@
 // Methods
-export * from "./buildGraph.ts";
+export * from "./buildFlatCharts.ts";
 export * from "./getGraphParamsProvider.ts";
 export * from "./getLabelDimensions.ts";
 export * from "./getPadding.ts";

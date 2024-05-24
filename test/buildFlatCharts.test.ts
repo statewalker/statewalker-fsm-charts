@@ -1,11 +1,11 @@
-import { buildGraph } from "../src/buildGraph.ts";
+import { buildFlatCharts } from "../src/buildFlatCharts.ts";
 import { TransitionsGraph } from "../src/TransitionsGraph.ts";
 import { getGraphParamsProvider } from "../src/getGraphParamsProvider.ts";
 import { Transition } from "../src/Transition.ts";
 import { describe, it, expect } from "./deps.ts";
 
-describe("generateFlatGraph", () => {
-  function testGraph(
+describe("buildFlatCharts", () => {
+  function testCharts(
     message: string,
     transitions: Transition[],
     expected: TransitionsGraph
@@ -18,7 +18,7 @@ describe("generateFlatGraph", () => {
         transitionsFontSize: 12,
         transitionsTextPadding: 3,
       });
-      const result = buildGraph({
+      const result = buildFlatCharts({
         transitions,
         newId: (prefix: string) => `${prefix}_${idCounter++}`,
         getStateParams,
@@ -33,14 +33,14 @@ describe("generateFlatGraph", () => {
     });
   }
 
-  testGraph("should generate empty graph", [], {
+  testCharts("should generate empty graph", [], {
     height: 0,
     width: 0,
     nodes: [],
     edges: [],
   });
 
-  testGraph("should generate graph for initial transition", [["", "", "a"]], {
+  testCharts("should generate graph for initial transition", [["", "", "a"]], {
     width: 92,
     height: 75,
     nodes: [
@@ -90,7 +90,7 @@ describe("generateFlatGraph", () => {
       },
     ],
   });
-  testGraph(
+  testCharts(
     "should generate graph for 'fork' transitions",
     [
       ["", "", "a"],
@@ -215,7 +215,7 @@ describe("generateFlatGraph", () => {
     }
   );
 
-  testGraph(
+  testCharts(
     "should generate graph for linear transitions",
     [
       ["", "", "a"],
@@ -340,7 +340,7 @@ describe("generateFlatGraph", () => {
     }
   );
 
-  testGraph(
+  testCharts(
     "should generate graph for simple cycle transitions",
     [
       ["", "", "a"],
@@ -456,7 +456,7 @@ describe("generateFlatGraph", () => {
     }
   );
 
-  // const { nodes, edges } = buildGraph({
+  // const { nodes, edges } = buildFlatCharts({
   //   transitions,
   //   newId,
   //   stateFontSize: 14,
