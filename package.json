@@ -24,9 +24,6 @@
       "import": "./src/index.ts"
     }
   },
-  "peerDependencies": {
-    "mermaid": "^10.9.1"
-  },
   "devDependencies": {
     "@statewalker/eslint-config": "*",
     "@statewalker/typescript-config": "*",
@@ -50,5 +47,8 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "dagre": "^0.8.5"
   }
 }
