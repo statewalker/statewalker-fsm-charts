@@ -1,7 +1,8 @@
 import type { Dimensions, Position } from "../layout/index.ts";
 import { serializeStyle } from "../utils/serializeStyle.ts";
+import { printBox } from "./printBox.ts";
 
-export function printBox<T>({
+export function printStateBox<T>({
   println,
   size,
   position,

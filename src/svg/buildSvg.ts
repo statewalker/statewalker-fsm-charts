@@ -6,9 +6,10 @@ import type {
 } from "../layout/index.ts";
 import { getPadding } from "../utils/getPadding.ts";
 import { printArrows } from "./printArrows.ts";
-import { printBoxes } from "./printBoxes.ts";
+import { printArrowsEnd } from "./printArrowsEnd.ts";
+import { printBox } from "./printBox.ts";
 import { printGroup } from "./printGroup.ts";
-import { printLabels } from "./printLabels.ts";
+import { printLabel } from "./printLabel.ts";
 import { translate } from "./translate.ts";
 import { translateBox } from "./translateBox.ts";
 
@@ -19,6 +20,8 @@ export function buildSvg({
   transitionFontSize = 12,
   padding = stateFontSize,
   println,
+  initialStateKey = "<initial>",
+  finalStateKey = "<final>",
 }: {
   graph: TransitionsGraph;
   newId: (prefix: string) => string;
@@ -26,15 +29,12 @@ export function buildSvg({
   stateFontSize?: number;
   transitionFontSize?: number;
   padding?: Padding;
+  initialStateKey?: string;
+  finalStateKey?: string;
 }) {
   const svgPadding = getPadding(padding);
   const width = Math.ceil(initialWidth + svgPadding[1] + svgPadding[3]);
   const height = Math.ceil(initialHeight + svgPadding[0] + svgPadding[2]);
-  println(`<div style="max-width: 100%; overflow: auto;">`);
-  println(`<svg width="${width}" height="${height}" class="statechart">`);
-  println(`<g>
-    <rect x="0" y="0" width="${width}" height="${height}" class="background" style="fill:none; stroke: red;"/>
-  </g>`);
 
   const translations = translate(
     { width, height },
@@ -53,42 +53,92 @@ export function buildSvg({
     }
   );
 
-  printBoxes<StateGraphNode>({
-    ...stateBoxTranslations,
-    println,
-    borderRadius: () => stateFontSize / 2,
-    className: () => "state-background",
-  })(nodes);
-
   const markerId = newId("marker");
+
+  println(`<div style="max-width: 100%; overflow: auto;">`);
+  println(`<svg width="${width}" height="${height}" viewbox="0 0 ${width} ${height}" class="statechart">`);
+
+  printArrowsEnd({ println })(markerId);
+
   printGroup<StateGraphEdge>({
     ...translations,
     println,
     action: printArrows({ println, position: translations.position, markerId }),
   })(edges);
 
-  printBoxes<StateGraphEdge>({
-    ...transitionBoxTanslations,
+  printGroup<StateGraphEdge>({
     println,
-    className: () => "transition-background",
+    action: printBox<StateGraphEdge>({
+      ...transitionBoxTanslations,
+      println: (str: string) => println(`  ${str}`),
+      className: () => "transition-background",
+    }),
   })(edges);
 
-  printLabels<StateGraphEdge>({
-    ...transitionBoxTanslations,
+  const printStateBox = printBox({
+    ...stateBoxTranslations,
+    println: (str: string) => println(`  ${str}`),
+    borderRadius: () => stateFontSize / 2,
+    className: () => "state-background",
+  });
+  printGroup<StateGraphNode>({
     println,
-    padding: (d) => getPadding(d.padding),
-    label: (d) => d.event,
-    fontSize: () => transitionFontSize,
-    className: () => "transition-label",
+    action: (d: StateGraphNode) => {
+      if (d.key !== initialStateKey && d.key !== finalStateKey) {
+        printStateBox(d);
+      }
+    },
+  })(nodes);
+
+  // Symbols for initial and final states
+  const initialStateRadius = 6;
+  const finalStateRadius = initialStateRadius / 2;
+  printGroup<StateGraphNode>({
+    println,
+    action: (d: StateGraphNode) => {
+      if (d.key === initialStateKey || d.key === finalStateKey) {
+        let { x, y } = stateBoxTranslations.position(d);
+        const { width, height } = stateBoxTranslations.size(d);
+        x += initialStateRadius;
+        y -= height / 2;
+        if (d.key === initialStateKey) {
+          println(
+            `  <circle class="state-symbol-initial" r="${initialStateRadius}" cx="${x}" cy="${y}"></circle>`
+          );
+        } else {
+          println(
+            `  <circle class="state-symbol-final" r="${initialStateRadius}" cx="${x}" cy="${y}"></circle>`
+          );
+          println(
+            `  <circle class="state-symbol-final-inner" r="${finalStateRadius}" cx="${x}" cy="${y}"></circle>`
+          );
+        }
+      }
+    },
+  })(nodes);
+
+  printGroup<StateGraphEdge>({
+    println,
+    action: printLabel<StateGraphEdge>({
+      ...transitionBoxTanslations,
+      println: (str: string) => println(`  ${str}`),
+      padding: (d) => getPadding(d.padding),
+      label: (d) => d.event,
+      fontSize: () => transitionFontSize,
+      className: () => "transition-label",
+    }),
   })(edges);
 
-  printLabels<StateGraphNode>({
-    ...translations,
+  printGroup<StateGraphNode>({
     println,
-    padding: (d) => getPadding(d.padding),
-    label: (d) => d.state,
-    fontSize: () => stateFontSize,
-    className: () => "state-label",
+    action: printLabel<StateGraphNode>({
+      ...translations,
+      println: (str: string) => println(`  ${str}`),
+      padding: (d) => getPadding(d.padding),
+      label: (d) => d.state,
+      fontSize: () => stateFontSize,
+      className: () => "state-label",
+    }),
   })(nodes);
 
   println("</svg>");

@@ -11,16 +11,7 @@ export function printArrows<T>({
   markerId: string;
   position: (d: T) => Position;
 }) {
-  return ({ points }: StateGraphEdge, i: number) => {
-    if (i === 0) {
-      println(
-        `<defs>
-        <marker id="${markerId}" class="transition-marker" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="strokeWidth" orient="auto">
-          <path d="M 19,7 L9,13 L14,7 L9,1 Z"></path>
-        </marker>
-      </defs>`
-      );
-    }
+  return ({ points }: StateGraphEdge) => {
     const coords = d3
       .line(points)
       .x((d: T) => position(d).x)
@@ -31,7 +22,7 @@ export function printArrows<T>({
       fill: "none",
     });
     println(
-      `<path class="transition-line" d="${coords(
+      `  <path class="transition-line" d="${coords(
         points
       )}" style="${pathStyle}" marker-end="url(#${markerId})" />`
     );
