@@ -1,5 +1,5 @@
-import { layout } from "./dagre";
-import { Graph } from "./graphlib";
+import { layout } from "../dagre/index";
+import { Graph } from "../graphlib/index";
 
 import type { GraphParamsProvider } from "./GraphParamsProvider.ts";
 import type { Transition } from "./Transition.ts";
@@ -65,28 +65,44 @@ export function buildFlatCharts({
   }
   layout(graph, { rankdir: vertical ? "tb" : "lr" });
   // console.log(graph);
-  const nodes = graph
-    .nodes()
-    .map((id: string) => graph.node(id) as StateGraphNode);
+  const nodes = graph.nodes().map((id: string) => {
+    const n = graph.node(id) as StateGraphNode;
+    n.x -= n.width / 2;
+    n.y -= n.height / 2;
+    return n;
+  });
   const edges = graph
     .edges()
-    .map(
-      (edge: { v: string; w: string }) => graph.edge(edge) as StateGraphEdge
-    );
+    .map(({ v, w, name }: { v: string; w: string; name: string }) => {
+      const e = graph.edge(v, w, name) as StateGraphEdge;
+      e.x -= e.width / 2;
+      e.y -= e.height / 2;
+      return e;
+    });
 
+  let x = 0;
+  let y = 0;
   let width = 0;
   let height = 0;
   for (const node of nodes) {
+    x = Math.min(x, node.x);
+    y = Math.min(y, node.y);
     width = Math.max(width, node.x + node.width);
     height = Math.max(height, node.y + node.height);
   }
   for (const edge of edges) {
+    x = Math.min(x, edge.x);
+    y = Math.min(y, edge.y);
     width = Math.max(width, edge.x + edge.width);
     height = Math.max(height, edge.y + edge.height);
     for (const point of edge.points) {
+      x = Math.min(x, edge.x);
+      y = Math.min(y, edge.y);
       width = Math.max(width, point.x);
       height = Math.max(height, point.y);
     }
   }
-  return { width, height, nodes, edges };
+  width -= x;
+  height -= y;
+  return { x, y, width, height, nodes, edges };
 }

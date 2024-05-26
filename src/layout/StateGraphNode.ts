@@ -9,4 +9,4 @@ export type StateGraphNode = Dimensions &
     id: string;
     key: string;
     state: string;
-  };
+  } & Record<string, any>;

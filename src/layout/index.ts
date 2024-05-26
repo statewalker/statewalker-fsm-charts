@@ -2,7 +2,6 @@
 export * from "./buildFlatCharts.ts";
 export * from "./getGraphParamsProvider.ts";
 export * from "./getLabelDimensions.ts";
-export * from "./getPadding.ts";
 
 // Types
 export * from "./Dimensions.ts";

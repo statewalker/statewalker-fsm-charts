@@ -6,7 +6,7 @@ import { Dimensions } from "./Dimensions.ts";
 export type GraphParamsProvider = {
   getStateParams: (
     stateKey: string,
-    state: string
+    state?: string
   ) => Dimensions & Record<string, any>;
   getTransitionParams: (
     fromStateKey: string,
