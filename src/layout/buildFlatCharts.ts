@@ -6,6 +6,8 @@ import type { Transition } from "./Transition.ts";
 import type { TransitionsGraph } from "./TransitionsGraph.ts";
 import type { StateGraphNode } from "./StateGraphNode.ts";
 import type { StateGraphEdge } from "./StateGraphEdge.ts";
+import { Padding } from "./Padding.ts";
+import { getPadding } from "../utils/getPadding.ts";
 
 /**
  * Build graphs corresponding to the specified transitions.
@@ -24,6 +26,7 @@ export function buildFlatCharts({
   newId,
   getStateParams,
   getTransitionParams,
+  padding = [5, 5],
   initialStateKey = "<initial>",
   finalStateKey = "<final>",
   vertical = false,
@@ -33,6 +36,7 @@ export function buildFlatCharts({
   initialStateKey?: string;
   finalStateKey?: string;
   vertical?: boolean;
+  padding?: Padding;
 } & GraphParamsProvider): TransitionsGraph {
   const graph = new Graph({
     directed: true,
@@ -64,45 +68,60 @@ export function buildFlatCharts({
     });
   }
   layout(graph, { rankdir: vertical ? "tb" : "lr" });
-  // console.log(graph);
+
+  const [top, right, bottom, left] = getPadding(padding);
+
   const nodes = graph.nodes().map((id: string) => {
     const n = graph.node(id) as StateGraphNode;
-    n.x -= n.width / 2;
-    n.y -= n.height / 2;
+    n.x += -n.width / 2;
+    n.y += -n.height / 2;
     return n;
   });
   const edges = graph
     .edges()
     .map(({ v, w, name }: { v: string; w: string; name: string }) => {
       const e = graph.edge(v, w, name) as StateGraphEdge;
-      e.x -= e.width / 2;
-      e.y -= e.height / 2;
+      e.x += -e.width / 2;
+      e.y += -e.height / 2;
       return e;
     });
 
+  // Get the bounding box of the graph
   let x = 0;
   let y = 0;
   let width = 0;
   let height = 0;
-  for (const node of nodes) {
+  const addCoords = (node: StateGraphNode | StateGraphEdge) => {
     x = Math.min(x, node.x);
     y = Math.min(y, node.y);
     width = Math.max(width, node.x + node.width);
     height = Math.max(height, node.y + node.height);
-  }
-  for (const edge of edges) {
-    x = Math.min(x, edge.x);
-    y = Math.min(y, edge.y);
-    width = Math.max(width, edge.x + edge.width);
-    height = Math.max(height, edge.y + edge.height);
+  };
+  nodes.forEach(addCoords);
+  edges.forEach(addCoords);
+  edges.forEach((edge) => {
     for (const point of edge.points) {
       x = Math.min(x, edge.x);
       y = Math.min(y, edge.y);
       width = Math.max(width, point.x);
       height = Math.max(height, point.y);
     }
-  }
-  width -= x;
-  height -= y;
+  });
+
+  // Shift the graph to the origin taking into account the padding
+  // Invert coordinates.
+  width += left + right;
+  height += bottom + top;
+  const updateCoords = (node: { x: number; y: number }) => {
+    node.x = node.x + left;
+    node.y = height - (node.y + top);
+    // node.y = node.y + bottom;
+  };
+  nodes.forEach(updateCoords);
+  edges.forEach(updateCoords);
+  edges.forEach((edge) => {
+    edge.points.forEach(updateCoords);
+  });
+
   return { x, y, width, height, nodes, edges };
 }

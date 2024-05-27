@@ -11,7 +11,7 @@ export function translate<
     position: (d: T) => {
       return {
         x: Math.round(d.x + shift.x),
-        y: Math.round(dimensions.height - (d.y + shift.y)),
+        y: Math.round(d.y + shift.y),
       };
     },
     padding: (d: T) => getPadding(d.padding),

@@ -1,4 +1,4 @@
-import { Dimensions } from "./Dimensions.ts";
+import type { Dimensions } from "./Dimensions.ts";
 
 /**
  * Provides default functions measuring dimensions for state nodes and transition edges in the graph.

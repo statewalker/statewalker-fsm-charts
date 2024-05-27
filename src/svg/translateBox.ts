@@ -20,7 +20,7 @@ export function translateBox<T>(
       const { x, y } = position(d);
       return {
         x: Math.round(x + left),
-        y: Math.round(y - bottom),
+        y: Math.round(y + bottom),
       };
     },
     size: (d: T) => {

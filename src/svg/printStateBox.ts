@@ -27,11 +27,11 @@ export function printStateBox<T>({
     const radius = borderRadius(d);
     if (radius > 0) {
       params.push(`rx="${radius}" ry="${radius}"`);
-    } 
+    }
     const cls = className(d);
     println(
       `<rect class="${cls}" x="${Math.round(x)}" y="${Math.round(
-        y - height
+        y
       )}" width="${Math.ceil(width)}" height="${Math.ceil(
         height
       )}"${params.join(" ")}/>`
