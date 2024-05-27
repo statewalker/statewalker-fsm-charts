@@ -33,7 +33,7 @@ export function printBox<T>({
         y - height
       )}" width="${Math.ceil(width)}" height="${Math.ceil(
         height
-      )}"${params.join(" ")}/>`
+      )}" ${params.join(" ")}/>`
     );
   };
 }

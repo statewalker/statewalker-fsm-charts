@@ -8,6 +8,8 @@ import type { StateGraphNode } from "./StateGraphNode.ts";
 import type { StateGraphEdge } from "./StateGraphEdge.ts";
 import { Padding } from "./Padding.ts";
 import { getPadding } from "../utils/getPadding.ts";
+import { Position } from "./Position.ts";
+import { Dimensions } from "./Dimensions.ts";
 
 /**
  * Build graphs corresponding to the specified transitions.
@@ -112,13 +114,17 @@ export function buildFlatCharts({
   // Invert coordinates.
   width += left + right;
   height += bottom + top;
-  const updateCoords = (node: { x: number; y: number }) => {
+  const updateCoords = (node: Position) => {
     node.x = node.x + left;
-    node.y = height - (node.y + top);
+    node.y = node.y + bottom;
     // node.y = node.y + bottom;
   };
-  nodes.forEach(updateCoords);
-  edges.forEach(updateCoords);
+  const updateBox = (node: Position & Dimensions) => {
+    updateCoords(node);
+    node.y += node.height;
+  }
+  nodes.forEach(updateBox);
+  edges.forEach(updateBox);
   edges.forEach((edge) => {
     edge.points.forEach(updateCoords);
   });

@@ -1,7 +1,7 @@
-import { buildFlatCharts } from "../src/buildFlatCharts.ts";
-import { TransitionsGraph } from "../src/TransitionsGraph.ts";
-import { getGraphParamsProvider } from "../src/getGraphParamsProvider.ts";
-import { Transition } from "../src/Transition.ts";
+import { buildFlatCharts } from "../src/layout/buildFlatCharts.ts";
+import { TransitionsGraph } from "../src/layout/TransitionsGraph.ts";
+import { getGraphParamsProvider } from "../src/layout/getGraphParamsProvider.ts";
+import { Transition } from "../src/layout/Transition.ts";
 import { describe, it, expect } from "./deps.ts";
 
 describe("buildFlatCharts", () => {
@@ -34,59 +34,62 @@ describe("buildFlatCharts", () => {
   }
 
   testCharts("should generate empty graph", [], {
+    x: 0,
+    y: 0,
     height: 0,
     width: 0,
     nodes: [],
     edges: [],
   });
-
   testCharts("should generate graph for initial transition", [["", "", "a"]], {
-    width: 92,
-    height: 75,
+    x: 0,
+    y: 0,
+    width: 82,
+    height: 38,
     nodes: [
       {
         id: "s_0",
         width: 6,
-        height: 22,
+        height: 20,
         state: "",
         key: "<initial>",
-        x: 3,
-        y: 11,
+        x: 0,
+        y: 0,
       },
       {
         id: "s_1",
         width: 20,
-        height: 22,
+        height: 20,
         state: "a",
         key: "a",
-        x: 72,
-        y: 11,
+        x: 62,
+        y: 0,
       },
     ],
     edges: [
       {
         id: "t_2",
         width: 6,
-        height: 36,
+        height: 18,
         from: "<initial>",
         event: "",
         to: "a",
         points: [
           {
             x: 6,
-            y: 11,
+            y: 10,
           },
           {
             x: 34,
-            y: 11,
+            y: 10,
           },
           {
             x: 62,
-            y: 11,
+            y: 10,
           },
         ],
-        x: 34,
-        y: 39,
+        x: 31,
+        y: 20,
       },
     ],
   });
@@ -98,123 +101,124 @@ describe("buildFlatCharts", () => {
       ["a", "ok", "c"],
     ],
     {
-      width: 192,
-      height: 147,
+      x: 0,
+      y: 0,
+      width: 182,
+      height: 108,
       nodes: [
         {
           id: "s_0",
           width: 6,
-          height: 22,
+          height: 20,
           state: "",
           key: "<initial>",
-          x: 3,
-          y: 47,
+          x: 0,
+          y: 35,
         },
         {
           id: "s_1",
           width: 20,
-          height: 22,
+          height: 20,
           state: "a",
           key: "a",
-          x: 72,
-          y: 47,
+          x: 62,
+          y: 35,
         },
         {
           id: "s_3",
           width: 20,
-          height: 22,
+          height: 20,
           state: "b",
           key: "b",
-          x: 172,
-          y: 11,
+          x: 162,
+          y: 0,
         },
         {
           id: "s_5",
           width: 20,
-          height: 22,
+          height: 20,
           state: "c",
           key: "c",
-          x: 172,
-          y: 83,
+          x: 162,
+          y: 70,
         },
       ],
       edges: [
         {
           id: "t_2",
           width: 6,
-          height: 36,
+          height: 18,
           from: "<initial>",
           event: "",
           to: "a",
           points: [
             {
               x: 6,
-              y: 47,
+              y: 45,
             },
             {
               x: 34,
-              y: 47,
+              y: 45,
             },
             {
               x: 62,
-              y: 47,
+              y: 45,
             },
           ],
-          x: 34,
-          y: 75,
+          x: 31,
+          y: 55,
         },
         {
           id: "t_4",
           width: 30,
-          height: 36,
+          height: 18,
           from: "a",
           event: "ok",
           to: "b",
           points: [
             {
               x: 82,
-              y: 39.8,
+              y: 38,
             },
             {
               x: 122,
-              y: 11,
+              y: 10,
             },
             {
               x: 162,
-              y: 11,
+              y: 10,
             },
           ],
-          x: 122,
-          y: 39,
+          x: 107,
+          y: 20,
         },
         {
           id: "t_6",
           width: 30,
-          height: 36,
+          height: 18,
           from: "a",
           event: "ok",
           to: "c",
           points: [
             {
               x: 82,
-              y: 54.2,
+              y: 52,
             },
             {
               x: 122,
-              y: 83,
+              y: 80,
             },
             {
               x: 162,
-              y: 83,
+              y: 80,
             },
           ],
-          x: 122,
-          y: 111,
+          x: 107,
+          y: 90,
         },
       ],
     }
   );
-
   testCharts(
     "should generate graph for linear transitions",
     [
@@ -223,118 +227,120 @@ describe("buildFlatCharts", () => {
       ["b", "ok", "c"],
     ],
     {
-      width: 292,
-      height: 75,
+      x: 0,
+      y: 0,
+      width: 282,
+      height: 38,
       nodes: [
         {
           id: "s_0",
           width: 6,
-          height: 22,
+          height: 20,
           state: "",
           key: "<initial>",
-          x: 3,
-          y: 11,
+          x: 0,
+          y: 0,
         },
         {
           id: "s_1",
           width: 20,
-          height: 22,
+          height: 20,
           state: "a",
           key: "a",
-          x: 72,
-          y: 11,
+          x: 62,
+          y: 0,
         },
         {
           id: "s_3",
           width: 20,
-          height: 22,
+          height: 20,
           state: "b",
           key: "b",
-          x: 172,
-          y: 11,
+          x: 162,
+          y: 0,
         },
         {
           id: "s_5",
           width: 20,
-          height: 22,
+          height: 20,
           state: "c",
           key: "c",
-          x: 272,
-          y: 11,
+          x: 262,
+          y: 0,
         },
       ],
       edges: [
         {
           id: "t_2",
           width: 6,
-          height: 36,
+          height: 18,
           from: "<initial>",
           event: "",
           to: "a",
           points: [
             {
               x: 6,
-              y: 11,
+              y: 10,
             },
             {
               x: 34,
-              y: 11,
+              y: 10,
             },
             {
               x: 62,
-              y: 11,
+              y: 10,
             },
           ],
-          x: 34,
-          y: 39,
+          x: 31,
+          y: 20,
         },
         {
           id: "t_4",
           width: 30,
-          height: 36,
+          height: 18,
           from: "a",
           event: "ok",
           to: "b",
           points: [
             {
               x: 82,
-              y: 11,
+              y: 10,
             },
             {
               x: 122,
-              y: 11,
+              y: 10,
             },
             {
               x: 162,
-              y: 11,
+              y: 10,
             },
           ],
-          x: 122,
-          y: 39,
+          x: 107,
+          y: 20,
         },
         {
           id: "t_6",
           width: 30,
-          height: 36,
+          height: 18,
           from: "b",
           event: "ok",
           to: "c",
           points: [
             {
               x: 182,
-              y: 11,
+              y: 10,
             },
             {
               x: 222,
-              y: 11,
+              y: 10,
             },
             {
               x: 262,
-              y: 11,
+              y: 10,
             },
           ],
-          x: 222,
-          y: 39,
+          x: 207,
+          y: 20,
         },
       ],
     }
@@ -348,73 +354,75 @@ describe("buildFlatCharts", () => {
       ["b", "back", "a"],
     ],
     {
-      width: 252,
-      height: 120,
+      x: 0,
+      y: 0,
+      width: 242,
+      height: 66,
       nodes: [
         {
           id: "s_0",
           width: 6,
-          height: 22,
+          height: 20,
           state: "",
           key: "<initial>",
-          x: 3,
-          y: 23,
+          x: 0,
+          y: 4,
         },
         {
           id: "s_1",
           width: 20,
-          height: 22,
+          height: 20,
           state: "a",
           key: "a",
-          x: 72,
-          y: 23,
+          x: 62,
+          y: 4,
         },
         {
           id: "s_3",
           width: 20,
-          height: 22,
+          height: 20,
           state: "b",
           key: "b",
-          x: 232,
-          y: 23,
+          x: 222,
+          y: 4,
         },
       ],
       edges: [
         {
           id: "t_2",
           width: 6,
-          height: 36,
+          height: 18,
           from: "<initial>",
           event: "",
           to: "a",
           points: [
             {
               x: 6,
-              y: 23,
+              y: 14,
             },
             {
               x: 34,
-              y: 23,
+              y: 14,
             },
             {
               x: 62,
-              y: 23,
+              y: 14,
             },
           ],
-          x: 34,
-          y: 51,
+          x: 31,
+          y: 24,
         },
         {
           id: "t_4",
           width: 90,
-          height: 36,
+          height: 18,
           from: "a",
           event: "forward",
           to: "b",
           points: [
             {
               x: 82,
-              y: 18.875,
+              y: 11,
             },
             {
               x: 152,
@@ -422,49 +430,37 @@ describe("buildFlatCharts", () => {
             },
             {
               x: 222,
-              y: 18.875,
+              y: 11,
             },
           ],
-          x: 152,
-          y: 18,
+          x: 107,
+          y: 0,
         },
         {
           id: "t_5",
           width: 54,
-          height: 36,
+          height: 18,
           from: "b",
           event: "back",
           to: "a",
           points: [
             {
               x: 222,
-              y: 27.125,
+              y: 17,
             },
             {
               x: 152,
-              y: 56,
+              y: 38,
             },
             {
               x: 82,
-              y: 27.125,
+              y: 17,
             },
           ],
-          x: 152,
-          y: 84,
+          x: 125,
+          y: 48,
         },
       ],
     }
   );
-
-  // const { nodes, edges } = buildFlatCharts({
-  //   transitions,
-  //   newId,
-  //   stateFontSize: 14,
-  //   stateTextPadding: 3,
-  //   transitionsFontSize: 12,
-  //   transitionsTextPadding: 3,
-  // });
-
-  // console.log("NODES", nodes);
-  // console.log("EDGES", edges);
 });
