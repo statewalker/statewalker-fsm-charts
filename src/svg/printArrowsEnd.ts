@@ -6,15 +6,18 @@ export function printArrowsEnd<T = void>({
   markerId,
   className,
   style,
+  attrs
 }: {
   println: (str: string) => void;
   markerId: (d: T) => string;
   className: (d: T) => string;
   style?: (d: T) => Record<string, string>;
+  attrs?: (d: T) => Record<string, string | number>;
 }) {
   return (d: T) => {
     const cls = className(d);
     const serializedAttrs = serializeAttrs({
+      ...(attrs ? attrs(d) : {}),
       class: cls,
       id: markerId(d),
       stroke: "none",

@@ -9,12 +9,14 @@ export function printArrows<T extends { points: Position[] }>({
   data,
   className,
   style,
+  attrs,
 }: {
   println: (str: string) => void;
   markerId: string;
   data?: (d: T) => Record<string, string>;
   className: (d: T) => string;
   style?: (d: T) => Record<string, string>;
+  attrs?: (d: T) => Record<string, string | number>;
 }) {
   return (d: T) => {
     const { points } = d;
@@ -47,14 +49,14 @@ export function printArrows<T extends { points: Position[] }>({
     }
     base.lineEnd();
 
-    const cls = className(d);
     const serializedAttrs = serializeAttrs({
-      // class: cls,
+      fill: "none",
+      stroke: "silver",
+      strokeWidth: "1",
+      ...(attrs ? attrs(d) : {}),
+      class: className(d),
       d: path.join(""),
-      markerEnd: `url(#${markerId})`,
-      fill : "none",
-      stroke : `var(--${cls}-stroke, silver)`,
-      strokeWidth : `var(--${cls}-stroke-width, 1)`,
+      "marker-end": `url(#${markerId})`,
       style: style && serializeStyle(style(d)),
     });
     const rectData = data && data(d);

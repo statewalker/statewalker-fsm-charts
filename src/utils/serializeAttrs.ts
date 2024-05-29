@@ -1,5 +1,3 @@
-import { toKebabCase } from "./toKebabCase.ts";
-
 export function serializeAttrs(
   attrs?: Record<string, string | number | undefined>,
   prefix = ""
@@ -10,9 +8,7 @@ export function serializeAttrs(
   )) {
     if (value === undefined || value === null || value === "") continue;
     result.push(
-      `${prefix}${escapeValue(toKebabCase(key))}${
-        "=" + JSON.stringify(escapeValue(value))
-      }`
+      `${prefix}${escapeValue(key)}${"=" + JSON.stringify(escapeValue(value))}`
     );
   }
   return result.join(" ");

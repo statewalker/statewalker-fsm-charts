@@ -13,7 +13,6 @@ import { printRect } from "./printRect.ts";
 import { printGroup } from "./printGroup.ts";
 import { printLabel } from "./printLabel.ts";
 import { serializeAttrs } from "../utils/serializeAttrs.ts";
-import { serializeStyle } from "../utils/serializeStyle.ts";
 
 export function buildSvg({
   graph: { width, height, nodes, edges },
@@ -48,15 +47,26 @@ export function buildSvg({
 
   // printStyles({ println })();
 
+  /* 
+  .transition-marker {
+    fill : var(--transition-marker--fill, var(--transition-line--stroke, silver));
+  }
+  */
   printArrowsEnd({
     markerId: () => markerId,
     println,
     className: () => "transition-marker",
-    style: () => ({
-      fill: `var(--transition-marker--fill, var(--transition-line--stroke, silver))`,
+    attrs: () => ({
+      fill: "currentColor",
+      stroke: "none",
     }),
   })();
-
+  /*
+  .transition-line {
+    stroke: var(--transition-line--stroke, silver);
+    strokeWidth: var(--transition-line--stroke-width, 1px);
+  }
+   */
   printGroup<StateGraphEdge>({
     println,
     action: printArrows({
@@ -66,13 +76,22 @@ export function buildSvg({
       data: (d) => ({
         transitionId: d.id,
       }),
-      style: () => ({
-        stroke: `var(--transition-line--stroke, silver)`,
-        strokeWidth: `var(--transition-line--stroke-width, 1px)`,
+      attrs: () => ({
+        stroke: "currentColor",
+        strokeWidth: "1px",
       }),
     }),
   })(edges);
 
+  /*
+  .transition-box {
+    fill: var(--transition--fill, rgba(255,255,255,0.7));
+    stroke: var(--transition--stroke, none);
+    strokeWidth: var(--transition--stroke-width, 1);
+    rx: 0.5em;
+    ry: 0.5em;
+  }
+  */
   const labelPosition = ({ x, y }: Position) => {
     return {
       x,
@@ -85,11 +104,11 @@ export function buildSvg({
       position: labelPosition,
       size: (d: Dimensions) => d,
       println: (str: string) => println(`  ${str}`),
-      className: () => "transition",
-      style: () => ({
-        fill: "var(--transition--fill, rgba(255,255,255,0.7))",
-        stroke: "var(--transition--stroke, none)",
-        strokeWidth: "var(--transition--stroke-width, 1)",
+      className: () => "transition-box",
+      attrs: () => ({
+        fill: "rgba(255,255,255,0.7)",
+        stroke: "none",
+        strokeWidth: "1",
         rx: "0.5em",
         ry: "0.5em",
       }),
@@ -100,6 +119,15 @@ export function buildSvg({
   })(edges);
 
   const shift = 3;
+  /*
+  .state-box {
+    fill: var(--state--fill, none);
+    stroke: var(--state--stroke-color, silver);
+    strokeWidth: var(--state--stroke-width, 2);
+    rx: 0.5em;
+    ry: 0.5em;
+  }
+  */
   const printStateBox = printRect<StateGraphNode>({
     position: ({ x, y }: Position) => ({
       x: x + shift,
@@ -109,16 +137,15 @@ export function buildSvg({
       width: Math.ceil(width - 2 * shift),
       height: Math.ceil(height - 2 * shift),
     }),
-    println: (str: string) => println(`  ${str}`),
-    borderRadius: () => stateFontSize / 2,
-    className: () => "state-background",
-    style: () => ({
-      fill: "var(--state--fill, none)",
-      stroke: "var(--state--stroke-color, silver)",
-      strokeWidth: "var(--state--stroke-width, 2)",
-      rx: "0.5em",
-      ry: "0.5em",
+    attrs: () => ({
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "2",
+      rx: Math.ceil(stateFontSize / 2),
+      ry: Math.ceil(stateFontSize / 2),
     }),
+    println: (str: string) => println(`  ${str}`),
+    className: () => "state-box",
     data: (d) => ({
       stateId: d.id,
     }),
@@ -131,6 +158,24 @@ export function buildSvg({
       }
     },
   })(nodes);
+
+  /*
+  .state-initial {
+    fill: var(--state-initial--fill, var(--state--fill, none));
+    stroke: var(--state-initial--stroke, var(--state--stroke-color, silver));
+    strokeWidth: var(--state-initial--stroke-width, var(--state--stroke-width, 2));
+  }
+  .state-final {
+    fill: var(--state-final--fill, var(--state--fill, none));
+    stroke: var(--state-final--stroke, var(--state--stroke-color, silver));
+    strokeWidth: var(--state-final--stroke-width, var(--state--stroke-width, 2));
+  }
+  .state-final.inner {
+    fill: var(--state-final--stroke, var(--state--stroke-color, silver));
+    stroke: none;
+    strokeWidth: 0;
+  }
+  */
 
   // Symbols for initial and final states
   const initialStateRadius = 6;
@@ -154,13 +199,9 @@ export function buildSvg({
             cx,
             cy,
             r: initialStateRadius,
-            style: serializeStyle({
-              fill: "var(--state-initial--fill, var(--state--fill, none))",
-              stroke:
-                "var(--state-initial--stroke, var(--state--stroke-color, silver))",
-              strokeWidth:
-                "var(--state-initial--stroke-width, var(--state--stroke-width, 2))",
-            }),
+            fill: "none",
+            stroke: "currentColor",
+            strokeWidth: "2",
           });
           println(`  <circle ${serializedAttrs} ${serializedData} />`);
         } else {
@@ -169,26 +210,20 @@ export function buildSvg({
             cx,
             cy,
             r: initialStateRadius,
-            style: serializeStyle({
-              fill: "var(--state-final--fill, var(--state--fill, none))",
-              stroke:
-                "var(--state-final--stroke, var(--state--stroke-color, silver))",
-              strokeWidth:
-                "var(--state-final--stroke-width, var(--state--stroke-width, 2))",
-            }),
+            fill: "none",
+            stroke: "currentColor",
+            strokeWidth: 2,
           });
           println(`  <circle ${serializedAttrs} ${serializedData} />`);
 
           serializedAttrs = serializeAttrs({
-            class: "state-final-inner",
+            class: "state-final inner",
             cx,
             cy,
             r: finalStateRadius,
-            style: serializeStyle({
-              fill: "var(--state-final--stroke, var(--state--stroke-color, silver))",
-              stroke: "none",
-              strokeWidth: "none",
-            }),
+            fill: "currentColor",
+            stroke: "none",
+            strokeWidth: 0,
           });
           println(`  <circle ${serializedAttrs} ${serializedData} />`);
         }
@@ -196,6 +231,13 @@ export function buildSvg({
     },
   })(nodes);
 
+  /*
+  .transition-label {
+    fill: var(--transition-label--color, gray);
+    font-size: var(--transition-label--font-size, 12px);
+    font-family: var(--transition-label--font-family, sans-serif);
+  }
+  */
   printGroup<StateGraphEdge>({
     println,
     action: printLabel<StateGraphEdge>({
@@ -209,14 +251,19 @@ export function buildSvg({
       data: (d) => ({
         transitionId: d.id,
       }),
-      style: () => ({
-        fill: "var(--transition-label--color, gray)",
-        fontSize: "var(--transition-label--font-size, 12)",
-        fontFamily: "var(--transition-label--font-family, sans-serif)",
+      attrs: () => ({
+        fill: "currentColor",
       }),
     }),
   })(edges);
 
+  /*
+  .state-label {
+    fill: var(--state-label--color, gray);
+    font-size: var(--state-label--font-size, 14px);
+    font-family: var(--state-label--font-family, sans-serif);
+  }
+  */
   printGroup<StateGraphNode>({
     println,
     action: printLabel<StateGraphNode>({
@@ -230,13 +277,11 @@ export function buildSvg({
       label: (d) => d.state,
       fontSize: () => stateFontSize,
       className: () => "state-label",
+      attrs: () => ({
+        fill: "currentColor",
+      }),
       data: (d) => ({
         stateId: d.id,
-      }),
-      style: () => ({
-        fill: "var(--state-label--color, gray)",
-        fontSize: "var(--state-label--font-size, 14)",
-        fontFamily: "var(--state-label--font-family, sans-serif)",
       }),
     }),
   })(nodes);

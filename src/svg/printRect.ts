@@ -7,31 +7,31 @@ export function printRect<T>({
   size,
   position,
   style,
-  borderRadius = () => 0,
   className = () => "",
   data,
+  attrs,
 }: {
   println: (str: string) => void;
   size: (d: T) => Dimensions;
   position: (d: T) => Position;
   style?: (d: T) => Record<string, string>;
   data?: (d: T) => Record<string, string>;
-  borderRadius?: (d: T) => number;
   className?: (d: T) => string;
+  attrs?: (d: T) => Record<string, string | number>;
 }) {
   return (d: T) => {
     const { x, y } = position(d);
     const { width, height } = size(d);
-    const radius = borderRadius(d);
     const serializedAttrs = serializeAttrs({
+      rx: 5,
+      ry: 5,
+      ...(attrs ? attrs(d) : {}),
       class: className(d),
       x: Math.round(x),
       y: Math.round(y - height),
       width: Math.ceil(width),
       height: Math.ceil(height),
       style: style && serializeStyle(style(d)),
-      rx: radius > 0 ? radius : undefined,
-      ry: radius > 0 ? radius : undefined,
     });
     const rectData = data && data(d);
     const serializedData = serializeAttrs(rectData, "data-");

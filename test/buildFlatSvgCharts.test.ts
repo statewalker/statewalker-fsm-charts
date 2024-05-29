@@ -12,6 +12,7 @@ import { process } from "./data/process.checkout.ts";
 // import { position } from "../src/dagre/position/index";
 import { buildSvg } from "../src/svg/generateSvg.ts";
 import fs from "fs/promises";
+import { generateCss } from "../src/index.ts";
 
 describe("buildFlatSvgCharts", () => {
   function testCharts(
@@ -48,8 +49,23 @@ describe("buildFlatSvgCharts", () => {
           println: (str: string) => lines.push(str),
         });
         const svg = lines.join("\n");
-        // console.log(svg);
-        await fs.writeFile("./chart.svg", svg);
+        const css = generateCss();
+        await fs.writeFile(
+          "./index.html",
+          `
+        <!DOCTYPE html>
+        <html>
+          <head>
+          </head>
+          <body>
+            <div style="max-width: 100%; overflow: auto">
+              <style>${css}</style>
+              ${svg}
+            </div>
+          </body>
+        </html>`
+        );
+
         // expect(result).toEqual(expected);
       } catch (err) {
         console.log("RESULT", JSON.stringify(result, null, 2));
