@@ -30,6 +30,7 @@ describe("buildFlatSvgCharts", () => {
         transitionsFontSize: 12,
         transitionsTextPadding: 6,
       });
+
       const result = buildFlatCharts({
         lodash,
         transitions,

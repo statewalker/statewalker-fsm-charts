@@ -1,18 +1,13 @@
 import type {
   TransitionsGraph,
-  Padding,
   StateGraphNode,
   StateGraphEdge,
   Position,
-  Dimensions,
 } from "../layout/index.ts";
 import { getPadding } from "../utils/getPadding.ts";
-import { printArrows } from "./printArrows.ts";
-import { printArrowsEnd } from "./printArrowsEnd.ts";
-import { printRect } from "./printRect.ts";
 import { printGroup } from "./printGroup.ts";
-import { printLabel } from "./printLabel.ts";
 import { serializeAttrs } from "../utils/serializeAttrs.ts";
+import { BasisCurve } from "../utils/BasisCurve.ts";
 
 export function buildSvg({
   graph: { width, height, nodes, edges },
@@ -52,15 +47,24 @@ export function buildSvg({
     fill : var(--transition-marker--fill, var(--transition-line--stroke, silver));
   }
   */
-  printArrowsEnd({
-    markerId: () => markerId,
-    println,
-    className: () => "transition-marker",
-    attrs: () => ({
-      fill: "currentColor",
+  {
+    const serializedAttrs = serializeAttrs({
+      refX: 19,
+      refY: 7,
+      markerWidth: 20,
+      markerHeight: 14,
+      orient: "auto",
+      class: "transition-marker",
+      id: markerId,
       stroke: "none",
-    }),
-  })();
+      fill: "currentColor",
+    });
+    println(`  <defs>`);
+    println(`    <marker ${serializedAttrs}>`);
+    println(`      <path d="M 19,7 L9,13 L14,7 L9,1 Z"></path>`);
+    println(`    </marker>`);
+    println(`  </defs>`);
+  }
   /*
   .transition-line {
     stroke: var(--transition-line--stroke, silver);
@@ -69,18 +73,47 @@ export function buildSvg({
    */
   printGroup<StateGraphEdge>({
     println,
-    action: printArrows({
-      println,
-      markerId,
-      className: () => "transition-line",
-      data: (d) => ({
-        transitionId: d.id,
-      }),
-      attrs: () => ({
+    action: (d) => {
+      const { points } = d;
+      const path: string[] = [];
+      const round = (...n: number[]) => n.map(Math.round);
+      const base = new BasisCurve({
+        bezierCurveTo(
+          x0: number,
+          y0: number,
+          x1: number,
+          y1: number,
+          x2: number,
+          y2: number
+        ) {
+          path.push("C" + round(x0, y0, x1, y1, x2, y2).join(","));
+        },
+        moveTo(x: number, y: number) {
+          path.push("M" + round(x, y).join(","));
+        },
+        lineTo(x: number, y: number) {
+          path.push("L" + round(x, y).join(","));
+        },
+        closePath() {
+          path.push("Z");
+        },
+      });
+      base.lineStart();
+      for (const point of points) {
+        base.point(point.x, point.y);
+      }
+      base.lineEnd();
+      const serializedAttrs = serializeAttrs({
+        class: "transition-line",
+        "transition-id": d.id,
+        fill: "none",
         stroke: "currentColor",
         strokeWidth: "1px",
-      }),
-    }),
+        d: path.join(""),
+        "marker-end": `url(#${markerId})`,
+      });
+      println(`  <path ${serializedAttrs} />`);
+    },
   })(edges);
 
   /*
@@ -100,22 +133,22 @@ export function buildSvg({
   };
   printGroup<StateGraphEdge>({
     println,
-    action: printRect<StateGraphEdge>({
-      position: labelPosition,
-      size: (d: Dimensions) => d,
-      println: (str: string) => println(`  ${str}`),
-      className: () => "transition-box",
-      attrs: () => ({
+    action: ({ x, y, width, height, id }) => {
+      const serializedAttrs = serializeAttrs({
+        x: Math.round(x),
+        y: Math.round(y - height),
+        width: Math.ceil(width),
+        height: Math.ceil(height),
+        rx: Math.ceil(transitionFontSize / 2),
+        ry: Math.ceil(transitionFontSize / 2),
         fill: "rgba(255,255,255,0.7)",
         stroke: "none",
         strokeWidth: "1",
-        rx: "0.5em",
-        ry: "0.5em",
-      }),
-      data: (d) => ({
-        transitionId: d.id,
-      }),
-    }),
+        class: "transition-box",
+        "data-transition-id": id,
+      });
+      println(`<rect ${serializedAttrs} />`);
+    },
   })(edges);
 
   const shift = 3;
@@ -128,34 +161,24 @@ export function buildSvg({
     ry: 0.5em;
   }
   */
-  const printStateBox = printRect<StateGraphNode>({
-    position: ({ x, y }: Position) => ({
-      x: x + shift,
-      y: y - shift,
-    }),
-    size: ({ width, height }: Dimensions) => ({
-      width: Math.ceil(width - 2 * shift),
-      height: Math.ceil(height - 2 * shift),
-    }),
-    attrs: () => ({
-      fill: "none",
-      stroke: "currentColor",
-      strokeWidth: "2",
-      rx: Math.ceil(stateFontSize / 2),
-      ry: Math.ceil(stateFontSize / 2),
-    }),
-    println: (str: string) => println(`  ${str}`),
-    className: () => "state-box",
-    data: (d) => ({
-      stateId: d.id,
-    }),
-  });
   printGroup<StateGraphNode>({
     println,
-    action: (d: StateGraphNode) => {
-      if (d.key !== initialStateKey && d.key !== finalStateKey) {
-        printStateBox(d);
-      }
+    action: ({ key, x, y, width, height, id }) => {
+      if (key === initialStateKey || key === finalStateKey) return;
+      const serializedAttrs = serializeAttrs({
+        x: x + shift,
+        y: y - height + shift,
+        width: Math.ceil(width - 2 * shift),
+        height: Math.ceil(height - 2 * shift),
+        rx: Math.ceil(stateFontSize / 2),
+        ry: Math.ceil(stateFontSize / 2),
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2",
+        class: "state-box",
+        "data-state-id": id,
+      });
+      println(`<rect ${serializedAttrs} />`);
     },
   })(nodes);
 
@@ -182,51 +205,46 @@ export function buildSvg({
   const finalStateRadius = initialStateRadius / 2;
   printGroup<StateGraphNode>({
     println,
-    action: (d: StateGraphNode) => {
-      if (d.key === initialStateKey || d.key === finalStateKey) {
-        const { x, y, width, height } = d;
-        const cx = Math.round(x + width / 2);
-        const cy = Math.round(y - height / 2);
-        const serializedData = serializeAttrs(
-          {
-            stateId: d.id,
-          },
-          "data-"
-        );
-        if (d.key === initialStateKey) {
-          const serializedAttrs = serializeAttrs({
-            class: "state-initial",
-            cx,
-            cy,
-            r: initialStateRadius,
-            fill: "none",
-            stroke: "currentColor",
-            strokeWidth: "2",
-          });
-          println(`  <circle ${serializedAttrs} ${serializedData} />`);
-        } else {
-          let serializedAttrs = serializeAttrs({
-            class: "state-final",
-            cx,
-            cy,
-            r: initialStateRadius,
-            fill: "none",
-            stroke: "currentColor",
-            strokeWidth: 2,
-          });
-          println(`  <circle ${serializedAttrs} ${serializedData} />`);
+    action: ({ key, id, x, y, width, height }) => {
+      if (key !== initialStateKey && key !== finalStateKey) return;
+      const cx = Math.round(x + width / 2);
+      const cy = Math.round(y - height / 2);
+      if (key === initialStateKey) {
+        const serializedAttrs = serializeAttrs({
+          class: "state-initial",
+          cx,
+          cy,
+          r: initialStateRadius,
+          fill: "none",
+          stroke: "currentColor",
+          strokeWidth: "2",
+          "data-state-id": id,
+        });
+        println(`  <circle ${serializedAttrs} />`);
+      } else {
+        let serializedAttrs = serializeAttrs({
+          class: "state-final",
+          cx,
+          cy,
+          r: initialStateRadius,
+          fill: "none",
+          stroke: "currentColor",
+          strokeWidth: 2,
+          "data-state-id": id,
+        });
+        println(`  <circle ${serializedAttrs} />`);
 
-          serializedAttrs = serializeAttrs({
-            class: "state-final inner",
-            cx,
-            cy,
-            r: finalStateRadius,
-            fill: "currentColor",
-            stroke: "none",
-            strokeWidth: 0,
-          });
-          println(`  <circle ${serializedAttrs} ${serializedData} />`);
-        }
+        serializedAttrs = serializeAttrs({
+          class: "state-final inner",
+          cx,
+          cy,
+          r: finalStateRadius,
+          fill: "currentColor",
+          stroke: "none",
+          strokeWidth: 0,
+          "data-state-id": id,
+        });
+        println(`  <circle ${serializedAttrs} />`);
       }
     },
   })(nodes);
@@ -240,21 +258,20 @@ export function buildSvg({
   */
   printGroup<StateGraphEdge>({
     println,
-    action: printLabel<StateGraphEdge>({
-      position: labelPosition,
-      size: (d: Dimensions) => d,
-      println: (str: string) => println(`  ${str}`),
-      padding: (d) => getPadding(d.padding),
-      label: (d) => d.event,
-      fontSize: () => transitionFontSize,
-      className: () => "transition-label",
-      data: (d) => ({
-        transitionId: d.id,
-      }),
-      attrs: () => ({
+    action: ({ id, x, y, width, height, padding, event: text }) => {
+      if (!text) return;
+      const textSize = transitionFontSize;
+      const [top, right, bottom, left] = getPadding(padding);
+      const serializedAttrs = serializeAttrs({
+        class: "transition-label",
+        "text-anchor": "middle",
         fill: "currentColor",
-      }),
-    }),
+        x: Math.round(x + (left + width - right) / 2),
+        y: Math.round(y - height - bottom - top + textSize / 2),
+        "data-transition-id": id,
+      });
+      println(`<text ${serializedAttrs}>${text}</text>`);
+    },
   })(edges);
 
   /*
@@ -266,24 +283,22 @@ export function buildSvg({
   */
   printGroup<StateGraphNode>({
     println,
-    action: printLabel<StateGraphNode>({
-      position: ({ x, y }: Position) => ({
-        x: x,
-        y: y - shift,
-      }),
-      size: (d: Dimensions) => d,
-      println: (str: string) => println(`  ${str}`),
-      padding: (d) => getPadding(d.padding),
-      label: (d) => d.state,
-      fontSize: () => stateFontSize,
-      className: () => "state-label",
-      attrs: () => ({
+    action: ({ id, x, y, width, height, padding, state: text }) => {
+      if (!text) return;
+      const textSize = stateFontSize;
+      const [top, right, bottom, left] = getPadding(padding);
+      const serializedAttrs = serializeAttrs({
+        class: "state-label",
+        "text-anchor": "middle",
         fill: "currentColor",
-      }),
-      data: (d) => ({
-        stateId: d.id,
-      }),
-    }),
+        x: Math.round(x + (left + width - right) / 2),
+        y: Math.round(
+          y - height + (top + height - bottom) / 2 + textSize / 2 - shift
+        ),
+        "data-state-id": id,
+      });
+      println(`<text ${serializedAttrs}>${text}</text>`);
+    },
   })(nodes);
 
   println("</svg>");
