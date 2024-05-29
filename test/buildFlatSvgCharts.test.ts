@@ -51,6 +51,7 @@ describe("buildFlatSvgCharts", () => {
         });
         const svg = lines.join("\n");
         const css = generateCss();
+        // const css = "";
         await fs.writeFile(
           "./index.html",
           `

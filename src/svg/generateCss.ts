@@ -37,39 +37,37 @@ export function generateCss({ prefix = "" } = {}) {
 
   ${prefix}.statechart .transition-line {
     stroke: var(--transition-line--stroke, silver);
-    strokeWidth: var(--transition-line--stroke-width, 1px);
+    stroke-width: var(--transition-line--stroke-width, 1px);
   }
 
   ${prefix}.statechart .transition-box {
     fill: var(--transition--fill, rgba(255,255,255,0.7));
     stroke: var(--transition--stroke, none);
-    strokeWidth: var(--transition--stroke-width, 1);
-    rx: 0.5em;
-    ry: 0.5em;
+    stroke-width: var(--transition--stroke-width, 1);
+    border-radius: 0.5em;
   }
 
   ${prefix}.statechart .state-box {
     fill: var(--state--fill, none);
     stroke: var(--state--stroke-color, silver);
-    strokeWidth: var(--state--stroke-width, 2);
-    rx: 0.5em;
-    ry: 0.5em;
+    stroke-width: var(--state--stroke-width, 2);
+    border-radius: 0.5em;
   }
 
   ${prefix}.statechart .state-initial {
     fill: var(--state-initial--fill, var(--state--fill, none));
     stroke: var(--state-initial--stroke, var(--state--stroke-color, silver));
-    strokeWidth: var(--state-initial--stroke-width, var(--state--stroke-width, 2));
+    stroke-width: var(--state-initial--stroke-width, var(--state--stroke-width, 2));
   }
   ${prefix}.statechart .state-final {
     fill: var(--state-final--fill, var(--state--fill, none));
     stroke: var(--state-final--stroke, var(--state--stroke-color, silver));
-    strokeWidth: var(--state-final--stroke-width, var(--state--stroke-width, 2));
+    stroke-width: var(--state-final--stroke-width, var(--state--stroke-width, 2));
   }
   ${prefix}.statechart .state-final.inner {
     fill: var(--state-final--stroke, var(--state--stroke-color, silver));
     stroke: none;
-    strokeWidth: 0;
+    stroke-width: 0;
   }
 
   ${prefix}.statechart .transition-label {
