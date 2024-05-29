@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import { _ } from '../lodash-es/index.ts';
 import { greedyFAS } from './greedy-fas.js';
 
 export { run, undo };

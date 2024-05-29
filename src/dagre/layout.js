@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import { _ } from '../lodash-es/index.ts';
 import { Graph } from '../graphlib/index.js';
 import { addBorderSegments } from './add-border-segments.js';
 import * as coordinateSystem from './coordinate-system.js';

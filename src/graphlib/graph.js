@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import { _ } from '../lodash-es/index.ts';
 
 var DEFAULT_EDGE_NAME = '\x00';
 var GRAPH_NODE = '\x00';

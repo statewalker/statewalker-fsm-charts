@@ -1,1 +1,2 @@
-export * from "./buildSvg.ts";
+export * from "./generateCss.ts";
+export * from "./generateSvg.ts";

@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import { _ } from '../lodash-es/index.ts';
 import * as util from './util.js';
 
 export { run, cleanup };

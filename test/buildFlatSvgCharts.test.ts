@@ -1,14 +1,16 @@
+import * as lodash from "lodash-es";
 import {
   type TransitionsGraph,
   type Transition,
   buildFlatCharts,
   getGraphParamsProvider,
-} from "../src/layout/index.ts"; 
+} from "../src/layout/index.ts";
 import { describe, it, expect } from "./deps.ts";
-import { transitions } from "./data/process.subscription.ts";
+// import { transitions } from "./data/process.subscription.ts";
+import { process } from "./data/process.checkout.ts";
 
 // import { position } from "../src/dagre/position/index";
-import { buildSvg } from "../src/svg/buildSvg.ts";
+import { buildSvg } from "../src/svg/generateSvg.ts";
 import fs from "fs/promises";
 
 describe("buildFlatSvgCharts", () => {
@@ -28,6 +30,7 @@ describe("buildFlatSvgCharts", () => {
         transitionsTextPadding: 6,
       });
       const result = buildFlatCharts({
+        lodash,
         transitions,
         newId,
         getStateParams,
@@ -35,6 +38,8 @@ describe("buildFlatSvgCharts", () => {
         vertical: false,
         padding: [15, 15],
       });
+
+      // console.log(JSON.stringify(result, null, 2));
       try {
         const lines: string[] = [];
         buildSvg({
@@ -43,7 +48,7 @@ describe("buildFlatSvgCharts", () => {
           println: (str: string) => lines.push(str),
         });
         const svg = lines.join("\n");
-        console.log(svg);
+        // console.log(svg);
         await fs.writeFile("./chart.svg", svg);
         // expect(result).toEqual(expected);
       } catch (err) {
@@ -53,7 +58,7 @@ describe("buildFlatSvgCharts", () => {
     });
   }
 
-  testCharts("should generate empty graph", transitions, {
+  testCharts("should generate empty graph", process.transitions, {
     x: 0,
     y: 0,
     height: 0,

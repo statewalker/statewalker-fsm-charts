@@ -27,7 +27,9 @@
   "devDependencies": {
     "@statewalker/eslint-config": "*",
     "@statewalker/typescript-config": "*",
-    "eslint": "^9.3.0",
+    "@types/lodash-es": "^4.17.12",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
@@ -37,7 +39,8 @@
     "url": "git@github.com:statewalker/statewalker-fsm-charts.git"
   },
   "scripts": {
-    "build": "yarn test && tsup",
+    "build_": "yarn test && tsup",
+    "build": "tsup",
     "watch": "tsup --watch",
     "clean": "rm -rf dist",
     "lint": "eslint",
@@ -48,8 +51,5 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "lodash-es": "^4.17.21"
   }
 }

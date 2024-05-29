@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import { _ } from '../../lodash-es/index.ts';
 import { PriorityQueue } from '../data/priority-queue.js';
 import { Graph } from '../graph.js';
 

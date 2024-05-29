@@ -32,13 +32,13 @@ export function getLabelDimensions(
   }
   const [top, right, bottom, left] = getPadding(padding);
   return {
-    width: dimensions.width + left + right,
-    height: dimensions.height + top + bottom,
+    width: Math.round(dimensions.width + left + right),
+    height: Math.round(dimensions.height + top + bottom),
   };
   function expandBox(dim1: Dimensions, dim2: Dimensions) {
     return {
-      width: Math.max(dim1.width, dim2.width),
-      height: dim1.height + dim2.height,
+      width: Math.round(Math.max(dim1.width, dim2.width)),
+      height: Math.round(dim1.height + dim2.height),
     };
   }
 
