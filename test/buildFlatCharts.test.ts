@@ -4,8 +4,7 @@ import { TransitionsGraph } from "../src/layout/TransitionsGraph.ts";
 import { getGraphParamsProvider } from "../src/layout/getGraphParamsProvider.ts";
 import { Transition } from "../src/layout/Transition.ts";
 import { describe, it, expect } from "./deps.ts";
-import { tests } from "./buildFlatSvgCharts.test-data.ts";
-import { setLodash } from "../src/lodash-es/index.ts";
+import { tests } from "./buildFlatCharts.data.ts";
 
 describe("buildFlatCharts", () => {
   for (const { message, transitions, control } of tests) {
