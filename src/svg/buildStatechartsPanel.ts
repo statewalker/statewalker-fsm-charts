@@ -13,7 +13,7 @@ export function buildStatechartsPanel({
   println: (str: string) => void;
   initialStateKey?: string;
   finalStateKey?: string;
-}) {
+}) : void {
   render(statechart, println);
 
   function render(statechart: StateChart, println: (str: string) => void) {

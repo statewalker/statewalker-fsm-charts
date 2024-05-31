@@ -1,8 +1,12 @@
-import type { Padding, Position, TransitionsGraph } from "../layout/index.ts";
+import type {
+  Dimensions,
+  Padding,
+  Position,
+  TransitionsGraph,
+} from "../layout/index.ts";
 import { getPadding } from "../utils/getPadding.ts";
 import { serializeAttrs } from "../utils/serializeAttrs.ts";
 import { BasisCurve } from "../utils/BasisCurve.ts";
-import { Dimensions } from "../../dist/index";
 
 function getBoxParams({
   x,

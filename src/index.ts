@@ -1,3 +1,2 @@
-export * from "./layout/index.ts";
-export * from "./svg/index.ts";
-export * from "./lodash-es/index.ts";
+export * from "./index-layout.ts";
+export * from "./index-svg.ts";

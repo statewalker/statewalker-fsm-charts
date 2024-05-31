@@ -1,4 +1,4 @@
-export function buildStatechartCss({ prefix = "" } = {}) {
+export function buildStatechartCss({ prefix = "" } = {}): string {
   return `
     --state--fill: white;
     --state--stroke-color: silver;
@@ -56,7 +56,7 @@ export function buildStatechartCss({ prefix = "" } = {}) {
     overflow: auto;
     scrollbar-width: thin;
   }
-  
+
   .state-details  .statechart {
 
   }
