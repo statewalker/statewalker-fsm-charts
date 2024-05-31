@@ -57,7 +57,7 @@ describe("buildStatechartsPanel", () => {
 <head>
 </head>
 <body>
-<div style="max-width: 100%; overflow: auto">
+<div style="max-width: 500px;">
   <style>
   ${css}
   ${prefix}.statechart .states .state:hover

@@ -4,16 +4,16 @@
 <head>
 </head>
 <body>
-<div style="max-width: 100%; overflow: auto">
+<div style="max-width: 500px;">
   <style>
   
     --state--fill: white;
     --state--stroke-color: silver;
     --state--stroke-width: 1px;
 
-    --state-initial--fill: var(--state--fill, white);
-    --state-initial--stroke-color: var(--state--stroke-color, silver);
-    --state-initial--stroke-width: var(--state--stroke-width, 1px);
+    --state-initial--fill: var(--state--stroke-color, silver);
+    --state-initial--stroke-color: var(--state--stroke-color, none);
+    --state-initial--stroke-width: var(--state--stroke-width, 0);
 
     --state-final--fill: var(--state--fill, white);
     --state-final--stroke-color: var(--state--stroke-color, silver);
@@ -58,7 +58,12 @@
     flex-direction: column;
     gap: 0.5em;
   }
-
+  .state-details .state-chart-container {
+    max-width: 100%;
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+  
   .state-details  .statechart {
 
   }
@@ -98,9 +103,9 @@
     border-radius: 0.5em;
   }
   .state-details  .statechart .states .state .state-initial {
-    fill: var(--state-initial--fill, white);
-    stroke: var(--state-initial--stroke-color, gray); 
-    stroke-width: var(--state-initial--stroke-width, 2);
+    fill: var(--state-initial--fill, gray);
+    stroke: var(--state-initial--stroke-color, none); 
+    stroke-width: var(--state-initial--stroke-width, 0);
   }
   .state-details  .statechart .states .state .state-final {
     fill: var(--state-final--fill, white);
@@ -139,7 +144,7 @@
 </style>
 <details class="state-details" data-state-id="state_0">
   <summary class="state-label">App</summary>
-  <div class="state-description"><div class="chart">
+  <div class="state-description"><div class="state-chart-container">
     <svg class="statechart" height="193" viewbox="0 0 494 193" width="494" xmlns="http://www.w3.org/2000/svg">
     <g class="transitions">
       <g class="transition" data-transition-id="t_3">
@@ -214,7 +219,7 @@
   </div>
     <details class="state-details" data-state-id="s_2">
       <summary class="state-label">OpenFileSystem</summary>
-      <div class="state-description"><div class="chart">
+      <div class="state-description"><div class="state-chart-container">
         <svg class="statechart" height="85" viewbox="0 0 655 85" width="655" xmlns="http://www.w3.org/2000/svg">
         <g class="transitions">
           <g class="transition" data-transition-id="t_12">
@@ -269,7 +274,7 @@
       </div>
         <details class="state-details" data-state-id="s_11">
           <summary class="state-label">ChooseFolder</summary>
-          <div class="state-description"><div class="chart">
+          <div class="state-description"><div class="state-chart-container">
             <svg class="statechart" height="200" viewbox="0 0 446 200" width="446" xmlns="http://www.w3.org/2000/svg">
             <g class="transitions">
               <g class="transition" data-transition-id="t_20">
@@ -348,7 +353,7 @@
     </details>
     <details class="state-details" data-state-id="s_4">
       <summary class="state-label">ShowError</summary>
-      <div class="state-description"><div class="chart">
+      <div class="state-description"><div class="state-chart-container">
         <svg class="statechart" height="112" viewbox="0 0 570 112" width="570" xmlns="http://www.w3.org/2000/svg">
         <g class="transitions">
           <g class="transition" data-transition-id="t_29">

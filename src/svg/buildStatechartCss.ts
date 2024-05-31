@@ -4,9 +4,9 @@ export function buildStatechartCss({ prefix = "" } = {}) {
     --state--stroke-color: silver;
     --state--stroke-width: 1px;
 
-    --state-initial--fill: var(--state--fill, white);
-    --state-initial--stroke-color: var(--state--stroke-color, silver);
-    --state-initial--stroke-width: var(--state--stroke-width, 1px);
+    --state-initial--fill: var(--state--stroke-color, silver);
+    --state-initial--stroke-color: var(--state--stroke-color, none);
+    --state-initial--stroke-width: var(--state--stroke-width, 0);
 
     --state-final--fill: var(--state--fill, white);
     --state-final--stroke-color: var(--state--stroke-color, silver);
@@ -51,7 +51,12 @@ export function buildStatechartCss({ prefix = "" } = {}) {
     flex-direction: column;
     gap: 0.5em;
   }
-
+  .state-details .state-chart-container {
+    max-width: 100%;
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+  
   .state-details  .statechart {
 
   }
@@ -91,9 +96,9 @@ export function buildStatechartCss({ prefix = "" } = {}) {
     border-radius: 0.5em;
   }
   .state-details  .statechart .states .state .state-initial {
-    fill: var(--state-initial--fill, white);
-    stroke: var(--state-initial--stroke-color, gray); 
-    stroke-width: var(--state-initial--stroke-width, 2);
+    fill: var(--state-initial--fill, gray);
+    stroke: var(--state-initial--stroke-color, none); 
+    stroke-width: var(--state-initial--stroke-width, 0);
   }
   .state-details  .statechart .states .state .state-final {
     fill: var(--state-final--fill, white);

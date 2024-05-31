@@ -19,7 +19,7 @@ export function buildStatechartsPanel({
   function render(statechart: StateChart, println: (str: string) => void) {
     println(`<details class="state-details" data-state-id="${statechart.id}">`);
     println(`  <summary class="state-label">${statechart.key}</summary>`);
-    println(`  <div class="state-description"><div class="chart">`);
+    println(`  <div class="state-description"><div class="state-chart-container">`);
     const printChildren = (str: string) => println(`    ${str}`);
     buildStatechartSvg({
       graph: statechart.graph,
