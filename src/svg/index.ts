@@ -1,2 +1,3 @@
-export * from "./generateCss.ts";
-export * from "./generateSvg.ts";
+export * from "./buildStatechartCss.ts";
+export * from "./buildStatechartsPanel.ts";
+export * from "./buildStatechartSvg.ts";
