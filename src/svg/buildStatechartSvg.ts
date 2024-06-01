@@ -120,7 +120,6 @@ export function buildStatechartSvg({
 
     const serializedAttrs = serializeAttrs({
       class: "transition-line",
-      "transition-id": id,
       fill: "none",
       stroke: "currentColor",
       strokeWidth: "1px",
@@ -244,7 +243,6 @@ export function buildStatechartSvg({
         fill: "currentColor",
         x: Math.round(x + width / 2),
         y: Math.round(y + height / 2 + stateFontSize / 4),
-        "data-state-id": id,
       });
       println(`    <text ${textAttrs}>${text}</text>`);
     }
