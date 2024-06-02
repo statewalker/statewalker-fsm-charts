@@ -17,9 +17,9 @@ export function buildStatechartsPanel({
   render(statechart, println);
 
   function render(statechart: StateChart, println: (str: string) => void) {
-    println(`<details class="state-details" data-state-id="${statechart.id}">`);
-    println(`  <summary class="state-label">${statechart.key}</summary>`);
-    println(`  <div class="state-description"><div class="state-chart-container">`);
+    println(`  <details class="state-details" data-state-id="${statechart.id}">`);
+    println(`    <summary class="state-details__label">${statechart.key}</summary>`);
+    println(`    <div class="state-details__description"><div class="state-details__chart">`);
     const printChildren = (str: string) => println(`    ${str}`);
     buildStatechartSvg({
       graph: statechart.graph,
@@ -28,11 +28,11 @@ export function buildStatechartsPanel({
       initialStateKey,
       finalStateKey,
     });
-    println(`  </div>`);
+    println(`    </div>`);
     for (const child of statechart.children || []) {
       render(child, printChildren);
     }
-    println(`  </div>`);
-    println(`</details>`);
+    println(`    </div>`);
+    println(`  </details>`);
   }
 }

@@ -65,7 +65,7 @@ export function buildStatechartSvg({
   .transitions .transition .transition-label
    --------------------------------------------------- 
   */
-  println(`<g class="transitions">`);
+  println(`<g class="statechart__transitions">`);
 
   const markerAttrs = serializeAttrs({
     refX: 19,
@@ -73,7 +73,7 @@ export function buildStatechartSvg({
     markerWidth: 20,
     markerHeight: 14,
     orient: "auto",
-    class: "transition-marker",
+    class: "transition__marker",
     stroke: "none",
     fill: "currentColor",
   });
@@ -119,7 +119,7 @@ export function buildStatechartSvg({
     base.lineEnd();
 
     const serializedAttrs = serializeAttrs({
-      class: "transition-line",
+      class: "transition__line",
       fill: "none",
       stroke: "currentColor",
       strokeWidth: "1px",
@@ -144,12 +144,12 @@ export function buildStatechartSvg({
         fill: "rgba(255,255,255,0.7)",
         stroke: "none",
         strokeWidth: "1",
-        class: "transition-box",
+        class: "transition__box",
       });
       println(`    <rect ${rectAttrs} />`);
 
       const textAttrs = serializeAttrs({
-        class: "transition-label",
+        class: "transition__label",
         "text-anchor": "middle",
         fill: "currentColor",
         x: Math.round(x + width / 2),
@@ -179,7 +179,7 @@ export function buildStatechartSvg({
   const initialStateRadius = 6;
   const finalStateRadius = initialStateRadius / 2;
 
-  println(`<g class="states">`);
+  println(`<g class="statechart__states">`);
   for (const node of nodes) {
     const { key, id, state: text } = node;
     const { x, y, width, height } = getBoxParams({ ...node, padding: shift });
@@ -190,7 +190,7 @@ export function buildStatechartSvg({
       const cy = Math.round(y + height / 2);
       if (key === initialStateKey) {
         const serializedAttrs = serializeAttrs({
-          class: "state-initial",
+          class: "state__initial",
           cx,
           cy,
           r: initialStateRadius,
@@ -201,7 +201,7 @@ export function buildStatechartSvg({
         println(`    <circle ${serializedAttrs} />`);
       } else {
         let serializedAttrs = serializeAttrs({
-          class: "state-final",
+          class: "state__final",
           cx,
           cy,
           r: initialStateRadius,
@@ -212,7 +212,7 @@ export function buildStatechartSvg({
         println(`    <circle ${serializedAttrs} />`);
 
         serializedAttrs = serializeAttrs({
-          class: "state-final inner",
+          class: "state__final state__final--inner",
           cx,
           cy,
           r: finalStateRadius,
@@ -233,12 +233,12 @@ export function buildStatechartSvg({
         fill: "none",
         stroke: "currentColor",
         strokeWidth: "2",
-        class: "state-box",
+        class: "state__box",
       });
       println(`    <rect ${rectAttrs} />`);
 
       const textAttrs = serializeAttrs({
-        class: "state-label",
+        class: "state__label",
         "text-anchor": "middle",
         fill: "currentColor",
         x: Math.round(x + width / 2),

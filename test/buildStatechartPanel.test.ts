@@ -7,7 +7,11 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import { buildStatechartsPanel, buildStatechartCss } from "../src/index.ts";
+import {
+  buildStatechartsPanel,
+  buildStatechartCss,
+  serializeCss,
+} from "../src/index.ts";
 import fs from "fs/promises";
 
 // buildStatechartsPanel
@@ -49,34 +53,44 @@ describe("buildStatechartsPanel", () => {
       println: (str: string) => lines.push(str),
     });
     const svg = lines.join("\n");
-    let prefix = "";
+    let prefix = ".main";
     const css = buildStatechartCss({ prefix });
+    const selectionStyles = {
+      [prefix]: {
+        ".states": {
+          ".state:hover": {
+            "--state--stroke-color": "blue",
+            "--state--stroke-width": "3px",
+            "--state-initial--stroke-color":
+              "var(--state--stroke-color, silver)",
+            "--state-initial--stroke-width": "var(--state--stroke-width, 2px)",
+            "--state-final--stroke-color": "var(--state--stroke-color, silver)",
+            "--state-final--stroke-width": "var(--state--stroke-width, 2px)",
+            "--state-label--color": "navy",
+            cursor: "pointer",
+          },
+        },
+        ".transitions": {
+          ".transition:hover": {
+            "--transition-line--stroke-color": "red",
+            "--transition-marker--fill":
+              "var(--transition-line--stroke-color, gray)",
+            "--transition-label--color": "maroon",
+            cursor: "pointer",
+          },
+        },
+      },
+    };
     const html = `
 <!DOCTYPE html>
 <html>
 <head>
 </head>
 <body>
-<div style="max-width: 500px;">
+<div class="main" style="max-width: 500px;">
   <style>
   ${css}
-  ${prefix}.statechart .states .state:hover
-  {
-    --state--stroke-color: blue;
-    --state--stroke-width: 3;
-    --state-initial--stroke-color: var(--state--stroke-color, silver);
-    --state-initial--stroke-width: var(--state--stroke-width, 2);
-    --state-final--stroke-color: var(--state--stroke-color, silver);
-    --state-final--stroke-width: var(--state--stroke-width, 2);
-    --state-label--color: navy;
-    cursor: pointer;
-  }
-  ${prefix}.statechart .transitions .transition:hover {
-    --transition-line--stroke-color: red;
-    --transition-marker--fill: var(--transition-line--stroke-color, gray);
-    --transition-label--color: maroon;
-    cursor: pointer;
-  }
+  ${serializeCss(selectionStyles)}
 </style>
 ${svg}
 </div>

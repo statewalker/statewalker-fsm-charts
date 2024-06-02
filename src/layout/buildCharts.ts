@@ -41,7 +41,7 @@ export function buildCharts({
 } & GraphParamsProvider): StateChart {
   return buildChart(config);
 
-  function buildChart(config: FsmStateConfig, id: string = newId("state")) {
+  function buildChart(config: FsmStateConfig, id: string = newId("s")) {
     const graph = buildFlatCharts({
       lodash,
       transitions: config.transitions,
