@@ -102,11 +102,13 @@ export function buildStatechartStyles({
         stroke: "var(--transition-border-color, none)",
         strokeWidth: "var(--transition-border-width, 1px)",
         borderRadius: "0.5em",
+        cursor: "pointer",
       },
       ".transition__label": {
         fill: "var(--transition-label-color, currentColor)",
         fontSize: "var(--transition-label-font-size, 12px)",
         fontFamily: "var(--transition-label-font-family, sans-serif)",
+        cursor: "pointer",
       },
 
       // ----------------------------------------------
@@ -147,6 +149,7 @@ export function buildStatechartStyles({
         stroke: "var(--state-border-color, currentColor)",
         strokeWidth: "var(--state-border-width, 1px)",
         borderRadius: "0.5em",
+        cursor: "pointer",
       },
       ".state__label": {
         color: "var(--state-label-color, currentColor)",
