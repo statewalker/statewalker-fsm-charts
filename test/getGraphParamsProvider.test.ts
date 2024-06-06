@@ -1,7 +1,4 @@
-import { buildFlatCharts } from "../src/layout/buildFlatCharts.ts";
-import { TransitionsGraph } from "../src/types/TransitionsGraph.ts";
 import { getGraphParamsProvider } from "../src/layout/getGraphParamsProvider.ts";
-import { Transition } from "../src/types/Transition.ts";
 import { describe, it, expect } from "./deps.ts";
 
 describe("getGraphParamsProvider", () => {

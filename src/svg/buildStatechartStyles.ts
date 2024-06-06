@@ -1,4 +1,4 @@
-import { CssTree } from "../utils/serializeCss";
+import type { CssTree } from "../utils/serializeCss";
 
 function buildStateDetailsStyle() {
   return {

@@ -1,5 +1,5 @@
-import { buildStatechartSvg } from "./buildStatechartSvg.ts";
 import type { StateChart } from "../types/StateChart.ts";
+import { buildStatechartSvg } from "./buildStatechartSvg.ts";
 
 export function buildStatechartsPanel({
   statechart,
