@@ -1,4 +1,4 @@
-import { Padding } from "../layout/Padding.ts";
+import type { Padding } from "../types/Padding.ts";
 
 /**
  * Expands a padding value to a 4-element array: [top, right, bottom, left].

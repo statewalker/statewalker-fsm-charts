@@ -1,15 +1,16 @@
 import { layout } from "../dagre/layout.js";
 import { Graph } from "../graphlib/graph.js";
 
-import type { GraphParamsProvider } from "./GraphParamsProvider.ts";
-import type { Transition } from "./Transition.ts";
-import type { TransitionsGraph } from "./TransitionsGraph.ts";
-import type { StateGraphNode } from "./StateGraphNode.ts";
-import type { StateGraphEdge } from "./StateGraphEdge.ts";
-import { Padding } from "./Padding.ts";
+import type { GraphParamsProvider } from "../types/GraphParamsProvider.ts";
+import type { Transition } from "../types/Transition.ts";
+import type { TransitionsGraph } from "../types/TransitionsGraph.ts";
+import type { StateGraphNode } from "../types/StateGraphNode.ts";
+import type { StateGraphEdge } from "../types/StateGraphEdge.ts";
+import type { Padding } from "../types/Padding.ts";
+import type { Position } from "../types/Position.ts";
+import type { Dimensions } from "../types/Dimensions.ts";
+
 import { getPadding } from "../utils/getPadding.ts";
-import { Position } from "./Position.ts";
-import { Dimensions } from "./Dimensions.ts";
 import { getLodash, setLodash } from "../lodash-es/index.ts";
 
 /**

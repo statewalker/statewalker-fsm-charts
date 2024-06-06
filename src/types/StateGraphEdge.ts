@@ -1,5 +1,5 @@
-import { Dimensions } from "./Dimensions.ts";
-import { Position } from "./Position.ts";
+import type { Dimensions } from "./Dimensions.ts";
+import type { Position } from "./Position.ts";
 
 /**
  * Information about a state graph edge.

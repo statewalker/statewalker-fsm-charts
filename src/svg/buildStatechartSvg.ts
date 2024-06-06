@@ -3,7 +3,7 @@ import type {
   Padding,
   Position,
   TransitionsGraph,
-} from "../layout/index.ts";
+} from "../types/index.ts";
 import { getPadding } from "../utils/getPadding.ts";
 import { serializeAttrs } from "../utils/serializeAttrs.ts";
 import { BasisCurve } from "../utils/BasisCurve.ts";

@@ -1,16 +1,8 @@
-import type { GraphParamsProvider } from "./GraphParamsProvider.ts";
-import type { StateGraphNode } from "./StateGraphNode.ts";
-import type { StateGraphEdge } from "./StateGraphEdge.ts";
-import type { Padding } from "./Padding.ts";
-import type { Position } from "./Position.ts";
-import type { Dimensions } from "./Dimensions.ts";
-import type { FsmStateConfig } from "../FsmStateConfig.ts";
-import type { StateChart } from "./StateChart.ts";
+import type { GraphParamsProvider } from "../types/GraphParamsProvider.ts";
+import type { Padding } from "../types/Padding.ts";
+import type { FsmStateConfig } from "../types/FsmStateConfig.ts";
+import type { StateChart } from "../types/StateChart.ts";
 
-import { layout } from "../dagre/layout.js";
-import { Graph } from "../graphlib/graph.js";
-import { getPadding } from "../utils/getPadding.ts";
-import { getLodash, setLodash } from "../lodash-es/index.ts";
 import { buildFlatCharts } from "./buildFlatCharts.ts";
 /**
  * Build graphs corresponding to the specified transitions.

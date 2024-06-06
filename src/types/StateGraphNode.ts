@@ -1,5 +1,5 @@
-import { Dimensions } from "./Dimensions";
-import { Position } from "./Position";
+import type { Dimensions } from "./Dimensions.ts";
+import type { Position } from "./Position.ts";
 
 /**
  * Information about a state node in the graph.
