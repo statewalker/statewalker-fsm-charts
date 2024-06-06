@@ -13,16 +13,22 @@ export function buildStatechartsPanel({
   println: (str: string) => void;
   initialStateKey?: string;
   finalStateKey?: string;
-}) : void {
+}): void {
   render(statechart, println);
 
   function render(statechart: StateChart, println: (str: string) => void) {
-    println(`  <details class="state-details" data-state-id="${statechart.id}">`);
-    println(`    <summary class="state-details__label">${statechart.key}</summary>`);
-    println(`    <div class="state-details__description"><div class="state-details__chart">`);
+    println(
+      `  <details class="state-details" data-state-id="${statechart.id}">`
+    );
+    println(
+      `    <summary class="state-details__label">${statechart.key}</summary>`
+    );
+    println(
+      `    <div class="state-details__description"><div class="state-details__chart">`
+    );
     const printChildren = (str: string) => println(`    ${str}`);
     buildStatechartSvg({
-      graph: statechart.graph,
+      graph: statechart,
       newId,
       println: printChildren,
       initialStateKey,

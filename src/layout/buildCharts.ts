@@ -67,7 +67,7 @@ export function buildCharts({
     return {
       id,
       key: config.key,
-      graph,
+      ...graph,
       children,
     };
   }

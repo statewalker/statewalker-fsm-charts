@@ -1,8 +1,7 @@
 import type { TransitionsGraph } from "./TransitionsGraph.ts";
 
-export type StateChart = {
+export type StateChart = TransitionsGraph & {
   id: string;
   key: string;
   children?: StateChart[];
-  graph: TransitionsGraph;
 } & Record<string, any>;
