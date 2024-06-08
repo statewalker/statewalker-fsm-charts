@@ -5,10 +5,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import {
-  buildStatechartCss,
-  serializeCss,
-} from "../src/index.ts";
+import { buildStatechartCss, serializeCss } from "../src/index.ts";
 import fs from "fs/promises";
 import { toStatechartsPanels } from "./toStatechartsPanels.ts";
 
@@ -27,7 +24,7 @@ describe("buildStatechartsPanel", () => {
       control = "";
     }
 
-    const { svg } = toStatechartsPanels(process);
+    const { html } = toStatechartsPanels(process);
     let prefix = ".main";
     const css = buildStatechartCss({ prefix });
     const selectionStyles = {
@@ -56,7 +53,7 @@ describe("buildStatechartsPanel", () => {
         },
       },
     };
-    const html = `
+    const result = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,14 +64,14 @@ describe("buildStatechartsPanel", () => {
   ${css}
   ${serializeCss(selectionStyles)}
 </style>
-${svg}
+${html}
 </div>
 </body>
 </html>`;
     try {
-      expect(html).toEqual(control);
+      expect(result).toEqual(control);
     } catch (error) {
-      await fs.writeFile(controlFileName, html, "utf-8");
+      await fs.writeFile(controlFileName, result, "utf-8");
       throw error;
     }
   });

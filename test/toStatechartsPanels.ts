@@ -4,11 +4,15 @@ import {
   getGraphParamsProvider,
   buildCharts,
   buildStatechartsPanel,
+  StateChart,
 } from "../src/index.ts";
 
-export function toStatechartsPanels(config: FsmStateConfig) {
+export function toStatechart(config: FsmStateConfig): {
+  statechart: StateChart;
+  newId: (prefix?: string) => string;
+} {
   let idCounter = 0;
-  const newId = (prefix: string) => `${prefix}_${idCounter++}`;
+  const newId = (prefix: string = "") => `${prefix}_${idCounter++}`;
   const { getStateParams, getTransitionParams } = getGraphParamsProvider({
     // fontSize: 14,
     stateFontSize: 14,
@@ -25,15 +29,26 @@ export function toStatechartsPanels(config: FsmStateConfig) {
     getTransitionParams,
     padding: [15, 15],
   });
+  return {
+    statechart,
+    newId,
+  };
+}
+
+export function toStatechartsPanels(config: FsmStateConfig): {
+  html: string;
+  statechart: StateChart;
+} {
+  const { newId, statechart } = toStatechart(config);
   const lines: string[] = [];
   buildStatechartsPanel({
     statechart,
     newId,
     println: (str: string) => lines.push(str),
   });
-  const svg = lines.join("\n");
+  const html = lines.join("\n");
   return {
-    svg,
+    html,
     statechart,
   };
 }
