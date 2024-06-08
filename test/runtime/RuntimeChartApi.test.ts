@@ -1,7 +1,7 @@
 import { describe, it, expect } from "../deps.ts";
-import { toStatechartsPanels } from "../toStatechartsPanels.ts";
+import { toStatechartsPanels } from "../html/toStatechartsPanels.ts";
 import { process } from "../data/process.checkout.ts";
-import { buildStatechartCss } from "../../src/index-svg.ts";
+import { buildStatechartCss } from "../../src/index-html.ts";
 import { JSDOM } from "jsdom";
 
 describe("RuntimeIndex", () => {

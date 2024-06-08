@@ -5,7 +5,7 @@ import {
   buildCharts,
   buildStatechartsPanel,
   StateChart,
-} from "../src/index.ts";
+} from "../../src/index.ts";
 
 export function toStatechart(config: FsmStateConfig): {
   statechart: StateChart;

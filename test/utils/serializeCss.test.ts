@@ -1,5 +1,5 @@
-import { describe, it, expect } from "./deps.ts";
-import { serializeCss } from "../src/index.ts";
+import { describe, it, expect } from "../deps.ts";
+import { serializeCss } from "../../src/index.ts";
 
 describe("serializeCss - simple CSS classes serialization", () => {
   it("should CSS from objects", () => {

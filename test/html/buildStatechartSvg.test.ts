@@ -2,15 +2,15 @@ import * as lodash from "lodash-es";
 import {
   buildFlatCharts,
   getGraphParamsProvider,
-} from "../src/layout/index.ts";
-import { describe, it, expect } from "./deps.ts";
-import { process } from "./data/process.checkout.ts";
+} from "../../src/layout/index.ts";
+import { describe, it, expect } from "../deps.ts";
+import { process } from "../data/process.checkout.ts";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import { buildStatechartSvg, buildStatechartCss } from "../src/index.ts";
+import { buildStatechartSvg, buildStatechartCss } from "../../src/html/index.ts";
 import fs from "fs/promises";
 
 describe("buildStatechartSvg", () => {

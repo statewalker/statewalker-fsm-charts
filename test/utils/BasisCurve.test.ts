@@ -1,5 +1,5 @@
-import { describe, it, expect } from "./deps.ts";
-import { BasisCurve } from "../src/utils/BasisCurve.ts";
+import { describe, it, expect } from "../deps.ts";
+import { BasisCurve } from "../../src/utils/BasisCurve.ts";
 
 describe("BasisCurve", () => {
   it("should generate right sequence of control points", () => {

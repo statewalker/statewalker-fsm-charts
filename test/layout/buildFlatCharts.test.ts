@@ -1,8 +1,8 @@
 import * as lodash from "lodash-es";
-import { buildFlatCharts } from "../src/layout/buildFlatCharts.ts";
-import type { Transition, TransitionsGraph } from "../src/types/index.ts";
-import { getGraphParamsProvider } from "../src/layout/getGraphParamsProvider.ts";
-import { describe, it, expect } from "./deps.ts";
+import { buildFlatCharts } from "../../src/layout/buildFlatCharts.ts";
+import type { Transition, TransitionsGraph } from "../../src/types/index.ts";
+import { getGraphParamsProvider } from "../../src/layout/getGraphParamsProvider.ts";
+import { describe, it, expect } from "../deps.ts";
 import { tests } from "./buildFlatCharts.data.ts";
 
 describe("buildFlatCharts", () => {

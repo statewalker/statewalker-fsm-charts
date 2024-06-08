@@ -1,5 +1,5 @@
-import { getGraphParamsProvider } from "../src/layout/getGraphParamsProvider.ts";
-import { describe, it, expect } from "./deps.ts";
+import { getGraphParamsProvider } from "../../src/layout/getGraphParamsProvider.ts";
+import { describe, it, expect } from "../deps.ts";
 
 describe("getGraphParamsProvider", () => {
   it("should return functions that return dimensions and parameters for state node and transitions", () => {

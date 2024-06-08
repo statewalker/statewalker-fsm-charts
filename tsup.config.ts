@@ -4,7 +4,7 @@ export default defineConfig((options: Options) => ({
   entryPoints: [
     "src/index.ts",
     "src/index-layout.ts",
-    "src/index-svg.ts",
+    "src/index-html.ts",
     "src/index-runtime.ts",
   ],
   clean: true,

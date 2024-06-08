@@ -1,12 +1,13 @@
-import { describe, it, expect } from "./deps.ts";
-import { process } from "./data/process.checkout.ts";
+import { describe, it, expect } from "../deps.ts";
+import { process } from "../data/process.checkout.ts";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import fs from "fs/promises";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import { buildStatechartCss, serializeCss } from "../src/index.ts";
-import fs from "fs/promises";
+import { buildStatechartCss } from "../../src/html/index.ts";
+import { serializeCss } from "../../src/utils/serializeCss.ts";
 import { toStatechartsPanels } from "./toStatechartsPanels.ts";
 
 // buildStatechartsPanel

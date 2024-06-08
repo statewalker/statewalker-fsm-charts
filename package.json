@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@statewalker/typescript-config": "*",
+    "@types/jsdom": "^21.1.7",
     "@types/lodash-es": "^4.17.12",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "eslint": "^8.0.1",
@@ -33,6 +34,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
+    "jsdom": "^24.1.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "tsup": "^8.0.2",

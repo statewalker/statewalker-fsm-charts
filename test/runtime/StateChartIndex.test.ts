@@ -1,5 +1,5 @@
 import { describe, it, expect } from "../deps.ts";
-import { toStatechartsPanels } from "../toStatechartsPanels.ts";
+import { toStatechartsPanels } from "../html/toStatechartsPanels.ts";
 import { process } from "../data/process.checkout.ts";
 import { StateChartIndex } from "../../src/runtime/index.ts";
 

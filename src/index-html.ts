@@ -1,2 +1,2 @@
 export * from "./types/index.ts";
-export * from "./svg/index.ts";
+export * from "./html/index.ts";
