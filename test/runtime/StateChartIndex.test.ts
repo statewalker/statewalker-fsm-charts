@@ -63,4 +63,18 @@ describe("StateChartIndex", () => {
     expect(api.getStateNode(fromId)?.key).toBe("ChooseFolder");
     expect(api.getStateNode(toId)?.key).toBe("CheckFolderAccess");
   });
+
+  it("should return a list of all transitions for a specific state id", async () => {
+    const stateIds = api.getStatesIds("App", "OpenFileSystem", "ChooseFolder", "A");
+    const stateId = stateIds.pop() as string;
+    const transitions = api.getTransitions(stateId);
+    expect(transitions !== undefined).toBe(true);
+    expect(Array.isArray(transitions)).toBe(true);
+    expect(transitions.length).toBe(2);
+    expect(transitions[0].from).toEqual("A");
+    expect(transitions[0].to).toEqual("B");
+    expect(transitions[1].from).toEqual("A");
+    expect(transitions[1].to).toEqual("C");
+  });
+
 });

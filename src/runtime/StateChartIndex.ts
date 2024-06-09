@@ -76,6 +76,19 @@ export class StateChartIndex {
   }
 
   /**
+   * Returns a list of edge objects corresponding to all transitions from the state
+   * @param stateId identifier of the source state
+   * @returns a list of graph edges
+   */
+  getTransitions(stateId?: string): StateGraphEdge[] {
+    const stack = this.getStackByStateId(stateId);
+    const state = stack.pop();
+    if (!state || !stack.length) return [];
+    const parent = stack[stack.length - 1];
+    return parent.edges.filter((t: StateGraphEdge) => t.from === state.key);
+  }
+
+  /**
    * Returns a graph node corresponding to the specified state id.
    * @param stateId identifier of the state
    * @returns graph node
