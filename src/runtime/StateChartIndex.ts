@@ -32,8 +32,7 @@ export class StateChartIndex {
       const node = list.find((node) => node.key === key);
       if (!node) break;
       result.push(node.id);
-      list = node.children;
-      if (!list?.length) list = node.nodes;
+      list = [...(node.children || []), ...(node.nodes || [])];
     }
     return result.length === stack.length ? result : [];
   }
