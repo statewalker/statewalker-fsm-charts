@@ -1,6 +1,6 @@
 {
   "name": "@statewalker/fsm-charts",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "HFSM Implementation",
   "keywords": [],
   "homepage": "https://github.com/statewalker/statewalker-fsm-charts",
