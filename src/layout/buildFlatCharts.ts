@@ -49,9 +49,8 @@ export function buildFlatCharts({
     setLodash(lodash);
     const graph = new Graph({
       directed: true,
-    })
-      .setGraph({ rankdir: vertical ? "tb" : "lr" })
-      .setDefaultEdgeLabel(() => ({}));
+      multigraph: true,
+    }).setGraph({ rankdir: vertical ? "tb" : "lr", multigraph: true });
 
     const nodesIndex: Record<string, string> = {};
 
@@ -71,12 +70,18 @@ export function buildFlatCharts({
       const toStateKey = toState || finalStateKey;
       const to = getStateNodeId(toStateKey, toState);
       const params = getTransitionParams(fromStateKey, event, toStateKey);
-      graph.setEdge(from, to, {
-        id: newId("t"),
-        ...params,
-      });
+      const edgeId = newId("t");
+      graph.setEdge(
+        from,
+        to,
+        {
+          id: edgeId,
+          ...params,
+        },
+        edgeId
+      );
     }
-    layout(graph, { rankdir: vertical ? "tb" : "lr" });
+    layout(graph, { rankdir: "lr" });
 
     const [top, right, bottom, left] = getPadding(padding);
 
