@@ -35,10 +35,10 @@ export class RuntimeStatechartApi {
     return this._addListener(this._transitionsClickListeners, listener);
   }
 
-  openStatePenals() {
+  openStatePanels() {
     this._setStatePanelStatus(`details[data-state-id]`, true);
   }
-  closeStatePenals() {
+  closeStatePanels() {
     this._setStatePanelStatus(`details[data-state-id]`, false);
   }
   isStatePanelOpen(stateId: string) {
@@ -52,7 +52,7 @@ export class RuntimeStatechartApi {
     const lastId = stateIds[stateIds.length - 1];
     const selected = this.isStateSelected(lastId);
     this.deselectStates();
-    this.closeStatePenals();
+    this.closeStatePanels();
     this.activateStates(...stateIds);
     if (selected) {
       this.deselectState(lastId);
