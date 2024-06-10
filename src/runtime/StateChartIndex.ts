@@ -18,6 +18,33 @@ export class StateChartIndex {
   }
 
   /**
+   * Returns a state node or a chart by the specified identifier.
+   * @param id the id of a state node or a chart
+   * @returns a state node or a chart
+   */
+  getNodeById(id: string): StateGraphNode | undefined {
+    return this._nodesIndex[id] || this._chartsIndex[id];
+  }
+
+  /**
+   * Returns a chart by the specified identifier.
+   * @param id the id of a state node or a chart
+   * @returns a state node or a chart
+   */
+  getChartById(id: string): StateChart | undefined {
+    return this._chartsIndex[id];
+  }
+
+  /**
+   * Returns an edge by the specified identifier.
+   * @param id the id of a graph edge
+   * @returns a graph edge
+   */
+  getEdgeById(id: string): StateGraphEdge | undefined {
+    return this._edgeIndex[id];
+  }
+
+  /**
    * Transforms a stack of state keys to the corresponding identifiers.
    * If a key in the stack was not found then this method returns
    * an empty stack.
