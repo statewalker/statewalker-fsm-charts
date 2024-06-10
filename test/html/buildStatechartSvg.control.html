@@ -7,16 +7,6 @@
 <div style="max-width: 100%; overflow: auto" class="state-details">
   <style>
   :root {
-  --state-background-color: white;
-  --state-border-color: silver;
-  --state-border-width: 1px;
-  --state-label-color: gray;
-  --state-label-font-size: 14px;
-  --state-label-font-family: sans-serif;
-  --state-selected-background-color: #eee;
-  --state-selected-border-color: red;
-  --state-selected-border-width: 2px;
-  --state-selected-label-color: red;
   --transition-background-color: rgba(255,255,255,0.7);
   --transition-border-color: none;
   --transition-border-width: 1px;
@@ -25,49 +15,12 @@
   --transition-label-color: gray;
   --transition-label-font-size: 12px;
   --transition-label-font-family: sans-serif;
-  --transition-selected-background-color: #eee;
-  --transition-selected-border-color: none;
-  --transition-selected-border-width: 0;
-  --transition-selected-line-color: red;
-  --transition-selected-line-width: 1px;
-  --transition-selected-label-color: red;
-}
-:root .state-details {
-  background-color: var(--state-background-color, white);
-  border: var(--state-border-width, 1px) solid var(--state-border-color, currentColor);
-  border-radius: 0.5em;
-  padding: 0.5em;
-}
-:root .state-details__label {
-  cursor: pointer;
-  color: var(--transition-label-color, currentColor);
-  font-family: var(--state-label-font-family, sans-serif);
-  font-size: var(--state-label-font-size, 14px);
-}
-:root .state-details__description {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-:root .state-details__chart {
-  max-width: 100%;
-  overflow: auto;
-  scrollbar-width: thin;
-}
-:root .state-details--selected {
-  background-color: var(--state-selected-background-color, white);
-  border: var(--state-selected-border-width, 1px) solid var(--state-selected-border-color, currentColor);
-}
-:root .state-details__label--selected {
-  color: var(--state-selected-label-color);
-}
-:root .transition--selected {
-  --transition-background-color: var(--transition-selected-background-color);
-  --transition-border-color: var(--transition-selected-border-color);
-  --transition-border-width: var(--transition-selected-border-width);
-  --transition-line-color: var(--transition-selected-line-color);
-  --transition-line-width: var(--transition-selected-line-width);
-  --transition-label-color: var(--transition-selected-label-color);
+  --state-background-color: white;
+  --state-border-color: silver;
+  --state-border-width: 1px;
+  --state-label-color: gray;
+  --state-label-font-size: 14px;
+  --state-label-font-family: sans-serif;
 }
 :root .transition__marker {
   fill: var(--transition-line-color, currentColor);
@@ -89,28 +42,6 @@
   font-size: var(--transition-label-font-size, 12px);
   font-family: var(--transition-label-font-family, sans-serif);
   cursor: pointer;
-}
-:root .state--selected {
-  --state-background-color: var(--state-selected-background-color);
-  --state-border-color: var(--state-selected-border-color);
-  --state-border-width: var(--state-selected-border-width);
-  --state-label-color: var(--state-selected-label-color);
-}
-:root .state__details {
-  background-color: var(--state-background-color, white);
-  border: var(--state-border-width, 1px) solid var(--state-border-color, currentColor);
-  border-radius: 0.5em;
-  padding: 0.5em;
-}
-:root .state__description {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-:root .state__chart-container {
-  max-width: 100%;
-  overflow: auto;
-  scrollbar-width: thin;
 }
 :root .state__box {
   fill: var(--state-background-color, white);
@@ -140,6 +71,94 @@
   fill: var(--state-border-color, currentColor);
   stroke: none;
   stroke-width: 0;
+}
+:root {
+  --transition-selected-background-color: #eee;
+  --transition-selected-border-color: none;
+  --transition-selected-border-width: 0;
+  --transition-selected-line-color: navy;
+  --transition-selected-line-width: 1px;
+  --transition-selected-label-color: navy;
+  --state-selected-background-color: white;
+  --state-selected-border-color: navy;
+  --state-selected-border-width: 2px;
+  --state-selected-label-color: navy;
+}
+:root .state.state--selected {
+  --state-background-color: var(--state-selected-background-color);
+  --state-border-color: var(--state-selected-border-color);
+  --state-border-width: var(--state-selected-border-width);
+  --state-label-color: var(--state-selected-label-color);
+}
+:root .transition.transition--selected {
+  --transition-background-color: var(--transition-selected-background-color);
+  --transition-border-color: var(--transition-selected-border-color);
+  --transition-border-width: var(--transition-selected-border-width);
+  --transition-line-color: var(--transition-selected-line-color);
+  --transition-line-width: var(--transition-selected-line-width);
+  --transition-label-color: var(--transition-selected-label-color);
+}
+:root {
+  --transition-active-background-color: #eee;
+  --transition-active-border-color: none;
+  --transition-active-border-width: 0;
+  --transition-active-line-color: red;
+  --transition-active-line-width: 1px;
+  --transition-active-label-color: red;
+  --state-active-background-color: white;
+  --state-active-border-color: red;
+  --state-active-border-width: 2px;
+  --state-active-label-color: red;
+}
+:root .state.state--active {
+  --state-background-color: var(--state-active-background-color);
+  --state-border-color: var(--state-active-border-color);
+  --state-border-width: var(--state-active-border-width);
+  --state-label-color: var(--state-active-label-color);
+}
+:root .transition.transition--active {
+  --transition-background-color: var(--transition-active-background-color);
+  --transition-border-color: var(--transition-active-border-color);
+  --transition-border-width: var(--transition-active-border-width);
+  --transition-line-color: var(--transition-active-line-color);
+  --transition-line-width: var(--transition-active-line-width);
+  --transition-label-color: var(--transition-active-label-color);
+}
+:root .state-details {
+  background-color: var(--state-background-color, white);
+  border: var(--state-border-width, 1px) solid var(--state-border-color, currentColor);
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+:root .state-details__label {
+  cursor: pointer;
+  color: var(--transition-label-color, currentColor);
+  font-family: var(--state-label-font-family, sans-serif);
+  font-size: var(--state-label-font-size, 14px);
+}
+:root .state-details__description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+:root .state-details__chart {
+  max-width: 100%;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+:root .state-details.state-details--selected {
+  background-color: var(--state-selected-background-color, white);
+  border: var(--state-selected-border-width, 1px) solid var(--state-selected-border-color, currentColor);
+}
+:root .state-details__label.state-details__label--selected {
+  color: var(--state-selected-label-color);
+}
+:root .state-details.state-details--active {
+  background-color: var(--state-active-background-color, white);
+  border: var(--state-active-border-width, 1px) solid var(--state-active-border-color, currentColor);
+}
+:root .state-details__label.state-details__label--active {
+  color: var(--state-active-label-color);
 }
   .state-details .statechart .states .state:hover
   {

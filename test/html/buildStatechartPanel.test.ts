@@ -28,32 +28,6 @@ describe("buildStatechartsPanel", () => {
     const { html } = toStatechartsPanels(process);
     let prefix = ".main";
     const css = buildStatechartCss({ prefix });
-    const selectionStyles = {
-      [prefix]: {
-        ".states": {
-          ".state:hover": {
-            "--state--stroke-color": "blue",
-            "--state--stroke-width": "3px",
-            "--state-initial--stroke-color":
-              "var(--state--stroke-color, silver)",
-            "--state-initial--stroke-width": "var(--state--stroke-width, 2px)",
-            "--state-final--stroke-color": "var(--state--stroke-color, silver)",
-            "--state-final--stroke-width": "var(--state--stroke-width, 2px)",
-            "--state-label--color": "navy",
-            cursor: "pointer",
-          },
-        },
-        ".transitions": {
-          ".transition:hover": {
-            "--transition-line--stroke-color": "red",
-            "--transition-marker--fill":
-              "var(--transition-line--stroke-color, gray)",
-            "--transition-label--color": "maroon",
-            cursor: "pointer",
-          },
-        },
-      },
-    };
     const result = `
 <!DOCTYPE html>
 <html>
@@ -61,9 +35,8 @@ describe("buildStatechartsPanel", () => {
 </head>
 <body>
 <div class="main" style="max-width: 500px;">
-  <style>
-  ${css}
-  ${serializeCss(selectionStyles)}
+<style>
+${css}
 </style>
 ${html}
 </div>
