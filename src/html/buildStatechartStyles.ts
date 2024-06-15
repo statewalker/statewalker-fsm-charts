@@ -1,5 +1,4 @@
-import { tail } from "lodash";
-import type { CssTree } from "../utils/serializeCss";
+import type { CssTree } from "../utils/serializeCss.ts";
 
 export const activeStatesStyle = {
   backgroundColor: "white",

@@ -1,9 +1,11 @@
+import { toKebabCase } from "./toKebabCase.ts";
+
 export function serializeAttrs(
   attrs: Record<string, string | number | undefined> = {},
   {
     prefix = "",
     transform = false,
-  }: { prefix: string; transform: boolean } = {}
+  }: { prefix?: string; transform?: boolean } = {}
 ) {
   const result: string[] = [];
   for (const [key, value] of Object.entries(attrs || {}).sort(([a], [b]) =>
@@ -13,7 +15,9 @@ export function serializeAttrs(
     result.push(
       `${prefix}${escapeValue(key)}${
         "=" +
-        JSON.stringify(escapeValue(transform ? toKebabCase(value) : value))
+        JSON.stringify(
+          escapeValue(transform ? toKebabCase(String(value)) : value)
+        )
       }`
     );
   }

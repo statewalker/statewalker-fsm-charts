@@ -21,6 +21,13 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./src": {
+      "import": "./src"
+    },
+    "./src/index.ts": {
       "import": "./src/index.ts"
     }
   },
