@@ -9,9 +9,8 @@ import type { Transition } from "./Transition.ts";
 //   states?: FsmState[];
 // } & Record<string, any>;
 
-
 export type FsmStateConfig = {
   key: string;
   transitions: Transition[];
   states?: FsmStateConfig[];
-};
+} & Record<string, any>;

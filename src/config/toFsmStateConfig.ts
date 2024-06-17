@@ -5,10 +5,10 @@ export function toFsmStateConfig(json: any): FsmStateConfig | undefined {
   if (!json || typeof json !== "object") return;
   const { key, transitions, states, ...options } = json;
   if (typeof key !== "string") return;
-  const stateTransitions: Transition[] = toFsmTransitions(transitions);
-  const substates: FsmStateConfig[] = toArray(states)
+  const stateTransitions = toFsmTransitions(transitions);
+  const substates = toArray(states)
     .map(toFsmStateConfig)
-    .filter((v) => !!v);
+    .filter((v) => !!v) as FsmStateConfig[];
   const state: FsmStateConfig = {
     key,
     transitions: stateTransitions,
