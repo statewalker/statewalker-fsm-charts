@@ -6,7 +6,7 @@ export function serializeProcessConfig(config: FsmStateConfig | undefined) {
   visit(config, lines);
   return lines.join("\n");
 
-  function visit(config: FsmStateConfig, lines: string[], shift = " ") {
+  function visit(config: FsmStateConfig, lines: string[], shift = "") {
     lines.push(`${shift}{`);
     const { key, states, transitions, ...params } = config;
     lines.push(`${shift}  "key": ${JSON.stringify(key)}`);
