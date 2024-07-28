@@ -39,7 +39,7 @@ export function buildCharts({
   ): StateChart {
     const graph = buildFlatCharts({
       lodash,
-      transitions: config.transitions,
+      transitions: config.transitions || [],
       newId,
       getStateParams,
       getTransitionParams,
