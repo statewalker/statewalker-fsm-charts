@@ -2,7 +2,7 @@ import { serializeProcessConfig } from "../../src/config/serializeProcessConfig.
 import { describe, it, expect } from "../deps.ts";
 
 describe("serializeProcessConfig", () => {
-  it("should ...", () => {
+  it("should serialize configurations to JSON strings", () => {
     expect(typeof serializeProcessConfig).toBe("function");
     const result = serializeProcessConfig({
       key: "N",
