@@ -21,8 +21,10 @@ export function buildCharts({
   getStateParams,
   getTransitionParams,
   padding = [5, 5],
+  vertical = false,
   initialStateKey = "<initial>",
   finalStateKey = "<final>",
+  direction,
 }: {
   config: FsmStateConfig;
   lodash: any;
@@ -30,6 +32,8 @@ export function buildCharts({
   initialStateKey?: string;
   finalStateKey?: string;
   padding?: Padding;
+  vertical?: boolean;
+  direction?: "tb" | "bt" | "lr" | "rl";
 } & GraphParamsProvider): StateChart {
   return buildChart(config);
 
@@ -46,6 +50,8 @@ export function buildCharts({
       padding,
       initialStateKey,
       finalStateKey,
+      vertical,
+      direction
     });
     const index = graph.nodes.reduce((index, node) => {
       index[node.key as string] = node.id as string;

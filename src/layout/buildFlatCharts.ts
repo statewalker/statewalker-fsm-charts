@@ -35,6 +35,7 @@ export function buildFlatCharts({
   initialStateKey = "<initial>",
   finalStateKey = "<final>",
   vertical = false,
+  direction,
 }: {
   transitions: Transition[];
   lodash: any;
@@ -43,14 +44,16 @@ export function buildFlatCharts({
   finalStateKey?: string;
   vertical?: boolean;
   padding?: Padding;
+  direction?: "tb" | "bt" | "lr" | "rl";
 } & GraphParamsProvider): TransitionsGraph {
   let prevLodash = getLodash();
   try {
     setLodash(lodash);
+    const rankdir = direction || (vertical ? "tb" : "lr");
     const graph = new Graph({
       directed: true,
       multigraph: true,
-    }).setGraph({ rankdir: vertical ? "tb" : "lr", multigraph: true });
+    }).setGraph({ rankdir, multigraph: true });
 
     const nodesIndex: Record<string, string> = {};
 
@@ -78,10 +81,10 @@ export function buildFlatCharts({
           id: edgeId,
           ...params,
         },
-        edgeId
+        edgeId,
       );
     }
-    layout(graph, { rankdir: "lr" });
+    layout(graph, { rankdir });
 
     const [top, right, bottom, left] = getPadding(padding);
 
