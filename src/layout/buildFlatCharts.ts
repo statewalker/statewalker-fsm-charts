@@ -27,7 +27,7 @@ import { getLodash, setLodash } from "../lodash-es/index.ts";
 
 export function buildFlatCharts({
   lodash,
-  transitions,
+  transitions = [],
   newId,
   getStateParams,
   getTransitionParams,
@@ -37,7 +37,7 @@ export function buildFlatCharts({
   vertical = false,
   direction,
 }: {
-  transitions: Transition[];
+  transitions?: Transition[];
   lodash: any;
   newId: (prefix: string) => string;
   initialStateKey?: string;
