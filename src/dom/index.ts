@@ -24,7 +24,7 @@ export function getStateDescriptionRenderer({
 }: {
   element: HTMLElement;
   rootStateKey: string;
-  splitHeader: (
+  splitHeader?: (
     header?: HTMLElement,
   ) => [stateKey: undefined | string, label: string];
 }) {
@@ -33,7 +33,9 @@ export function getStateDescriptionRenderer({
   const rootDescription = findSection(docSections, rootStateFilter);
 
   if (!rootDescription) {
-    return () => {};
+    return (statesStack: string[]) => {
+      return undefined;
+    };
   }
 
   // Remove description nodes from DOM
