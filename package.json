@@ -1,6 +1,6 @@
 {
   "name": "@statewalker/fsm-charts",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "HFSM Implementation",
   "keywords": [],
   "homepage": "https://github.com/statewalker/statewalker-fsm-charts",
@@ -14,6 +14,7 @@
     "dist",
     "src"
   ],
+  "source": "./src/index.ts",
   "module": "./dist/index.js",
   "main": "./dist/index.js",
   "jsdelivr": "./dist/index.js",
@@ -21,14 +22,10 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./src": {
-      "import": "./src"
-    },
-    "./src/index.ts": {
-      "import": "./src/index.ts"
+      "default": "./dist/index.js"
     }
   },
   "devDependencies": {
@@ -60,9 +57,9 @@
     "lint": "eslint",
     "lint:fix": "yarn lint -- --fix",
     "test": "vitest --run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublish": "yarn build"
   },
-  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   }
