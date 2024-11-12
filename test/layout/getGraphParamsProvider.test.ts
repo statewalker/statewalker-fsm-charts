@@ -81,65 +81,109 @@ describe("getGraphParamsProvider#getStateParams", () => {
     };
     expect(result).toEqual(expected);
   });
+
+  it("should calculate state dimensions with custom labels", () => {
+    const { getStateParams } = getGraphParamsProvider({
+      stateFontSize: 14,
+      stateTextPadding: 3,
+      getStateLabel: (state: string) => `[${state.toUpperCase()}]`,
+    });
+    const result = getStateParams("a");
+    const expected = {
+      key: "a",
+      state: "[A]",
+      width: 32,
+      height: 20,
+      fontSize: 14,
+      padding: [3, 3, 3, 3],
+    };
+    expect(result).toEqual(expected);
+  });
 });
 
-// describe("getGraphParamsProvider#getTransitionParams", () => {
-//   it("should allow to calculate empty transition dimensions without padding", () => {
-//     const { getTransitionParams } = getGraphParamsProvider({
-//       transitionsFontSize: 14,
-//       transitionsTextPadding: 0,
-//     });
-//     const result = getTransitionParams("", "", "");
-//     expect(result).toEqual({
-//       from: "",
-//       event: "",
-//       to: "",
-//       width: 0,
-//       height: 14,
-//     });
-//   });
-//   it("should allow to calculate empty event dimensions with padding", () => {
-//     const { getTransitionParams } = getGraphParamsProvider({
-//       transitionsFontSize: 14,
-//       transitionsTextPadding: [0, 3],
-//     });
-//     const result = getTransitionParams("", "", "");
-//     expect(result).toEqual({
-//       from: "",
-//       event: "",
-//       to: "",
-//       width: 6,
-//       height: 14,
-//     });
-//   });
-//   it("should allow to calculate not-empty transition dimensions without padding", () => {
-//     const { getTransitionParams } = getGraphParamsProvider({
-//       transitionsFontSize: 14,
-//       transitionsTextPadding: 0,
-//     });
-//     const result = getTransitionParams("a", "b", "c");
-//     const expected = {
-//       from: "a",
-//       event: "b",
-//       to: "c",
-//       width: 14,
-//       height: 14,
-//     };
-//     expect(result).toEqual(expected);
-//   });
-//   it("should allow to calculate not-empty transition dimensions with padding", () => {
-//     const { getTransitionParams } = getGraphParamsProvider({
-//       transitionsFontSize: 14,
-//       transitionsTextPadding: [0, 3],
-//     });
-//     const result = getTransitionParams("a", "b", "c");
-//     const expected = {
-//       from: "a",
-//       event: "b",
-//       to: "c",
-//       width: 20,
-//       height: 14,
-//     };
-//     expect(result).toEqual(expected);
-//   });
-// });
+describe("getGraphParamsProvider#getTransitionParams", () => {
+  it("should allow to calculate empty transition dimensions without padding", () => {
+    const { getTransitionParams } = getGraphParamsProvider({
+      transitionsFontSize: 14,
+      transitionsTextPadding: 0,
+    });
+    const result = getTransitionParams("", "", "");
+    expect(result).toEqual({
+      from: "",
+      fontSize: 14,
+      event: "",
+      to: "",
+      width: 0,
+      height: 14,
+      padding: [0, 0, 0, 0],
+    });
+  });
+  it("should allow to calculate empty event dimensions with padding", () => {
+    const { getTransitionParams } = getGraphParamsProvider({
+      transitionsFontSize: 14,
+      transitionsTextPadding: [0, 3],
+    });
+    const result = getTransitionParams("", "", "");
+    expect(result).toEqual({
+      from: "",
+      event: "",
+      fontSize: 14,
+      to: "",
+      width: 6,
+      height: 14,
+      padding: [0, 3, 0, 3],
+    });
+  });
+  it("should allow to calculate not-empty transition dimensions without padding", () => {
+    const { getTransitionParams } = getGraphParamsProvider({
+      transitionsFontSize: 14,
+      transitionsTextPadding: 0,
+    });
+    const result = getTransitionParams("a", "b", "c");
+    const expected = {
+      from: "a",
+      event: "b",
+      to: "c",
+      width: 9,
+      height: 14,
+      fontSize: 14,
+      padding: [0, 0, 0, 0],
+    };
+    expect(result).toEqual(expected);
+  });
+  it("should allow to calculate not-empty transition dimensions with padding", () => {
+    const { getTransitionParams } = getGraphParamsProvider({
+      transitionsFontSize: 14,
+      transitionsTextPadding: [0, 3],
+    });
+    const result = getTransitionParams("a", "b", "c");
+    const expected = {
+      from: "a",
+      event: "b",
+      to: "c",
+      width: 15,
+      height: 14,
+      fontSize: 14,
+      padding: [0, 3, 0, 3],
+    };
+    expect(result).toEqual(expected);
+  });
+  it("should calculate transitions dimensions with custom labels", () => {
+    const { getTransitionParams } = getGraphParamsProvider({
+      transitionsFontSize: 14,
+      transitionsTextPadding: [0, 3],
+      getTransitionLabel: (from, event, to) => `[${from}:${event}:${to}]`,
+    });
+    const result = getTransitionParams("a", "b", "c");
+    const expected = {
+      from: "a",
+      event: "[a:b:c]",
+      to: "c",
+      width: 67,
+      height: 14,
+      fontSize: 14,
+      padding: [0, 3, 0, 3],
+    };
+    expect(result).toEqual(expected);
+  });
+});
