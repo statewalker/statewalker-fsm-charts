@@ -4,6 +4,7 @@ import type { Padding } from "../types/Padding.ts";
 
 import { getLabelDimensions } from "./getLabelDimensions.ts";
 import { getPadding } from "../utils/getPadding.ts";
+import { Label } from "../types/Label.ts";
 
 /**
  * Provides default functions measuring dimensions for state nodes and transition edges in the graph.
@@ -45,7 +46,8 @@ export function getGraphParamsProvider({
           padding,
           fontSize,
         }),
-        state : stateLabel,
+        state,
+        text: stateLabel,
         key: stateKey,
         padding,
         fontSize,
@@ -55,7 +57,7 @@ export function getGraphParamsProvider({
       fromStateKey: string,
       event: string,
       toStateKey: string,
-    ): Dimensions & Record<string, any> => {
+    ) => {
       const padding = getPadding(transitionsTextPadding);
       const fontSize = transitionsFontSize;
       const eventLabel = getTransitionLabel(fromStateKey, event, toStateKey);
@@ -65,8 +67,9 @@ export function getGraphParamsProvider({
           fontSize,
         }),
         from: fromStateKey,
-        event : eventLabel,
+        event,
         to: toStateKey,
+        text: eventLabel,
         padding,
         fontSize,
       };

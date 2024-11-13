@@ -19,6 +19,12 @@ export function toStatechart(config: FsmStateConfig): {
     stateTextPadding: [14, 16],
     transitionsFontSize: 12,
     transitionsTextPadding: 6,
+    getStateLabel: (state: string) => {
+      return state;
+    },
+    getTransitionLabel: (from: string, event: string, to: string) => {
+      return event;
+    },
   });
 
   const statechart = buildCharts({

@@ -28,6 +28,7 @@ describe("getGraphParamsProvider#getStateParams", () => {
       fontSize: 14,
       key: "<initial>",
       state: "",
+      text: "",
       width: 0,
       height: 14,
       padding: [0, 0, 0, 0],
@@ -42,6 +43,7 @@ describe("getGraphParamsProvider#getStateParams", () => {
     expect(result).toEqual({
       key: "<initial>",
       state: "",
+      text: "",
       width: 6,
       height: 14,
       fontSize: 14,
@@ -57,6 +59,7 @@ describe("getGraphParamsProvider#getStateParams", () => {
     const expected = {
       key: "a",
       state: "a",
+      text: "a",
       width: 9,
       height: 14,
       fontSize: 14,
@@ -74,6 +77,7 @@ describe("getGraphParamsProvider#getStateParams", () => {
     const expected = {
       key: "a",
       state: "a",
+      text : "a",
       width: 15,
       height: 20,
       fontSize: 14,
@@ -91,7 +95,8 @@ describe("getGraphParamsProvider#getStateParams", () => {
     const result = getStateParams("a");
     const expected = {
       key: "a",
-      state: "[A]",
+      state: "a",
+      text: "[A]",
       width: 32,
       height: 20,
       fontSize: 14,
@@ -113,6 +118,7 @@ describe("getGraphParamsProvider#getTransitionParams", () => {
       fontSize: 14,
       event: "",
       to: "",
+      text : "",
       width: 0,
       height: 14,
       padding: [0, 0, 0, 0],
@@ -129,6 +135,7 @@ describe("getGraphParamsProvider#getTransitionParams", () => {
       event: "",
       fontSize: 14,
       to: "",
+      text: "",
       width: 6,
       height: 14,
       padding: [0, 3, 0, 3],
@@ -144,6 +151,7 @@ describe("getGraphParamsProvider#getTransitionParams", () => {
       from: "a",
       event: "b",
       to: "c",
+      text : "b",
       width: 9,
       height: 14,
       fontSize: 14,
@@ -161,6 +169,7 @@ describe("getGraphParamsProvider#getTransitionParams", () => {
       from: "a",
       event: "b",
       to: "c",
+      text: "b",
       width: 15,
       height: 14,
       fontSize: 14,
@@ -177,8 +186,9 @@ describe("getGraphParamsProvider#getTransitionParams", () => {
     const result = getTransitionParams("a", "b", "c");
     const expected = {
       from: "a",
-      event: "[a:b:c]",
+      event: "b",
       to: "c",
+      text: "[a:b:c]",
       width: 67,
       height: 14,
       fontSize: 14,

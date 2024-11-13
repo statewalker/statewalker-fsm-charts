@@ -1,6 +1,7 @@
 export type * from "./Dimensions.ts";
 export type * from "./FsmStateConfig.ts";
 export type * from "./GraphParamsProvider.ts";
+export type * from "./Label.ts";
 export type * from "./Padding.ts";
 export type * from "./Position.ts";
 export type * from "./StateChart.ts";

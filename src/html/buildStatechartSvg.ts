@@ -51,7 +51,7 @@ export function buildStatechartSvg({
       height,
       viewbox: `0 0 ${width} ${height}`,
       xmlns: "http://www.w3.org/2000/svg",
-    })}>`
+    })}>`,
   );
 
   /*
@@ -79,7 +79,7 @@ export function buildStatechartSvg({
   });
 
   for (const edge of edges) {
-    const { id, points, event: text } = edge;
+    const { id, points, text } = edge;
     println(`  <g class="transition" data-transition-id="${id}">`);
     const markerId = newId("marker");
 
@@ -98,7 +98,7 @@ export function buildStatechartSvg({
         x1: number,
         y1: number,
         x2: number,
-        y2: number
+        y2: number,
       ) {
         path.push("C" + round(x0, y0, x1, y1, x2, y2).join(","));
       },
@@ -181,7 +181,7 @@ export function buildStatechartSvg({
 
   println(`<g class="statechart__states">`);
   for (const node of nodes) {
-    const { key, id, state: text } = node;
+    const { key, id, text } = node;
     const { x, y, width, height } = getBoxParams({ ...node, padding: shift });
 
     println(`  <g class="state" data-state-id="${id}">`);

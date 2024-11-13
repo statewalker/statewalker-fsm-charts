@@ -1,4 +1,5 @@
 import type { Dimensions } from "./Dimensions.ts";
+import { Label } from "./Label.ts";
 
 /**
  * Provides default functions measuring dimensions for state nodes and transition edges in the graph.
@@ -6,12 +7,11 @@ import type { Dimensions } from "./Dimensions.ts";
 export type GraphParamsProvider = {
   getStateParams: (
     stateKey: string,
-    state?: string
-  ) => Dimensions & Record<string, any>;
+    state?: string,
+  ) => Dimensions & Label & Record<string, any>;
   getTransitionParams: (
     fromStateKey: string,
     event: string,
-    toStateKey: string
-  ) => Dimensions & Record<string, any>;
+    toStateKey: string,
+  ) => Dimensions & Label & Record<string, any>;
 };
-
