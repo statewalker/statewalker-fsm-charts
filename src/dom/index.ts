@@ -90,9 +90,12 @@ export function getStateDescriptionRenderer({
 }
 
 export function* visitDom(elm: Node): Iterable<Node> {
+  if (isDomElement(elm) && elm.tagName === "TEMPLATE") {
+    elm = (elm as HTMLTemplateElement).content;
+  }
   for (let node = elm.firstChild; node; node = node.nextSibling) {
     if (isDomElement(node)) {
-      if (node.tagName === "DIV") {
+      if (node.tagName === "DIV" || node.tagName === "TEMPLATE") {
         yield* visitDom(node);
       } else {
         yield node;
