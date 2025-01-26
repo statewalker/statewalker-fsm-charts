@@ -7,7 +7,6 @@ import fs from "fs/promises";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 import { buildStatechartCss } from "../../src/html/index.ts";
-import { serializeCss } from "../../src/utils/serializeCss.ts";
 import { toStatechartsPanels } from "./toStatechartsPanels.ts";
 
 // buildStatechartsPanel
