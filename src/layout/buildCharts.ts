@@ -19,6 +19,8 @@ export function buildCharts({
   config,
   newId,
   getStateParams,
+  getStateLabel = (stateKey: string) =>
+    stateKey.replace(/([a-z])([A-Z])/g, "$1 $2"),
   getTransitionParams,
   padding = [5, 5],
   vertical = false,
@@ -34,43 +36,79 @@ export function buildCharts({
   padding?: Padding;
   vertical?: boolean;
   direction?: "tb" | "bt" | "lr" | "rl";
+  getStateLabel?: (stateKey: string) => string | undefined;
 } & GraphParamsProvider): StateChart {
   return buildChart(config);
 
   function buildChart(
     config: FsmStateConfig,
-    id: string = newId("s")
+    id: string = newId("s"),
+    stack: Array<FsmStateConfig> = [],
   ): StateChart {
-    const graph = buildFlatCharts({
-      lodash,
-      transitions: config.transitions || [],
-      newId,
-      getStateParams,
-      getTransitionParams,
-      padding,
-      initialStateKey,
-      finalStateKey,
-      vertical,
-      direction
-    });
-    const index = graph.nodes.reduce((index, node) => {
-      index[node.key as string] = node.id as string;
-      return index;
-    }, {} as Record<string, string>);
+    stack.push(config);
 
-    const children: StateChart[] = [];
-    if (config.states) {
-      for (const child of config.states) {
-        const childId = index[child.key];
-        children.push(buildChart(child, childId));
+    try {
+      const buildStateLabel = (state: string, key: string = state) => {
+        if (key === "<initial>" || key === "<final>") {
+          return "";
+        }
+
+        let result: string | undefined;
+        for (let i = stack.length - 1; result === undefined && i >= 0; i--) {
+          const conf = stack[i];
+          if (!conf.states) continue;
+          for (const subState of conf.states) {
+            if (subState.key !== state) continue;
+            result = subState.label ?? state;
+            break;
+          }
+        }
+
+        return result ?? getStateLabel(state) ?? state;
+      };
+      const graph = buildFlatCharts({
+        lodash,
+        transitions: config.transitions || [],
+        newId,
+        getStateParams: (state: string, key?: string) => {
+          const params = getStateParams(state, key);
+          params.text = buildStateLabel(state, key);
+          return params;
+        },
+        getTransitionParams,
+        padding,
+        initialStateKey,
+        finalStateKey,
+        vertical,
+        direction,
+      });
+      const index = graph.nodes.reduce(
+        (index, node) => {
+          index[node.key as string] = node.id as string;
+          return index;
+        },
+        {} as Record<string, string>,
+      );
+
+      const children: StateChart[] = [];
+      if (config.states) {
+        for (const child of config.states) {
+          const childId = index[child.key];
+          children.push(buildChart(child, childId, [...stack]));
+        }
       }
+      const text = config.label ?? getStateLabel(config.key) ?? config.key;
+      // const state = text;
+      return {
+        id,
+        key: config.key,
+        // state,
+        text,
+        ...graph,
+        children,
+      };
+    } finally {
+      // stack.pop();
     }
-    return {
-      id,
-      key: config.key,
-      state: config.key,
-      ...graph,
-      children,
-    };
   }
 }

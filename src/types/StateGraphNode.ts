@@ -8,5 +8,6 @@ export type StateGraphNode = Dimensions &
   Position & {
     id: string;
     key: string;
-    state: string;
+    text: string;
+    // state: string;
   } & Record<string, any>;

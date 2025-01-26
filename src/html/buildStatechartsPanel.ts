@@ -21,10 +21,13 @@ export function buildStatechartsPanel({
       `  <details class="state-details" data-state-id="${statechart.id}">`
     );
     println(
-      `    <summary class="state-details__label">${statechart.key}</summary>`
+      `    <summary class="state-details__label">${statechart.text ?? statechart.state}</summary>`
     );
     println(
-      `    <div class="state-details__description"><div class="state-details__chart">`
+      `    <div class="state-details__description">`
+    );
+    println(
+      `      <div class="state-details__chart">`
     );
     const printChildren = (str: string) => println(`    ${str}`);
     buildStatechartSvg({
