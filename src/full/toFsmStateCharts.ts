@@ -95,6 +95,7 @@ ${css}
           transitions.forEach((t) => api.selectTransition(t.id));
         }
       }
+      api.focusStates(...nodeIds);
     })
   );
 

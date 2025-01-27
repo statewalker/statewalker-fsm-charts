@@ -24,7 +24,7 @@ export function buildStatechartsPanel({
       `    <summary class="state-details__label">${statechart.text ?? statechart.state}</summary>`
     );
     println(
-      `    <div class="state-details__description">`
+      `    <div class="state-details__content">`
     );
     println(
       `      <div class="state-details__chart">`
@@ -37,6 +37,10 @@ export function buildStatechartsPanel({
       initialStateKey,
       finalStateKey,
     });
+    println(`    </div>`);
+    println(
+      `    <div class="state-details__description">`
+    );
     println(`    </div>`);
     for (const child of statechart.children || []) {
       render(child, printChildren);

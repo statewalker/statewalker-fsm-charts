@@ -43,7 +43,7 @@ export class RuntimeStatechartApi {
   }
   isStatePanelOpen(stateId: string) {
     const elm = this.element.querySelector(
-      `details[data-state-id="${stateId}"]`
+      `details[data-state-id="${stateId}"]`,
     ) as HTMLDetailsElement;
     return elm && !!elm.open;
   }
@@ -68,15 +68,32 @@ export class RuntimeStatechartApi {
       this.selectState(id);
     }
   }
+ 
+  focusStates(...stateIds: string[]) {
+    for (let i = 0; i < stateIds.length; i++) {
+      const stateId = stateIds[i];
+      for (const tagName of ["details", "g"]) {
+        const elm = this.element.querySelector(
+          `${tagName}[data-state-id="${stateId}"]`,
+        );
+        console.log('>>> scrollIntoView', `${tagName}[data-state-id="${stateId}"]`, elm)
+        elm?.scrollIntoView();
+      }
+    }
+  }
 
-  // toggleStatePanel(stateId) {
-  //   const elm = this.element.querySelector(
-  //     `details[data-state-id="${stateId}"]`
-  //   );
-  //   if (elm) {
-  //     elm.open = !elm.open;
-  //   }
-  // }
+  setStateDescription(
+    stateId: string,
+    description: HTMLElement | string | undefined,
+  ) {
+    const descriptionContainer = this.element.querySelector(
+      `details[data-state-id="${stateId}"] .state-details__description`,
+    );
+    if (descriptionContainer) {
+      descriptionContainer.innerHTML = "";
+      descriptionContainer.append(description ?? "");
+    }
+  }
 
   closeStatePanel(stateId: string) {
     this._setStatePanelStatus(`details[data-state-id="${stateId}"]`, false);
@@ -138,11 +155,11 @@ export class RuntimeStatechartApi {
     const bindListeners = (
       index: Record<string, RuntimeListener>,
       dataField: string,
-      eventType: string
+      eventType: string,
     ) => {
       function newEventListener(
         index: Record<string, RuntimeListener>,
-        elm: Element
+        elm: Element,
       ) {
         return (ev: Event) => {
           ev.preventDefault();
@@ -162,7 +179,7 @@ export class RuntimeStatechartApi {
         const eventListener = newEventListener(index, elm);
         elm.addEventListener(eventType, eventListener);
         this._addListener(this._registry, () =>
-          elm.removeEventListener(eventType, eventListener)
+          elm.removeEventListener(eventType, eventListener),
         );
       });
     };
@@ -170,7 +187,7 @@ export class RuntimeStatechartApi {
     bindListeners(
       this._transitionsClickListeners,
       "data-transition-id",
-      "click"
+      "click",
     );
   }
 
@@ -185,20 +202,20 @@ export class RuntimeStatechartApi {
     this._applyStateModifier(
       cssSelector,
       modifier,
-      (elm, cls) => elm && elm.classList.add(cls)
+      (elm, cls) => elm && elm.classList.add(cls),
     );
   }
   _removeStateModifier(cssSelector: string, modifier: string = "selected") {
     this._applyStateModifier(
       cssSelector,
       modifier,
-      (elm, cls) => elm && elm.classList.remove(cls)
+      (elm, cls) => elm && elm.classList.remove(cls),
     );
   }
   _applyStateModifier(
     cssSelector: string,
     modifier: string = "selected",
-    apply: (elm: Element | null, className: string) => void
+    apply: (elm: Element | null, className: string) => void,
   ) {
     const detailsModifier = `state-details--${modifier}`;
     const stateLabelsModifier = `state-details__label--${modifier}`;
@@ -218,23 +235,23 @@ export class RuntimeStatechartApi {
     this._applyTransitionsModifier(
       cssSelector,
       modifier,
-      (elm, cls) => elm && elm.classList.add(cls)
+      (elm, cls) => elm && elm.classList.add(cls),
     );
   }
   _removeTransitionsModifier(
     cssSelector: string,
-    modifier: string = "selected"
+    modifier: string = "selected",
   ) {
     this._applyTransitionsModifier(
       cssSelector,
       modifier,
-      (elm, cls) => elm && elm.classList.remove(cls)
+      (elm, cls) => elm && elm.classList.remove(cls),
     );
   }
   _applyTransitionsModifier(
     cssSelector: string,
     modifier: string = "selected",
-    apply: (elm: Element | null, className: string) => void
+    apply: (elm: Element | null, className: string) => void,
   ) {
     const transitionModifier = `transition--${modifier}`;
     const transitionLineModifier = `transition__line--${modifier}`;

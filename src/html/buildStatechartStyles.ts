@@ -53,7 +53,7 @@ export function buildStateDetailsStyle({
         fontFamily: "var(--state-label-font-family, sans-serif)",
         fontSize: "var(--state-label-font-size, 14px)",
       },
-      ".state-details__description": {
+      ".state-details__content": {
         display: "flex",
         flexDirection: "column",
         gap: "0.5em",
