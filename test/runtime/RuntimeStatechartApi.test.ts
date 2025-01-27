@@ -3,7 +3,10 @@ import { toStatechartsPanels } from "../html/toStatechartsPanels.ts";
 import { process } from "../data/process.checkout.ts";
 import { buildStatechartCss } from "../../src/index-html.ts";
 import { JSDOM } from "jsdom";
-import { RuntimeStatechartApi, StateChartIndex } from "../../src/index-runtime.ts";
+import {
+  RuntimeStatechartApi,
+  StateChartIndex,
+} from "../../src/index-runtime.ts";
 
 describe("RuntimeStatechartApi", () => {
   it("should generate transitions graph", async () => {
@@ -19,10 +22,8 @@ ${css}
       statechart,
     });
     const index = new StateChartIndex({ statechart });
-
     const stateKeys = ["App", "OpenFileSystem", "ChooseFolder", "A"];
     const stateIds = index.getStatesIds(...stateKeys);
-    const states = statechart
     const stateId = stateIds[stateIds.length - 1];
     api.selectState(stateId);
     expect(api.isStateSelected(stateId)).toBe(true);
@@ -40,24 +41,24 @@ ${css}
     ].map((elm) => elm.textContent);
     expect(stateDetailsLabels).toEqual([
       "App",
-      "OpenFileSystem",
-      "ChooseFolder",
-      "ShowError",
+      "Open File System",
+      "Choose Folder",
+      "Show Error",
     ]);
 
     const stateChartLabels = [
-      ...(await document.querySelectorAll("g.state > .state__label")),
+      ...document.querySelectorAll("g.state > .state__label"),
     ].map((elm) => elm.textContent);
     expect(stateChartLabels).toEqual([
-      "OpenFileSystem",
-      "ShowError",
-      "ChooseFolder",
-      "CheckFolderAccess",
+      "Open File System",
+      "Show Error",
+      "Choose Folder",
+      "Check Folder Access",
       "A",
       "B",
       "C",
-      "ShowMessage",
-      "ShowDetailedMessage",
+      "Show Message",
+      "Show Detailed Message",
     ]);
   });
 });

@@ -136,7 +136,7 @@
   font-family: var(--state-label-font-family, sans-serif);
   font-size: var(--state-label-font-size, 14px);
 }
-.main .state-details__description {
+.main .state-details__content {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
@@ -163,7 +163,8 @@
 </style>
   <details class="state-details" data-state-id="s_0">
     <summary class="state-details__label">App</summary>
-    <div class="state-details__description"><div class="state-details__chart">
+    <div class="state-details__content">
+      <div class="state-details__chart">
     <svg class="statechart" height="193" viewbox="0 0 494 193" width="494" xmlns="http://www.w3.org/2000/svg">
     <g class="statechart__transitions">
       <g class="transition" data-transition-id="t_3">
@@ -223,11 +224,11 @@
       </g>
       <g class="state" data-state-id="s_2">
         <rect class="state__box" fill="none" height="35" rx="7" ry="7" stroke="currentColor" strokeWidth="2" width="147" x="119.5" y="44.5" />
-        <text class="state__label" fill="currentColor" text-anchor="middle" x="193" y="66">OpenFileSystem</text>
+        <text class="state__label" fill="currentColor" text-anchor="middle" x="193" y="66">Open File System</text>
       </g>
       <g class="state" data-state-id="s_4">
         <rect class="state__box" fill="none" height="35" rx="7" ry="7" stroke="currentColor" strokeWidth="2" width="103" x="372.5" y="18.5" />
-        <text class="state__label" fill="currentColor" text-anchor="middle" x="424" y="40">ShowError</text>
+        <text class="state__label" fill="currentColor" text-anchor="middle" x="424" y="40">Show Error</text>
       </g>
       <g class="state" data-state-id="s_7">
         <circle class="state__final" cx="424" cy="144" fill="none" r="6" stroke="currentColor" strokeWidth="2" />
@@ -236,9 +237,12 @@
     </g>
     </svg>
     </div>
+    <div class="state-details__description">
+    </div>
       <details class="state-details" data-state-id="s_2">
-        <summary class="state-details__label">OpenFileSystem</summary>
-        <div class="state-details__description"><div class="state-details__chart">
+        <summary class="state-details__label">Open File System</summary>
+        <div class="state-details__content">
+          <div class="state-details__chart">
         <svg class="statechart" height="112" viewbox="0 0 655 112" width="655" xmlns="http://www.w3.org/2000/svg">
         <g class="statechart__transitions">
           <g class="transition" data-transition-id="t_12">
@@ -288,11 +292,11 @@
           </g>
           <g class="state" data-state-id="s_11">
             <rect class="state__box" fill="none" height="35" rx="7" ry="7" stroke="currentColor" strokeWidth="2" width="129" x="119.5" y="18.5" />
-            <text class="state__label" fill="currentColor" text-anchor="middle" x="184" y="40">ChooseFolder</text>
+            <text class="state__label" fill="currentColor" text-anchor="middle" x="184" y="40">Choose Folder</text>
           </g>
           <g class="state" data-state-id="s_13">
             <rect class="state__box" fill="none" height="35" rx="7" ry="7" stroke="currentColor" strokeWidth="2" width="173" x="332.5" y="18.5" />
-            <text class="state__label" fill="currentColor" text-anchor="middle" x="419" y="40">CheckFolderAccess</text>
+            <text class="state__label" fill="currentColor" text-anchor="middle" x="419" y="40">Check Folder Access</text>
           </g>
           <g class="state" data-state-id="s_15">
             <circle class="state__final" cx="624" cy="36" fill="none" r="6" stroke="currentColor" strokeWidth="2" />
@@ -301,9 +305,12 @@
         </g>
         </svg>
         </div>
+        <div class="state-details__description">
+        </div>
           <details class="state-details" data-state-id="s_11">
-            <summary class="state-details__label">ChooseFolder</summary>
-            <div class="state-details__description"><div class="state-details__chart">
+            <summary class="state-details__label">Choose Folder</summary>
+            <div class="state-details__content">
+              <div class="state-details__chart">
             <svg class="statechart" height="200" viewbox="0 0 446 200" width="446" xmlns="http://www.w3.org/2000/svg">
             <g class="statechart__transitions">
               <g class="transition" data-transition-id="t_20">
@@ -376,13 +383,16 @@
             </g>
             </svg>
             </div>
+            <div class="state-details__description">
+            </div>
             </div>
           </details>
         </div>
       </details>
       <details class="state-details" data-state-id="s_4">
-        <summary class="state-details__label">ShowError</summary>
-        <div class="state-details__description"><div class="state-details__chart">
+        <summary class="state-details__label">Show Error</summary>
+        <div class="state-details__content">
+          <div class="state-details__chart">
         <svg class="statechart" height="112" viewbox="0 0 570 112" width="570" xmlns="http://www.w3.org/2000/svg">
         <g class="statechart__transitions">
           <g class="transition" data-transition-id="t_29">
@@ -422,14 +432,16 @@
           </g>
           <g class="state" data-state-id="s_28">
             <rect class="state__box" fill="none" height="35" rx="7" ry="7" stroke="currentColor" strokeWidth="2" width="121" x="119.5" y="18.5" />
-            <text class="state__label" fill="currentColor" text-anchor="middle" x="180" y="40">ShowMessage</text>
+            <text class="state__label" fill="currentColor" text-anchor="middle" x="180" y="40">Show Message</text>
           </g>
           <g class="state" data-state-id="s_30">
             <rect class="state__box" fill="none" height="35" rx="7" ry="7" stroke="currentColor" strokeWidth="2" width="190" x="361.5" y="18.5" />
-            <text class="state__label" fill="currentColor" text-anchor="middle" x="457" y="40">ShowDetailedMessage</text>
+            <text class="state__label" fill="currentColor" text-anchor="middle" x="457" y="40">Show Detailed Message</text>
           </g>
         </g>
         </svg>
+        </div>
+        <div class="state-details__description">
         </div>
         </div>
       </details>

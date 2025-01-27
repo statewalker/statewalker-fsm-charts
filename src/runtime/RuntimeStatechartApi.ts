@@ -76,7 +76,6 @@ export class RuntimeStatechartApi {
         const elm = this.element.querySelector(
           `${tagName}[data-state-id="${stateId}"]`,
         );
-        console.log('>>> scrollIntoView', `${tagName}[data-state-id="${stateId}"]`, elm)
         elm?.scrollIntoView();
       }
     }

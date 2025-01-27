@@ -59,7 +59,7 @@ export function buildCharts({
           if (!conf.states) continue;
           for (const subState of conf.states) {
             if (subState.key !== state) continue;
-            result = subState.label ?? state;
+            result = subState.label ?? getStateLabel(state);
             break;
           }
         }
@@ -89,6 +89,7 @@ export function buildCharts({
         },
         {} as Record<string, string>,
       );
+      const text = config.label ?? getStateLabel(config.key) ?? config.key;
 
       const children: StateChart[] = [];
       if (config.states) {
@@ -97,7 +98,7 @@ export function buildCharts({
           children.push(buildChart(child, childId, [...stack]));
         }
       }
-      const text = config.label ?? getStateLabel(config.key) ?? config.key;
+
       // const state = text;
       return {
         id,
