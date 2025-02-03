@@ -1,8 +1,4 @@
-export type DomSection = {
-  header?: HTMLElement;
-  content: Node[];
-  children: DomSection[];
-};
+import { buildSections, DomSection } from "./buildSections.js";
 
 export function getStateDescriptionRenderer({
   element,
@@ -43,17 +39,6 @@ export function getStateDescriptionRenderer({
     if (node.nodeName[0] === "#") continue;
     node.parentElement?.removeChild(node);
   }
-  //   for (const section of vistSections(rootDescription)) {
-  //     const [key, label] = splitHeader(section.header);
-  //     console.log("??????", section.header?.innerText, key);
-  //     if (!key) continue;
-
-  //     section.header?.remove();
-  //     for (const node of section.content) {
-  //       if (node.nodeName[0] === "#") continue;
-  //       node.parentElement?.removeChild(node);
-  //     }
-  //   }
 
   return (statesStack: string[]) => {
     const stateKey = [...statesStack].pop();
@@ -89,23 +74,6 @@ export function getStateDescriptionRenderer({
   }
 }
 
-export function* visitDom(elm: Node): Iterable<Node> {
-  if (isDomElement(elm) && elm.tagName === "TEMPLATE") {
-    elm = (elm as HTMLTemplateElement).content;
-  }
-  for (let node = elm.firstChild; node; node = node.nextSibling) {
-    if (isDomElement(node)) {
-      if (node.tagName === "DIV" || node.tagName === "TEMPLATE") {
-        yield* visitDom(node);
-      } else {
-        yield node;
-      }
-    } else {
-      yield node;
-    }
-  }
-}
-
 export function* visitSectionNodes(section: DomSection): Iterable<Node> {
   if (section.header) yield section.header;
   yield* section.content;
@@ -131,78 +99,6 @@ export function findSection(
   for (const s of vistSections(section)) {
     if (accept(s) === true) return s;
   }
-}
-
-function isDomElement(node: Node): node is HTMLElement {
-  return node.nodeType === Node.ELEMENT_NODE;
-}
-
-function newAligner<T extends unknown[] = []>(context: {
-  enter: (level: number, ...params: T) => void;
-  exit: (level: number, ...params: T) => void;
-}) {
-  let level = -1;
-  return (newLevel: number, ...params: T) => {
-    while (level >= 0 && level >= newLevel) {
-      context.exit(level--, ...params);
-    }
-    while (level < newLevel) {
-      context.enter(++level, ...params);
-    }
-  };
-}
-
-function* toDomNodesIterator(root: Node | Iterable<Node>): Iterable<Node> {
-  yield* root instanceof Node ? visitDom(root) : root;
-}
-
-export function buildSections(root: HTMLElement | Iterable<Node>): DomSection {
-  const nodes = toDomNodesIterator(root);
-  let top: DomSection = null!;
-  let peek: DomSection = null!;
-  const stack: DomSection[] = [];
-  const aligner = newAligner<[HTMLElement?]>({
-    enter(level, header) {
-      const section: DomSection = {
-        header,
-        content: [],
-        children: [],
-      };
-      top = top || section;
-      peek && peek.children.push(section);
-      peek = section;
-      stack.push(section);
-    },
-    exit() {
-      stack.pop();
-      peek = stack[stack.length - 1];
-    },
-  });
-  aligner(0);
-  let currentHeaderLevel = 0;
-  let currentLevel = 0;
-  for (const node of nodes) {
-    if (isDomElement(node)) {
-      if (/^H[1-6]$/i.test(node.tagName)) {
-        const headerLevel = +node.tagName.replace(/^H/, "");
-        currentLevel =
-          headerLevel > currentHeaderLevel
-            ? currentLevel + 1
-            : headerLevel < currentHeaderLevel
-              ? currentLevel - 1
-              : currentLevel;
-        currentHeaderLevel = headerLevel;
-        aligner(currentLevel, node);
-      } else {
-        peek.content.push(node);
-      }
-    } else {
-      peek.content.push(node);
-    }
-  }
-  return top.content.length === 0 && top.children.length === 1 && !top.header
-    ? top.children[0]
-    : top;
 }
 
 export function renderSections({

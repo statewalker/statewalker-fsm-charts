@@ -49,7 +49,7 @@ export function buildCharts({
 
     try {
       const buildStateLabel = (state: string, key: string = state) => {
-        if (key === "<initial>" || key === "<final>") {
+        if (key === initialStateKey || key === finalStateKey) {
           return "";
         }
 
@@ -72,6 +72,7 @@ export function buildCharts({
         newId,
         getStateParams: (state: string, key?: string) => {
           const params = getStateParams(state, key);
+          delete params.state;
           params.text = buildStateLabel(state, key);
           return params;
         },

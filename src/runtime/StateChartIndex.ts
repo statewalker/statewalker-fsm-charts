@@ -11,9 +11,22 @@ export class StateChartIndex {
   _nodesParentsIndex: Record<string, string> = {};
   _edgeIndex: Record<string, StateGraphEdge> = {};
   _edgesParentsIndex: Record<string, string> = {};
+  initialStateKey: string;
+  finalStateKey: string;
 
-  constructor({ statechart }: { statechart: StateChart }) {
+  constructor({
+    statechart,
+    initialStateKey = "<initial>",
+    finalStateKey = "<final>",
+  }: {
+    statechart: StateChart;
+    initialStateKey?: string;
+    finalStateKey?: string;
+  }) {
     this.statechart = statechart;
+    this.initialStateKey = initialStateKey;
+    this.finalStateKey = finalStateKey;
+
     this._buildIndexes();
   }
 
@@ -42,6 +55,31 @@ export class StateChartIndex {
    */
   getEdgeById(id: string): StateGraphEdge | undefined {
     return this._edgeIndex[id];
+  }
+
+  /**
+   * Returns a list of all nodes in this chart.
+   * @return a list of all nodes
+   */
+  getAllNodes(): StateGraphNode[] {
+    return [
+      ...new Set([
+        ...Object.values(this._chartsIndex),
+        ...Object.values(this._nodesIndex),
+      ]),
+    ];
+  }
+
+  /**
+   * Returns a list of all non-empty state nodes in this chart.
+   * The result excludes nodes for initial and fina states.
+   * @return a list of all non-empty state nodes
+   */
+  getStateNodes(): StateGraphNode[] {
+    return this.getAllNodes().filter(
+      (node) =>
+        node.key !== this.initialStateKey && node.key !== this.finalStateKey,
+    );
   }
 
   /**
@@ -96,7 +134,7 @@ export class StateChartIndex {
     if (!state || !stack.length) return;
     const parent = stack[stack.length - 1];
     const t = parent.edges.find(
-      (t: StateGraphEdge) => t.from === state.key && t.event === event
+      (t: StateGraphEdge) => t.from === state.key && t.event === event,
     );
     return t;
   }
@@ -140,7 +178,7 @@ export class StateChartIndex {
    * @returns an array with two identifiers - [sourceStateId, targetStateId] - the source state id and target state id
    */
   getTransitionStateIds(
-    transition?: StateGraphEdge
+    transition?: StateGraphEdge,
   ): [string | undefined, string | undefined] {
     const result: [string | undefined, string | undefined] = [
       undefined,
