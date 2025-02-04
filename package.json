@@ -1,6 +1,6 @@
 {
   "name": "@statewalker/fsm-charts",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "HFSM Implementation",
   "keywords": [],
   "homepage": "https://github.com/statewalker/statewalker-fsm-charts",
@@ -53,6 +53,7 @@
     "build": "rm -fr ./dist && yarn test && tsup",
     "prepare": "yarn build",
     "watch": "tsup --watch",
+    "watch-for-viewer": "tsup --watch --outDir=../statewalker-fsm-viewer/src/.observablehq/cache/_node/@statewalker/fsm-charts@0.2.1",
     "clean": "rm -rf dist",
     "lint": "eslint",
     "lint:fix": "yarn lint -- --fix",
