@@ -55,6 +55,33 @@ export function buildSections(root: HTMLElement | Iterable<Node>): DomSection {
     : top;
 }
 
+export function* visitSectionNodes(section: DomSection): Iterable<Node> {
+  if (section.header) yield section.header;
+  yield* section.content;
+  for (const s of vistSections(section, true)) {
+    yield* visitSectionNodes(s);
+  }
+}
+
+export function* vistSections(
+  root: DomSection,
+  ignoreRoot: boolean = false,
+): Generator<DomSection> {
+  !ignoreRoot && (yield root);
+  for (const child of root.children) {
+    yield* vistSections(child, false);
+  }
+}
+
+export function findSection(
+  section: DomSection,
+  accept: (section: DomSection) => boolean,
+) {
+  for (const s of vistSections(section)) {
+    if (accept(s) === true) return s;
+  }
+}
+
 // --------------------------------------------
 // DOM Iterator utilities
 

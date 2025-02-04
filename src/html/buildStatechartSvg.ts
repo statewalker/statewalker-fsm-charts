@@ -42,6 +42,7 @@ export function buildStatechartSvg({
   initialStateKey?: string;
   finalStateKey?: string;
 }) {
+  if (!nodes.length && !edges.length) return;
   width = Math.ceil(width);
   height = Math.ceil(height);
   println(
