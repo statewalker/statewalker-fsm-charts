@@ -83,7 +83,7 @@ export class RuntimeStatechartApi {
 
   setStateDescription(
     stateId: string,
-    description: HTMLElement | string | undefined,
+    description: Node | string | undefined,
   ) {
     const descriptionContainer = this.element.querySelector(
       `details[data-state-id="${stateId}"] .state-details__description`,

@@ -36,11 +36,11 @@ export function getStateDescriptionRenderer(options: {
 export function renderSections<T extends DomSection>({
   section,
   deep = (s) => true,
-  header = (section) => section.header?.cloneNode(true) as HTMLElement,
+  header = (section) => section.header?.cloneNode(true) as Node,
 }: {
   section: T;
   deep?: (s: T) => boolean;
-  header?: (section: T) => undefined | string | HTMLElement;
+  header?: (section: T) => undefined | string | Node;
 }) {
   const container = document.createElement("div");
   const id = `id-${String(Math.random()).split(".")[1]}-${Date.now()}`;
