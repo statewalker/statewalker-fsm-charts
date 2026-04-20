@@ -29,21 +29,20 @@
     }
   },
   "devDependencies": {
-    "@statewalker/typescript-config": "*",
-    "@types/jsdom": "^21.1.7",
-    "@types/lodash-es": "^4.17.12",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "eslint": "^8.0.1",
-    "eslint-config-standard-with-typescript": "^43.0.1",
-    "eslint-plugin-import": "^2.25.2",
+    "@types/jsdom": "catalog:",
+    "@types/lodash-es": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-standard-with-typescript": "catalog:",
+    "eslint-plugin-import": "catalog:",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
-    "eslint-plugin-promise": "^6.0.0",
-    "jsdom": "^24.1.0",
-    "lodash": "^4.17.21",
-    "lodash-es": "^4.17.21",
-    "tsup": "^8.0.2",
+    "eslint-plugin-promise": "catalog:",
+    "jsdom": "catalog:",
+    "lodash": "catalog:",
+    "lodash-es": "catalog:",
+    "tsup": "catalog:",
     "typescript": "*",
-    "vitest": "^1.6.0"
+    "vitest": "catalog:"
   },
   "repository": {
     "type": "git",
@@ -51,7 +50,6 @@
   },
   "scripts": {
     "build": "rm -fr ./dist && yarn test && tsup",
-    "prepare": "yarn build",
     "watch": "tsup --watch",
     "watch-for-viewer": "tsup --watch --outDir=../statewalker-fsm-viewer/src/.observablehq/cache/_node/@statewalker/fsm-charts@0.2.1",
     "clean": "rm -rf dist",
