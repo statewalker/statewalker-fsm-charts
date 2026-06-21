@@ -1,7 +1,7 @@
-import type { Dimensions } from "./Dimensions.ts";
-import type { Position } from "./Position.ts";
-import type { StateGraphEdge } from "./StateGraphEdge.ts";
-import type { StateGraphNode } from "./StateGraphNode.ts";
+import type { Dimensions } from "./Dimensions.js";
+import type { Position } from "./Position.js";
+import type { StateGraphEdge } from "./StateGraphEdge.js";
+import type { StateGraphNode } from "./StateGraphNode.js";
 
 /**
  * Coordinates for state nodes and endges corresponding to state transitions.

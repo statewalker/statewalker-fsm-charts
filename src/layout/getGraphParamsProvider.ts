@@ -1,10 +1,9 @@
-import type { Dimensions } from "../types/Dimensions.ts";
-import type { GraphParamsProvider } from "../types/GraphParamsProvider.ts";
-import type { Padding } from "../types/Padding.ts";
-
-import { getLabelDimensions } from "./getLabelDimensions.ts";
-import { getPadding } from "../utils/getPadding.ts";
-import { Label } from "../types/Label.ts";
+import type { Dimensions } from "../types/Dimensions.js";
+import type { GraphParamsProvider } from "../types/GraphParamsProvider.js";
+import { Label } from "../types/Label.js";
+import type { Padding } from "../types/Padding.js";
+import { getPadding } from "../utils/getPadding.js";
+import { getLabelDimensions } from "./getLabelDimensions.js";
 
 /**
  * Provides default functions measuring dimensions for state nodes and transition edges in the graph.

@@ -1,4 +1,4 @@
-import type { Transition } from "./Transition.ts";
+import type { Transition } from "./Transition.js";
 
 // export type FsmStateKey = string;
 // export type FsmEventKey = string;

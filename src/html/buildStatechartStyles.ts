@@ -1,4 +1,4 @@
-import type { CssTree } from "../utils/serializeCss.ts";
+import type { CssTree } from "../utils/serializeCss.js";
 
 export const activeStatesStyle = {
   backgroundColor: "white",

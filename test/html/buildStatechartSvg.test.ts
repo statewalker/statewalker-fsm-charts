@@ -1,23 +1,26 @@
 import * as lodash from "lodash-es";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 import {
   buildFlatCharts,
   getGraphParamsProvider,
-} from "../../src/layout/index.ts";
-import { describe, it, expect } from "../deps.ts";
-import { process } from "../data/process.checkout.ts";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
+} from "../../src/layout/index.js";
+import { process } from "../data/process.checkout.js";
+import { describe, expect, it } from "../deps.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import { buildStatechartSvg, buildStatechartCss } from "../../src/html/index.ts";
 import fs from "fs/promises";
+import {
+  buildStatechartCss,
+  buildStatechartSvg,
+} from "../../src/html/index.js";
 
 describe("buildStatechartSvg", () => {
   it("should generate transitions graph", async () => {
     const controlFileName = join(
       __dirname,
-      "./buildStatechartSvg.control.html"
+      "./buildStatechartSvg.control.html",
     );
 
     let control = "";
@@ -53,7 +56,7 @@ describe("buildStatechartSvg", () => {
       println: (str: string) => lines.push(str),
     });
     const svg = lines.join("\n");
-    let prefix = "";
+    const prefix = "";
     const css = buildStatechartCss({ prefix });
     const html = `
 <!DOCTYPE html>

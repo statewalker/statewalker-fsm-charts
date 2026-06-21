@@ -1,5 +1,5 @@
-import { splitTransitionString } from "../../src/config/splitTransitionString.ts";
-import { describe, it, expect } from "../deps.ts";
+import { splitTransitionString } from "../../src/config/splitTransitionString.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("splitTransitionString", () => {
   it("should transform empty string to an empty transition list", () => {
@@ -55,8 +55,8 @@ describe("splitTransitionString", () => {
 
     expect(
       splitTransitionString(
-        `-next->A -next-> B -next-> C -prev-> B -prev-> A -*-> C -exit-> `
-      )
+        `-next->A -next-> B -next-> C -prev-> B -prev-> A -*-> C -exit-> `,
+      ),
     ).toEqual([
       ["", "next", "A"],
       ["A", "next", "B"],

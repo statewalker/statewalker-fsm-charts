@@ -1,14 +1,14 @@
-import { newId } from "../utils/newId.ts";
-import { newRegistry } from "../utils/newRegistry.ts";
-import { RuntimeStatechartApi, StateChartIndex } from "../runtime/index.ts";
 import {
   buildStatechartCss,
   buildStatechartsPanel,
-  FsmStateConfig,
-  StateChart,
-  StateGraphEdge,
-} from "../index-html.ts";
-import { buildCharts, getGraphParamsProvider } from "../index-layout.ts";
+  type FsmStateConfig,
+  type StateChart,
+  type StateGraphEdge,
+} from "../index-html.js";
+import { buildCharts, getGraphParamsProvider } from "../index-layout.js";
+import { RuntimeStatechartApi, StateChartIndex } from "../runtime/index.js";
+import { newId } from "../utils/newId.js";
+import { newRegistry } from "../utils/newRegistry.js";
 
 export type FsmStateCharts = {
   api: RuntimeStatechartApi;
@@ -96,7 +96,7 @@ ${css}
         }
       }
       // api.focusStates(...nodeIds);
-    })
+    }),
   );
 
   if (onTransitionClick) {
@@ -104,7 +104,7 @@ ${css}
       api.onTransitionClick((transitionId) => {
         const transition = index.getEdgeById(transitionId);
         transition && onTransitionClick(transition);
-      })
+      }),
     );
   }
   return {

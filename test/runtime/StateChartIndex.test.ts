@@ -1,7 +1,7 @@
-import { describe, it, expect } from "../deps.ts";
-import { toStatechartsPanels } from "../html/toStatechartsPanels.ts";
-import { process } from "../data/process.checkout.ts";
-import { StateChartIndex } from "../../src/runtime/index.ts";
+import { StateChartIndex } from "../../src/runtime/index.js";
+import { process } from "../data/process.checkout.js";
+import { describe, expect, it } from "../deps.js";
+import { toStatechartsPanels } from "../html/toStatechartsPanels.js";
 
 describe("StateChartIndex", () => {
   const { statechart } = toStatechartsPanels(process);
@@ -65,7 +65,12 @@ describe("StateChartIndex", () => {
   });
 
   it("should return a list of all transitions for a specific state id", async () => {
-    const stateIds = api.getStatesIds("App", "OpenFileSystem", "ChooseFolder", "A");
+    const stateIds = api.getStatesIds(
+      "App",
+      "OpenFileSystem",
+      "ChooseFolder",
+      "A",
+    );
     const stateId = stateIds.pop() as string;
     const transitions = api.getTransitions(stateId);
     expect(transitions !== undefined).toBe(true);
@@ -76,5 +81,4 @@ describe("StateChartIndex", () => {
     expect(transitions[1].from).toEqual("A");
     expect(transitions[1].to).toEqual("C");
   });
-
 });

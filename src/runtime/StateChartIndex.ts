@@ -1,8 +1,8 @@
 import type {
   StateChart,
-  StateGraphNode,
   StateGraphEdge,
-} from "../types/index.ts";
+  StateGraphNode,
+} from "../types/index.js";
 
 export class StateChartIndex {
   statechart: StateChart;
@@ -90,7 +90,7 @@ export class StateChartIndex {
    * @returns a stack of state identifiers for the given states
    */
   getStatesIds(...stack: string[]): string[] {
-    let result = [];
+    const result = [];
     let list = [this.statechart] as (StateChart | StateGraphNode)[];
     for (let i = 0; list?.length > 0 && i < stack.length; i++) {
       const key = stack[i];

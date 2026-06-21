@@ -1,5 +1,5 @@
-import { describe, it, expect } from "../deps.ts";
-import { serializeCss } from "../../src/index.ts";
+import { serializeCss } from "../../src/index.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("serializeCss - simple CSS classes serialization", () => {
   it("should CSS from objects", () => {
@@ -11,7 +11,7 @@ describe("serializeCss - simple CSS classes serialization", () => {
         ".foo": {
           color: "red",
         },
-      })
+      }),
     ).toEqual(`.foo {
   color: red;
 }`);
@@ -22,7 +22,7 @@ describe("serializeCss - simple CSS classes serialization", () => {
         ".foo": {
           "--border-width": 3,
         },
-      })
+      }),
     ).toEqual(`.foo {
   --border-width: 3;
 }`);
@@ -33,7 +33,7 @@ describe("serializeCss - simple CSS classes serialization", () => {
         ".foo": {
           "--foo-bar": "red",
         },
-      })
+      }),
     ).toEqual(`.foo {
   --foo-bar: red;
 }`);
@@ -44,7 +44,7 @@ describe("serializeCss - simple CSS classes serialization", () => {
         ".myClass": {
           borderWidth: "3px",
         },
-      })
+      }),
     ).toEqual(`.myClass {
   border-width: 3px;
 }`);
@@ -62,7 +62,7 @@ describe("serializeCss - hierarchical styles serialization", () => {
             },
           },
         },
-      })
+      }),
     ).toEqual(`.a .b .c {
   color: red;
 }`);
@@ -80,7 +80,7 @@ describe("serializeCss - hierarchical styles serialization", () => {
             },
           },
         },
-      })
+      }),
     ).toEqual(`.a {
   color: red;
 }
@@ -103,7 +103,7 @@ describe("serializeCss - hierarchical styles serialization", () => {
             },
           },
         },
-      })
+      }),
     ).toEqual(`.a {
   color: red;
 }

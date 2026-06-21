@@ -1,7 +1,7 @@
-import { type Transition } from "../types/index.ts";
+import type { Transition } from "../types/index.js";
 
 export function concatTransitionsToString(transitions: Transition[]) {
-  let list: string[] = [];
+  const list: string[] = [];
   let str: string = "";
   let prev: undefined | string;
   for (const [from, event, to] of transitions) {

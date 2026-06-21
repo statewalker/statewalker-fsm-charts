@@ -1,8 +1,8 @@
-import type { FsmStateConfig } from "../types/index.ts";
+import type { FsmStateConfig } from "../types/index.js";
 
 export function serializeProcessConfig(config: FsmStateConfig | undefined) {
   if (!config) return "";
-  let lines: string[] = [];
+  const lines: string[] = [];
   visit(config, lines);
   return lines.join("\n");
 

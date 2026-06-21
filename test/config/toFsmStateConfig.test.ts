@@ -1,5 +1,5 @@
-import { toFsmStateConfig } from "../../src/config/toFsmStateConfig.ts";
-import { describe, it, expect } from "../deps.ts";
+import { toFsmStateConfig } from "../../src/config/toFsmStateConfig.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("toFsmStateConfig", () => {
   it("should keep states with empty transitions", () => {
@@ -8,7 +8,7 @@ describe("toFsmStateConfig", () => {
       toFsmStateConfig({
         key: "N",
         transitions: [],
-      })
+      }),
     ).toEqual({
       key: "N",
       transitions: [],
@@ -20,7 +20,7 @@ describe("toFsmStateConfig", () => {
         key: "N",
         description: "Test state",
         transitions: [],
-      })
+      }),
     ).toEqual({
       key: "N",
       description: "Test state",
@@ -42,7 +42,7 @@ describe("toFsmStateConfig", () => {
             baz: "Baz",
           },
         ],
-      })
+      }),
     ).toEqual({
       key: "N",
       foo: "Foo",
@@ -52,12 +52,12 @@ describe("toFsmStateConfig", () => {
         {
           key: "A",
           bar: "Bar",
-          transitions: []
+          transitions: [],
         },
         {
           key: "B",
           baz: "Baz",
-          transitions: []
+          transitions: [],
         },
       ],
     });
@@ -76,7 +76,7 @@ describe("toFsmStateConfig", () => {
           ["A", "x", "B"],
           ["B", "y", "A"],
         ],
-      })
+      }),
     ).toEqual({
       key: "N",
       transitions: [

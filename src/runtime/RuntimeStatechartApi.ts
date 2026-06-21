@@ -1,4 +1,4 @@
-import type { StateChart } from "../types/index.ts";
+import type { StateChart } from "../types/index.js";
 
 export type RuntimeListener = (id: string) => void;
 export class RuntimeStatechartApi {
@@ -68,7 +68,7 @@ export class RuntimeStatechartApi {
       this.selectState(id);
     }
   }
- 
+
   focusStates(...stateIds: string[]) {
     for (let i = 0; i < stateIds.length; i++) {
       const stateId = stateIds[i];
@@ -81,10 +81,7 @@ export class RuntimeStatechartApi {
     }
   }
 
-  setStateDescription(
-    stateId: string,
-    description: Node | string | undefined,
-  ) {
+  setStateDescription(stateId: string, description: Node | string | undefined) {
     const descriptionContainer = this.element.querySelector(
       `details[data-state-id="${stateId}"] .state-details__description`,
     );

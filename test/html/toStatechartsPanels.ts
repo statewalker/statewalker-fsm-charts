@@ -1,11 +1,11 @@
 import * as lodash from "lodash-es";
 import {
-  type FsmStateConfig,
-  getGraphParamsProvider,
   buildCharts,
   buildStatechartsPanel,
-  StateChart,
-} from "../../src/index.ts";
+  type FsmStateConfig,
+  getGraphParamsProvider,
+  type StateChart,
+} from "../../src/index.js";
 
 export function toStatechart(config: FsmStateConfig): {
   statechart: StateChart;

@@ -1,4 +1,4 @@
-import { serializeCss } from "../utils/serializeCss.ts";
+import { serializeCss } from "../utils/serializeCss.js";
 import {
   activeStatesStyle,
   activeTransitionsStyle,
@@ -8,7 +8,7 @@ import {
   buildStateDetailsStyleWithModifier,
   selectedStatesStyle,
   selectedTransitionsStyle,
-} from "./buildStatechartStyles.ts";
+} from "./buildStatechartStyles.js";
 
 export function buildStatechartCss({ prefix = "" } = {}): string {
   const root = prefix || ":root";

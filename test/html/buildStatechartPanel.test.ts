@@ -1,20 +1,20 @@
-import { describe, it, expect } from "../deps.ts";
-import { process } from "../data/process.checkout.ts";
+import fs from "fs/promises";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import fs from "fs/promises";
+import { process } from "../data/process.checkout.js";
+import { describe, expect, it } from "../deps.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import { buildStatechartCss } from "../../src/html/index.ts";
-import { toStatechartsPanels } from "./toStatechartsPanels.ts";
+import { buildStatechartCss } from "../../src/html/index.js";
+import { toStatechartsPanels } from "./toStatechartsPanels.js";
 
 // buildStatechartsPanel
 describe("buildStatechartsPanel", () => {
   it("should generate transitions graph", async () => {
     const controlFileName = join(
       __dirname,
-      "./buildStatechartPanel.control.html"
+      "./buildStatechartPanel.control.html",
     );
 
     let control = "";
@@ -25,7 +25,7 @@ describe("buildStatechartsPanel", () => {
     }
 
     const { html } = toStatechartsPanels(process);
-    let prefix = ".main";
+    const prefix = ".main";
     const css = buildStatechartCss({ prefix });
     const result = `
 <!DOCTYPE html>

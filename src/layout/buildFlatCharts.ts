@@ -1,17 +1,15 @@
 import { layout } from "../dagre/layout.js";
 import { Graph } from "../graphlib/graph.js";
-
-import type { GraphParamsProvider } from "../types/GraphParamsProvider.ts";
-import type { Transition } from "../types/Transition.ts";
-import type { TransitionsGraph } from "../types/TransitionsGraph.ts";
-import type { StateGraphNode } from "../types/StateGraphNode.ts";
-import type { StateGraphEdge } from "../types/StateGraphEdge.ts";
-import type { Padding } from "../types/Padding.ts";
-import type { Position } from "../types/Position.ts";
-import type { Dimensions } from "../types/Dimensions.ts";
-
-import { getPadding } from "../utils/getPadding.ts";
-import { getLodash, setLodash } from "../lodash-es/index.ts";
+import { getLodash, setLodash } from "../lodash-es/index.js";
+import type { Dimensions } from "../types/Dimensions.js";
+import type { GraphParamsProvider } from "../types/GraphParamsProvider.js";
+import type { Padding } from "../types/Padding.js";
+import type { Position } from "../types/Position.js";
+import type { StateGraphEdge } from "../types/StateGraphEdge.js";
+import type { StateGraphNode } from "../types/StateGraphNode.js";
+import type { Transition } from "../types/Transition.js";
+import type { TransitionsGraph } from "../types/TransitionsGraph.js";
+import { getPadding } from "../utils/getPadding.js";
 
 /**
  * Build graphs corresponding to the specified transitions.
@@ -46,7 +44,7 @@ export function buildFlatCharts({
   padding?: Padding;
   direction?: "tb" | "bt" | "lr" | "rl";
 } & GraphParamsProvider): TransitionsGraph {
-  let prevLodash = getLodash();
+  const prevLodash = getLodash();
   try {
     setLodash(lodash);
     const rankdir = direction || (vertical ? "tb" : "lr");

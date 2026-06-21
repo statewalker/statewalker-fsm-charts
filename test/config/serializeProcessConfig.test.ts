@@ -1,5 +1,5 @@
-import { serializeProcessConfig } from "../../src/config/serializeProcessConfig.ts";
-import { describe, it, expect } from "../deps.ts";
+import { serializeProcessConfig } from "../../src/config/serializeProcessConfig.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("serializeProcessConfig", () => {
   it("should serialize configurations to JSON strings", () => {
@@ -23,7 +23,7 @@ describe("serializeProcessConfig", () => {
       ],
     });
     expect(result).toEqual(
-        `{
+      `{
   "key": "N",
   "transitions": [
     ["A","o","B"]
@@ -40,7 +40,7 @@ describe("serializeProcessConfig", () => {
   ],
   "foo": "Foo",
   "description": "Test state"
-}`
+}`,
     );
   });
 });

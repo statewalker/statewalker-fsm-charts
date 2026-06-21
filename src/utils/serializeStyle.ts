@@ -1,8 +1,8 @@
-import { toKebabCase } from "./toKebabCase.ts";
+import { toKebabCase } from "./toKebabCase.js";
 
 export function serializeStyle(
   style: Record<string, string>,
-  separator = "; "
+  separator = "; ",
 ) {
   const str = Object.entries(style)
     .map(([key, value]) => `${toKebabCase(key)}: ${value}`)

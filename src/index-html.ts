@@ -1,2 +1,2 @@
-export type * from "./types/index.ts";
-export * from "./html/index.ts";
+export * from "./html/index.js";
+export type * from "./types/index.js";

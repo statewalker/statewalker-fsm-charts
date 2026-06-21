@@ -1,5 +1,6 @@
 // Methods
-export * from "./buildFlatCharts.ts";
-export * from "./buildCharts.ts";
-export * from "./getGraphParamsProvider.ts";
-export * from "./getLabelDimensions.ts";
+
+export * from "./buildCharts.js";
+export * from "./buildFlatCharts.js";
+export * from "./getGraphParamsProvider.js";
+export * from "./getLabelDimensions.js";

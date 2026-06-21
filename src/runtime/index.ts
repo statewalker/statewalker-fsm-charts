@@ -1,2 +1,2 @@
-export * from "./RuntimeStatechartApi.ts";
-export * from "./StateChartIndex.ts";
+export * from "./RuntimeStatechartApi.js";
+export * from "./StateChartIndex.js";

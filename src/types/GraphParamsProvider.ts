@@ -1,5 +1,5 @@
-import type { Dimensions } from "./Dimensions.ts";
-import { Label } from "./Label.ts";
+import type { Dimensions } from "./Dimensions.js";
+import type { Label } from "./Label.js";
 
 /**
  * Provides default functions measuring dimensions for state nodes and transition edges in the graph.

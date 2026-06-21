@@ -1,8 +1,7 @@
-import { toKebabCase } from "../../src/utils/toKebabCase.ts";
-import { describe, it, expect } from "../deps.ts";
+import { toKebabCase } from "../../src/utils/toKebabCase.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("toKebabCase", () => {
-
   it("should transform CamelCaseString to kebab-case-string", async () => {
     expect(toKebabCase("")).toBe("");
     expect(toKebabCase("Foo")).toBe("-foo");

@@ -1,5 +1,5 @@
-import { splitTransitionString } from "./splitTransitionString.ts";
-import type { FsmStateConfig, Transition } from "../types/index.ts";
+import type { FsmStateConfig, Transition } from "../types/index.js";
+import { splitTransitionString } from "./splitTransitionString.js";
 
 export function toFsmStateConfig(json: any): FsmStateConfig | undefined {
   if (!json || typeof json !== "object") return;
@@ -20,7 +20,7 @@ export function toFsmStateConfig(json: any): FsmStateConfig | undefined {
     const transitions: Transition[] = [];
     const index: Record<string, boolean> = {};
     const array = toArray(json);
-    for (let line of array) {
+    for (const line of array) {
       const lineTransitions =
         typeof line === "string"
           ? splitTransitionString(line)

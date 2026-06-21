@@ -1,5 +1,5 @@
-import type { StateGraphNode } from "./StateGraphNode.ts";
-import type { TransitionsGraph } from "./TransitionsGraph.ts";
+import type { StateGraphNode } from "./StateGraphNode.js";
+import type { TransitionsGraph } from "./TransitionsGraph.js";
 
 export type StateChart = TransitionsGraph &
   StateGraphNode & {

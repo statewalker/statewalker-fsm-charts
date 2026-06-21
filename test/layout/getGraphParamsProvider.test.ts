@@ -1,5 +1,5 @@
-import { getGraphParamsProvider } from "../../src/layout/getGraphParamsProvider.ts";
-import { describe, it, expect } from "../deps.ts";
+import { getGraphParamsProvider } from "../../src/layout/getGraphParamsProvider.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("getGraphParamsProvider", () => {
   it("should return functions that return dimensions and parameters for state node and transitions", () => {
@@ -77,7 +77,7 @@ describe("getGraphParamsProvider#getStateParams", () => {
     const expected = {
       key: "a",
       state: "a",
-      text : "a",
+      text: "a",
       width: 15,
       height: 20,
       fontSize: 14,
@@ -118,7 +118,7 @@ describe("getGraphParamsProvider#getTransitionParams", () => {
       fontSize: 14,
       event: "",
       to: "",
-      text : "",
+      text: "",
       width: 0,
       height: 14,
       padding: [0, 0, 0, 0],
@@ -151,7 +151,7 @@ describe("getGraphParamsProvider#getTransitionParams", () => {
       from: "a",
       event: "b",
       to: "c",
-      text : "b",
+      text: "b",
       width: 9,
       height: 14,
       fontSize: 14,

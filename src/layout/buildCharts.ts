@@ -1,9 +1,9 @@
-import type { GraphParamsProvider } from "../types/GraphParamsProvider.ts";
-import type { Padding } from "../types/Padding.ts";
-import type { FsmStateConfig } from "../types/FsmStateConfig.ts";
-import type { StateChart } from "../types/StateChart.ts";
+import type { FsmStateConfig } from "../types/FsmStateConfig.js";
+import type { GraphParamsProvider } from "../types/GraphParamsProvider.js";
+import type { Padding } from "../types/Padding.js";
+import type { StateChart } from "../types/StateChart.js";
 
-import { buildFlatCharts } from "./buildFlatCharts.ts";
+import { buildFlatCharts } from "./buildFlatCharts.js";
 /**
  * Build graphs corresponding to the specified transitions.
  * @param config - State configuration with transitions and sub-states.

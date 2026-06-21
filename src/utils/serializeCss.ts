@@ -1,4 +1,4 @@
-import { toKebabCase } from "./toKebabCase.ts";
+import { toKebabCase } from "./toKebabCase.js";
 
 export interface CssTree extends Record<string, string | number | CssTree> {}
 
@@ -8,14 +8,14 @@ export function serializeCss(obj: CssTree) {
   function visitStyle(
     obj: CssTree,
     lines: string[] = [],
-    prefixes: string[] = [""]
+    prefixes: string[] = [""],
   ) {
     for (const [key, style] of Object.entries(obj)) {
       const selectors = [];
       for (const sel of key.split(",").map((_) => _.trim())) {
         for (const prefix of prefixes) {
           const selector = sel.replace(/^(.)/, (_, ch) =>
-            ch === "&" ? prefix : prefix.length > 0 ? prefix + " " + ch : ch
+            ch === "&" ? prefix : prefix.length > 0 ? prefix + " " + ch : ch,
           );
           selectors.push(selector);
         }

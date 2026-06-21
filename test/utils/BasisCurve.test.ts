@@ -1,5 +1,5 @@
-import { describe, it, expect } from "../deps.ts";
-import { BasisCurve } from "../../src/utils/BasisCurve.ts";
+import { BasisCurve } from "../../src/utils/BasisCurve.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("BasisCurve", () => {
   it("should generate right sequence of control points", () => {
@@ -27,7 +27,7 @@ describe("BasisCurve", () => {
         x1: number,
         y1: number,
         x2: number,
-        y2: number
+        y2: number,
       ) {
         result.push(["C", ...round(x0, y0, x1, y1, x2, y2)]);
       },

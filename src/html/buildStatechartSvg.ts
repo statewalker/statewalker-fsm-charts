@@ -3,10 +3,10 @@ import type {
   Padding,
   Position,
   TransitionsGraph,
-} from "../types/index.ts";
-import { getPadding } from "../utils/getPadding.ts";
-import { serializeAttrs } from "../utils/serializeAttrs.ts";
-import { BasisCurve } from "../utils/BasisCurve.ts";
+} from "../types/index.js";
+import { BasisCurve } from "../utils/BasisCurve.js";
+import { getPadding } from "../utils/getPadding.js";
+import { serializeAttrs } from "../utils/serializeAttrs.js";
 
 function getBoxParams({
   x,

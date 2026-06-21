@@ -1,6 +1,6 @@
-import type { Dimensions } from "../types/Dimensions.ts";
-import type { Padding } from "../types/Padding.ts";
-import { getPadding } from "../utils/getPadding.ts";
+import type { Dimensions } from "../types/Dimensions.js";
+import type { Padding } from "../types/Padding.js";
+import { getPadding } from "../utils/getPadding.js";
 
 export function getLabelDimensions(
   label: string,
@@ -14,7 +14,7 @@ export function getLabelDimensions(
     fontSize?: number;
     getCharWidth?: (char: string) => number;
     lineGap?: number;
-  } = {}
+  } = {},
 ) {
   const lines = [label]; // label.split("\n");
   let dimensions: Dimensions = { width: 0, height: 0 };
@@ -27,7 +27,7 @@ export function getLabelDimensions(
         line,
         fontSize,
         getCharWidth,
-      })
+      }),
     );
   }
   const [top, right, bottom, left] = getPadding(padding);

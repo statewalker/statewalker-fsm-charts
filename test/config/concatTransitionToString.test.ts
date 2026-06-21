@@ -1,5 +1,5 @@
-import { concatTransitionsToString } from "../../src/config/concatTransitionsToString.ts";
-import { describe, it, expect } from "../deps.ts";
+import { concatTransitionsToString } from "../../src/config/concatTransitionsToString.js";
+import { describe, expect, it } from "../deps.js";
 
 describe("concatTransitionsToString", () => {
   it("should recreate basic transition strings", () => {
@@ -16,14 +16,14 @@ describe("concatTransitionsToString", () => {
         ["A", "", "B"],
         ["B", "", "A"],
         ["B", "x", "C"],
-      ])
+      ]),
     ).toEqual(["A --> B --> A", "B -x-> C"]);
     expect(
       concatTransitionsToString([
         ["A", "", "B"],
         ["B", "x", "C"],
         ["B", "", "A"],
-      ])
+      ]),
     ).toEqual(["A --> B -x-> C", "B --> A"]);
   });
   it("should recreate long transition strings from an array of individual transitions", () => {
@@ -34,7 +34,7 @@ describe("concatTransitionsToString", () => {
         ["OpenFileSystem", "error", "ShowError"],
         ["ShowError", "ok", "OpenFileSystem"],
         ["OpenFileSystem", "exit", ""],
-      ])
+      ]),
     ).toEqual([
       " -*-> OpenFileSystem -my event one-> OpenFileSystem -error-> ShowError -ok-> OpenFileSystem -exit-> ",
     ]);

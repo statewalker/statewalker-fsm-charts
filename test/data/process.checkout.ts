@@ -1,4 +1,4 @@
-import { FsmStateConfig } from "../../src/types/FsmStateConfig.ts";
+import type { FsmStateConfig } from "../../src/types/FsmStateConfig.js";
 export const process: FsmStateConfig = {
   key: "App",
   transitions: [

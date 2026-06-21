@@ -1,12 +1,12 @@
-import { describe, it, expect } from "../deps.ts";
-import { toStatechartsPanels } from "../html/toStatechartsPanels.ts";
-import { process } from "../data/process.checkout.ts";
-import { buildStatechartCss } from "../../src/index-html.ts";
 import { JSDOM } from "jsdom";
+import { buildStatechartCss } from "../../src/index-html.js";
 import {
   RuntimeStatechartApi,
   StateChartIndex,
-} from "../../src/index-runtime.ts";
+} from "../../src/index-runtime.js";
+import { process } from "../data/process.checkout.js";
+import { describe, expect, it } from "../deps.js";
+import { toStatechartsPanels } from "../html/toStatechartsPanels.js";
 
 describe("RuntimeStatechartApi", () => {
   it("should generate transitions graph", async () => {
