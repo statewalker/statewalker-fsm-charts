@@ -12,7 +12,7 @@ export function buildSections(root: HTMLElement | Iterable<Node>): DomSection {
   let peek: DomSection = null!;
   const stack: DomSection[] = [];
   const aligner = newTreeBuilder<[HTMLElement?]>({
-    enter(level, header) {
+    enter(_level, header) {
       const section: DomSection = {
         header,
         content: [],
@@ -80,6 +80,7 @@ export function findSection(
   for (const s of vistSections(section)) {
     if (accept(s) === true) return s;
   }
+  return undefined;
 }
 
 // --------------------------------------------

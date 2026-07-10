@@ -49,15 +49,15 @@
     "url": "git@github.com:statewalker/statewalker-fsm-charts.git"
   },
   "scripts": {
-    "build": "rm -fr ./dist && yarn test && tsup",
+    "build": "rm -fr ./dist && pnpm test && tsup",
     "watch": "tsup --watch",
     "watch-for-viewer": "tsup --watch --outDir=../statewalker-fsm-viewer/src/.observablehq/cache/_node/@statewalker/fsm-charts@0.2.1",
     "clean": "rm -rf dist",
     "lint": "eslint",
-    "lint:fix": "yarn lint -- --fix",
+    "lint:fix": "pnpm lint --fix",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "prepublish": "yarn build"
+    "prepublish": "pnpm build"
   },
   "publishConfig": {
     "access": "public"
