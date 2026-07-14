@@ -1,6 +1,6 @@
 export function barycenter(
   g: any,
-  movable: any
+  movable: any,
 ): (
   | {
       v: any;

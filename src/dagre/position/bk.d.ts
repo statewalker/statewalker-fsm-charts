@@ -9,7 +9,7 @@ export function verticalAlignment(
   g: any,
   layering: any,
   conflicts: any,
-  neighborFn: any
+  neighborFn: any,
 ): {
   root: {};
   align: {};
@@ -19,13 +19,13 @@ export function horizontalCompaction(
   layering: any,
   root: any,
   align: any,
-  reverseSep: any
+  reverseSep: any,
 ): {};
 export function alignCoordinates(xss: any, alignTo: any): void;
 export function findSmallestWidthAlignment(g: any, xss: any): any;
 export function balance(
   xss: any,
-  align: any
+  align: any,
 ): {
   [x: string]: any;
 };

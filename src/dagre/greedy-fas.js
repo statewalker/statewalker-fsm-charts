@@ -1,6 +1,6 @@
-import { _ } from '../lodash-es/index.ts';
-import { Graph } from '../graphlib/index.js';
-import { List } from './data/list.js';
+import { Graph } from "../graphlib/index.js";
+import { _ } from "../lodash-es/index.ts";
+import { List } from "./data/list.js";
 
 /*
  * A greedy heuristic for finding a feedback arc set for a graph. A feedback
@@ -21,11 +21,7 @@ function greedyFAS(g, weightFn) {
   var results = doGreedyFAS(state.graph, state.buckets, state.zeroIdx);
 
   // Expand multi-edges
-  return _.flatten(
-    _.map(results, function (e) {
-      return g.outEdges(e.v, e.w);
-    })
-  );
+  return _.flatten(_.map(results, (e) => g.outEdges(e.v, e.w)));
 }
 
 function doGreedyFAS(g, buckets, zeroIdx) {
@@ -45,7 +41,9 @@ function doGreedyFAS(g, buckets, zeroIdx) {
       for (var i = buckets.length - 2; i > 0; --i) {
         entry = buckets[i].dequeue();
         if (entry) {
-          results = results.concat(removeNode(g, buckets, zeroIdx, entry, true));
+          results = results.concat(
+            removeNode(g, buckets, zeroIdx, entry, true),
+          );
           break;
         }
       }
@@ -58,7 +56,7 @@ function doGreedyFAS(g, buckets, zeroIdx) {
 function removeNode(g, buckets, zeroIdx, entry, collectPredecessors) {
   var results = collectPredecessors ? [] : undefined;
 
-  _.forEach(g.inEdges(entry.v), function (edge) {
+  _.forEach(g.inEdges(entry.v), (edge) => {
     var weight = g.edge(edge);
     var uEntry = g.node(edge.v);
 
@@ -70,11 +68,11 @@ function removeNode(g, buckets, zeroIdx, entry, collectPredecessors) {
     assignBucket(buckets, zeroIdx, uEntry);
   });
 
-  _.forEach(g.outEdges(entry.v), function (edge) {
+  _.forEach(g.outEdges(entry.v), (edge) => {
     var weight = g.edge(edge);
     var w = edge.w;
     var wEntry = g.node(w);
-    wEntry['in'] -= weight;
+    wEntry.in -= weight;
     assignBucket(buckets, zeroIdx, wEntry);
   });
 
@@ -88,27 +86,25 @@ function buildState(g, weightFn) {
   var maxIn = 0;
   var maxOut = 0;
 
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     fasGraph.setNode(v, { v: v, in: 0, out: 0 });
   });
 
   // Aggregate weights on nodes, but also sum the weights across multi-edges
   // into a single edge for the fasGraph.
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var prevWeight = fasGraph.edge(e.v, e.w) || 0;
     var weight = weightFn(e);
     var edgeWeight = prevWeight + weight;
     fasGraph.setEdge(e.v, e.w, edgeWeight);
     maxOut = Math.max(maxOut, (fasGraph.node(e.v).out += weight));
-    maxIn = Math.max(maxIn, (fasGraph.node(e.w)['in'] += weight));
+    maxIn = Math.max(maxIn, (fasGraph.node(e.w).in += weight));
   });
 
-  var buckets = _.range(maxOut + maxIn + 3).map(function () {
-    return new List();
-  });
+  var buckets = _.range(maxOut + maxIn + 3).map(() => new List());
   var zeroIdx = maxIn + 1;
 
-  _.forEach(fasGraph.nodes(), function (v) {
+  _.forEach(fasGraph.nodes(), (v) => {
     assignBucket(buckets, zeroIdx, fasGraph.node(v));
   });
 
@@ -118,9 +114,9 @@ function buildState(g, weightFn) {
 function assignBucket(buckets, zeroIdx, entry) {
   if (!entry.out) {
     buckets[0].enqueue(entry);
-  } else if (!entry['in']) {
+  } else if (!entry.in) {
     buckets[buckets.length - 1].enqueue(entry);
   } else {
-    buckets[entry.out - entry['in'] + zeroIdx].enqueue(entry);
+    buckets[entry.out - entry.in + zeroIdx].enqueue(entry);
   }
 }

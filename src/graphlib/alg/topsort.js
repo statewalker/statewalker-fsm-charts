@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { topsort, CycleException };
 

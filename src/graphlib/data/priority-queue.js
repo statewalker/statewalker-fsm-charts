@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { PriorityQueue };
 
@@ -24,9 +24,7 @@ class PriorityQueue {
    * Returns the keys that are in the queue. Takes `O(n)` time.
    */
   keys() {
-    return this._arr.map(function (x) {
-      return x.key;
-    });
+    return this._arr.map((x) => x.key);
   }
   /**
    * Returns `true` if **key** is in the queue and `false` if not.
@@ -52,7 +50,7 @@ class PriorityQueue {
    */
   min() {
     if (this.size() === 0) {
-      throw new Error('Queue underflow');
+      throw new Error("Queue underflow");
     }
     return this._arr[0].key;
   }
@@ -98,13 +96,13 @@ class PriorityQueue {
     var index = this._keyIndices[key];
     if (priority > this._arr[index].priority) {
       throw new Error(
-        'New priority is greater than current priority. ' +
-          'Key: ' +
+        "New priority is greater than current priority. " +
+          "Key: " +
           key +
-          ' Old: ' +
+          " Old: " +
           this._arr[index].priority +
-          ' New: ' +
-          priority
+          " New: " +
+          priority,
       );
     }
     this._arr[index].priority = priority;

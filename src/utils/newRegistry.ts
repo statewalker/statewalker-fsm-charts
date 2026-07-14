@@ -15,7 +15,7 @@ export function newRegistry(
   const register = (action: () => unknown) => {
     const id = counter++;
     return (registrations[id] = Object.assign(
-      function (skip?: boolean) {
+      (skip?: boolean) => {
         try {
           delete registrations[id];
           return !skip && action && action();

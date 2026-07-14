@@ -1,11 +1,11 @@
-import { _ } from '../../lodash-es/index.ts';
-import { Graph } from '../../graphlib/index.js';
-import * as util from '../util.js';
-import { addSubgraphConstraints } from './add-subgraph-constraints.js';
-import { buildLayerGraph } from './build-layer-graph.js';
-import { crossCount } from './cross-count.js';
-import { initOrder } from './init-order.js';
-import { sortSubgraph } from './sort-subgraph.js';
+import { Graph } from "../../graphlib/index.js";
+import { _ } from "../../lodash-es/index.ts";
+import * as util from "../util.js";
+import { addSubgraphConstraints } from "./add-subgraph-constraints.js";
+import { buildLayerGraph } from "./build-layer-graph.js";
+import { crossCount } from "./cross-count.js";
+import { initOrder } from "./init-order.js";
+import { sortSubgraph } from "./sort-subgraph.js";
 
 export { order };
 
@@ -26,8 +26,12 @@ export { order };
  */
 function order(g) {
   var maxRank = util.maxRank(g),
-    downLayerGraphs = buildLayerGraphs(g, _.range(1, maxRank + 1), 'inEdges'),
-    upLayerGraphs = buildLayerGraphs(g, _.range(maxRank - 1, -1, -1), 'outEdges');
+    downLayerGraphs = buildLayerGraphs(g, _.range(1, maxRank + 1), "inEdges"),
+    upLayerGraphs = buildLayerGraphs(
+      g,
+      _.range(maxRank - 1, -1, -1),
+      "outEdges",
+    );
 
   var layering = initOrder(g);
   assignOrder(g, layering);
@@ -51,17 +55,15 @@ function order(g) {
 }
 
 function buildLayerGraphs(g, ranks, relationship) {
-  return _.map(ranks, function (rank) {
-    return buildLayerGraph(g, rank, relationship);
-  });
+  return _.map(ranks, (rank) => buildLayerGraph(g, rank, relationship));
 }
 
 function sweepLayerGraphs(layerGraphs, biasRight) {
   var cg = new Graph();
-  _.forEach(layerGraphs, function (lg) {
+  _.forEach(layerGraphs, (lg) => {
     var root = lg.graph().root;
     var sorted = sortSubgraph(lg, root, cg, biasRight);
-    _.forEach(sorted.vs, function (v, i) {
+    _.forEach(sorted.vs, (v, i) => {
       lg.node(v).order = i;
     });
     addSubgraphConstraints(lg, cg, sorted.vs);
@@ -69,8 +71,8 @@ function sweepLayerGraphs(layerGraphs, biasRight) {
 }
 
 function assignOrder(g, layering) {
-  _.forEach(layering, function (layer) {
-    _.forEach(layer, function (v, i) {
+  _.forEach(layering, (layer) => {
+    _.forEach(layer, (v, i) => {
       g.node(v).order = i;
     });
   });

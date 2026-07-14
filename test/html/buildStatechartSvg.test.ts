@@ -1,6 +1,6 @@
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import * as lodash from "lodash-es";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
 import {
   buildFlatCharts,
   getGraphParamsProvider,
@@ -10,7 +10,7 @@ import { describe, expect, it } from "../deps.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import fs from "fs/promises";
+import fs from "node:fs/promises";
 import {
   buildStatechartCss,
   buildStatechartSvg,
@@ -26,7 +26,7 @@ describe("buildStatechartSvg", () => {
     let control = "";
     try {
       control = await fs.readFile(controlFileName, "utf-8");
-    } catch (error) {
+    } catch (_error) {
       control = "";
     }
     const transitions = process.transitions;

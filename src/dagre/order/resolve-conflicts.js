@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { resolveConflicts };
 
@@ -29,7 +29,7 @@ export { resolveConflicts };
  */
 function resolveConflicts(entries, cg) {
   var mappedEntries = {};
-  _.forEach(entries, function (entry, i) {
+  _.forEach(entries, (entry, i) => {
     var tmp = (mappedEntries[entry.v] = {
       indegree: 0,
       in: [],
@@ -45,7 +45,7 @@ function resolveConflicts(entries, cg) {
     }
   });
 
-  _.forEach(cg.edges(), function (e) {
+  _.forEach(cg.edges(), (e) => {
     var entryV = mappedEntries[e.v];
     var entryW = mappedEntries[e.w];
     if (!_.isUndefined(entryV) && !_.isUndefined(entryW)) {
@@ -54,7 +54,7 @@ function resolveConflicts(entries, cg) {
     }
   });
 
-  var sourceSet = _.filter(mappedEntries, function (entry) {
+  var sourceSet = _.filter(mappedEntries, (entry) => {
     // @ts-expect-error
     return !entry.indegree;
   });
@@ -66,7 +66,7 @@ function doResolveConflicts(sourceSet) {
   var entries = [];
 
   function handleIn(vEntry) {
-    return function (uEntry) {
+    return (uEntry) => {
       if (uEntry.merged) {
         return;
       }
@@ -81,8 +81,8 @@ function doResolveConflicts(sourceSet) {
   }
 
   function handleOut(vEntry) {
-    return function (wEntry) {
-      wEntry['in'].push(vEntry);
+    return (wEntry) => {
+      wEntry.in.push(vEntry);
       if (--wEntry.indegree === 0) {
         sourceSet.push(wEntry);
       }
@@ -92,17 +92,13 @@ function doResolveConflicts(sourceSet) {
   while (sourceSet.length) {
     var entry = sourceSet.pop();
     entries.push(entry);
-    _.forEach(entry['in'].reverse(), handleIn(entry));
+    _.forEach(entry.in.reverse(), handleIn(entry));
     _.forEach(entry.out, handleOut(entry));
   }
 
   return _.map(
-    _.filter(entries, function (entry) {
-      return !entry.merged;
-    }),
-    function (entry) {
-      return _.pick(entry, ['vs', 'i', 'barycenter', 'weight']);
-    }
+    _.filter(entries, (entry) => !entry.merged),
+    (entry) => _.pick(entry, ["vs", "i", "barycenter", "weight"]),
   );
 }
 

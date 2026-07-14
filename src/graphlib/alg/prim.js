@@ -1,6 +1,6 @@
-import { _ } from '../../lodash-es/index.ts';
-import { PriorityQueue } from '../data/priority-queue.js';
-import { Graph } from '../graph.js';
+import { _ } from "../../lodash-es/index.ts";
+import { PriorityQueue } from "../data/priority-queue.js";
+import { Graph } from "../graph.js";
 
 export { prim };
 
@@ -26,7 +26,7 @@ function prim(g, weightFunc) {
     return result;
   }
 
-  _.each(g.nodes(), function (v) {
+  _.each(g.nodes(), (v) => {
     pq.add(v, Number.POSITIVE_INFINITY);
     result.setNode(v);
   });
@@ -40,7 +40,7 @@ function prim(g, weightFunc) {
     if (_.has(parents, v)) {
       result.setEdge(v, parents[v]);
     } else if (init) {
-      throw new Error('Input graph is not connected: ' + g);
+      throw new Error(`Input graph is not connected: ${g}`);
     } else {
       init = true;
     }

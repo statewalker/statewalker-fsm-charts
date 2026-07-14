@@ -1,11 +1,11 @@
-import { _ } from '../lodash-es/index.ts';
+import { _ } from "../lodash-es/index.ts";
 
 export { parentDummyChains };
 
 function parentDummyChains(g) {
   var postorderNums = postorder(g);
 
-  _.forEach(g.graph().dummyChains, function (v) {
+  _.forEach(g.graph().dummyChains, (v) => {
     var node = g.node(v);
     var edgeObj = node.edgeObj;
     var pathData = findPath(g, postorderNums, edgeObj.v, edgeObj.w);
@@ -19,7 +19,10 @@ function parentDummyChains(g) {
       node = g.node(v);
 
       if (ascending) {
-        while ((pathV = path[pathIdx]) !== lca && g.node(pathV).maxRank < node.rank) {
+        while (
+          (pathV = path[pathIdx]) !== lca &&
+          g.node(pathV).maxRank < node.rank
+        ) {
           pathIdx++;
         }
 
@@ -59,7 +62,10 @@ function findPath(g, postorderNums, v, w) {
   do {
     parent = g.parent(parent);
     vPath.push(parent);
-  } while (parent && (postorderNums[parent].low > low || lim > postorderNums[parent].lim));
+  } while (
+    parent &&
+    (postorderNums[parent].low > low || lim > postorderNums[parent].lim)
+  );
   lca = parent;
 
   // Traverse from w to LCA

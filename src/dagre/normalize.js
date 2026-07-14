@@ -1,5 +1,5 @@
-import { _ } from '../lodash-es/index.ts';
-import * as util from './util.js';
+import { _ } from "../lodash-es/index.ts";
+import * as util from "./util.js";
 
 export { run, undo };
 
@@ -21,7 +21,7 @@ export { run, undo };
  */
 function run(g) {
   g.graph().dummyChains = [];
-  _.forEach(g.edges(), function (edge) {
+  _.forEach(g.edges(), (edge) => {
     normalizeEdge(g, edge);
   });
 }
@@ -49,12 +49,12 @@ function normalizeEdge(g, e) {
       edgeObj: e,
       rank: vRank,
     };
-    dummy = util.addDummyNode(g, 'edge', attrs, '_d');
+    dummy = util.addDummyNode(g, "edge", attrs, "_d");
     if (vRank === labelRank) {
       attrs.width = edgeLabel.width;
       attrs.height = edgeLabel.height;
       // @ts-expect-error
-      attrs.dummy = 'edge-label';
+      attrs.dummy = "edge-label";
       // @ts-expect-error
       attrs.labelpos = edgeLabel.labelpos;
     }
@@ -69,7 +69,7 @@ function normalizeEdge(g, e) {
 }
 
 function undo(g) {
-  _.forEach(g.graph().dummyChains, function (v) {
+  _.forEach(g.graph().dummyChains, (v) => {
     var node = g.node(v);
     var origLabel = node.edgeLabel;
     var w;
@@ -78,7 +78,7 @@ function undo(g) {
       w = g.successors(v)[0];
       g.removeNode(v);
       origLabel.points.push({ x: node.x, y: node.y });
-      if (node.dummy === 'edge-label') {
+      if (node.dummy === "edge-label") {
         origLabel.x = node.x;
         origLabel.y = node.y;
         origLabel.width = node.width;

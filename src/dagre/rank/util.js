@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { longestPath, slack };
 
@@ -33,11 +33,7 @@ function longestPath(g) {
     }
     visited[v] = true;
 
-    var rank = _.min(
-      _.map(g.outEdges(v), function (e) {
-        return dfs(e.w) - g.edge(e).minlen;
-      })
-    );
+    var rank = _.min(_.map(g.outEdges(v), (e) => dfs(e.w) - g.edge(e).minlen));
 
     if (
       rank === Number.POSITIVE_INFINITY || // return value of _.map([]) for Lodash 3

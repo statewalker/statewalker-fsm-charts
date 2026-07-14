@@ -19,7 +19,7 @@ export function buildSections(root: HTMLElement | Iterable<Node>): DomSection {
         children: [],
       };
       top = top || section;
-      peek && peek.children.push(section);
+      peek?.children.push(section);
       peek = section;
       stack.push(section);
     },
@@ -29,20 +29,23 @@ export function buildSections(root: HTMLElement | Iterable<Node>): DomSection {
     },
   });
   aligner(0);
-  let currentHeaderLevel = 0;
-  let currentLevel = 0;
+  // Track the actual header magnitudes of the open ancestor sections. A header of
+  // level L closes every open header at its level or deeper, then opens at the
+  // resulting depth. Deriving depth from the real magnitudes (not a ±1 delta) keeps
+  // nesting correct for any header sequence and never goes negative.
+  const headerLevels: number[] = [];
   for (const node of nodes) {
     if (isDomElement(node)) {
       if (/^H[1-6]$/i.test(node.tagName)) {
         const headerLevel = +node.tagName.replace(/^H/, "");
-        currentLevel =
-          headerLevel > currentHeaderLevel
-            ? currentLevel + 1
-            : headerLevel < currentHeaderLevel
-              ? currentLevel - 1
-              : currentLevel;
-        currentHeaderLevel = headerLevel;
-        aligner(currentLevel, node);
+        while (
+          headerLevels.length > 0 &&
+          headerLevels[headerLevels.length - 1] >= headerLevel
+        ) {
+          headerLevels.pop();
+        }
+        headerLevels.push(headerLevel);
+        aligner(headerLevels.length, node);
       } else {
         peek.content.push(node);
       }

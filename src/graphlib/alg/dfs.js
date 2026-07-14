@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { dfs };
 
@@ -19,12 +19,12 @@ function dfs(g, vs, order) {
 
   var acc = [];
   var visited = {};
-  _.each(vs, function (v) {
+  _.each(vs, (v) => {
     if (!g.hasNode(v)) {
-      throw new Error('Graph does not have node: ' + v);
+      throw new Error(`Graph does not have node: ${v}`);
     }
 
-    doDfs(g, v, order === 'post', visited, navigation, acc);
+    doDfs(g, v, order === "post", visited, navigation, acc);
   });
   return acc;
 }
@@ -36,7 +36,7 @@ function doDfs(g, v, postorder, visited, navigation, acc) {
     if (!postorder) {
       acc.push(v);
     }
-    _.each(navigation(v), function (w) {
+    _.each(navigation(v), (w) => {
       doDfs(g, w, postorder, visited, navigation, acc);
     });
     if (postorder) {

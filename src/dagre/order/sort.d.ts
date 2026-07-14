@@ -1,6 +1,6 @@
 export function sort(
   entries: any,
-  biasRight: any
+  biasRight: any,
 ): {
   vs: any[];
 };

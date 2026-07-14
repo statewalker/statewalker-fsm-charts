@@ -1,4 +1,4 @@
-import { topsort, CycleException } from './topsort.js';
+import { CycleException, topsort } from "./topsort.js";
 
 export { isAcyclic };
 

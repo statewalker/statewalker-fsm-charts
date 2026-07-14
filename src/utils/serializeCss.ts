@@ -15,7 +15,7 @@ export function serializeCss(obj: CssTree) {
       for (const sel of key.split(",").map((_) => _.trim())) {
         for (const prefix of prefixes) {
           const selector = sel.replace(/^(.)/, (_, ch) =>
-            ch === "&" ? prefix : prefix.length > 0 ? prefix + " " + ch : ch,
+            ch === "&" ? prefix : prefix.length > 0 ? `${prefix} ${ch}` : ch,
           );
           selectors.push(selector);
         }

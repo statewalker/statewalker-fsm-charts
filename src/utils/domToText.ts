@@ -20,7 +20,7 @@ export function domToText(elm: HTMLElement) {
       const child = el.childNodes[i];
       const result = visitor(el.childNodes[i]);
       if (child.nodeType !== Node.ELEMENT_NODE) continue;
-      if (result !== undefined && !Boolean(result)) continue;
+      if (result !== undefined && !result) continue;
       visit(child as HTMLElement, visitor);
     }
   }

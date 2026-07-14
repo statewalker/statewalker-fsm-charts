@@ -8,7 +8,7 @@ export type DrawContext = {
     x1: number,
     y1: number,
     x2: number,
-    y2: number
+    y2: number,
   ): void;
   moveTo(x: number, y: number): void;
   lineTo(x: number, y: number): void;
@@ -33,7 +33,7 @@ export class BasisCurve {
       (this._x0 + 2 * this._x1) / 3,
       (this._y0 + 2 * this._y1) / 3,
       (this._x0 + 4 * this._x1 + x) / 6,
-      (this._y0 + 4 * this._y1 + y) / 6 
+      (this._y0 + 4 * this._y1 + y) / 6,
     );
   }
 
@@ -77,7 +77,7 @@ export class BasisCurve {
         this._point = 3;
         this._context.lineTo(
           (5 * this._x0 + this._x1) / 6,
-          (5 * this._y0 + this._y1) / 6
+          (5 * this._y0 + this._y1) / 6,
         ); // falls through
       default:
         this.$point(x, y);

@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { addSubgraphConstraints };
 
@@ -6,7 +6,7 @@ function addSubgraphConstraints(g, cg, vs) {
   var prev = {},
     rootPrev;
 
-  _.forEach(vs, function (v) {
+  _.forEach(vs, (v) => {
     var child = g.parent(v),
       parent,
       prevChild;

@@ -1,5 +1,5 @@
-import { _ } from '../lodash-es/index.ts';
-import { Graph } from './graph.js';
+import { _ } from "../lodash-es/index.ts";
+import { Graph } from "./graph.js";
 
 export { write, read };
 
@@ -20,7 +20,7 @@ function write(g) {
 }
 
 function writeNodes(g) {
-  return _.map(g.nodes(), function (v) {
+  return _.map(g.nodes(), (v) => {
     var nodeValue = g.node(v);
     var parent = g.parent(v);
     var node = { v: v };
@@ -35,7 +35,7 @@ function writeNodes(g) {
 }
 
 function writeEdges(g) {
-  return _.map(g.edges(), function (e) {
+  return _.map(g.edges(), (e) => {
     var edgeValue = g.edge(e);
     var edge = { v: e.v, w: e.w };
     if (!_.isUndefined(e.name)) {
@@ -50,13 +50,13 @@ function writeEdges(g) {
 
 function read(json) {
   var g = new Graph(json.options).setGraph(json.value);
-  _.each(json.nodes, function (entry) {
+  _.each(json.nodes, (entry) => {
     g.setNode(entry.v, entry.value);
     if (entry.parent) {
       g.setParent(entry.v, entry.parent);
     }
   });
-  _.each(json.edges, function (entry) {
+  _.each(json.edges, (entry) => {
     g.setEdge({ v: entry.v, w: entry.w, name: entry.name }, entry.value);
   });
   return g;

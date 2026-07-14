@@ -1,8 +1,8 @@
-import { _ } from '../lodash-es/index.ts';
+import { _ } from "../lodash-es/index.ts";
 
-var DEFAULT_EDGE_NAME = '\x00';
-var GRAPH_NODE = '\x00';
-var EDGE_KEY_DELIM = '\x01';
+var DEFAULT_EDGE_NAME = "\x00";
+var GRAPH_NODE = "\x00";
+var EDGE_KEY_DELIM = "\x01";
 
 // Implementation notes:
 //
@@ -25,9 +25,9 @@ var EDGE_KEY_DELIM = '\x01';
 //    we're going to get to a performant hashtable in JavaScript.
 export class Graph {
   constructor(opts = {}) {
-    this._isDirected = _.has(opts, 'directed') ? opts.directed : true;
-    this._isMultigraph = _.has(opts, 'multigraph') ? opts.multigraph : false;
-    this._isCompound = _.has(opts, 'compound') ? opts.compound : false;
+    this._isDirected = _.has(opts, "directed") ? opts.directed : true;
+    this._isMultigraph = _.has(opts, "multigraph") ? opts.multigraph : false;
+    this._isCompound = _.has(opts, "compound") ? opts.compound : false;
 
     // Label for the graph itself
     this._label = undefined;
@@ -100,25 +100,18 @@ export class Graph {
     return _.keys(this._nodes);
   }
   sources() {
-    var self = this;
-    return _.filter(this.nodes(), function (v) {
-      return _.isEmpty(self._in[v]);
-    });
+    return _.filter(this.nodes(), (v) => _.isEmpty(this._in[v]));
   }
   sinks() {
-    var self = this;
-    return _.filter(this.nodes(), function (v) {
-      return _.isEmpty(self._out[v]);
-    });
+    return _.filter(this.nodes(), (v) => _.isEmpty(this._out[v]));
   }
   setNodes(vs, value) {
     var args = arguments;
-    var self = this;
-    _.each(vs, function (v) {
+    _.each(vs, (v) => {
       if (args.length > 1) {
-        self.setNode(v, value);
+        this.setNode(v, value);
       } else {
-        self.setNode(v);
+        this.setNode(v);
       }
     });
     return this;
@@ -152,17 +145,16 @@ export class Graph {
     return _.has(this._nodes, v);
   }
   removeNode(v) {
-    var self = this;
     if (_.has(this._nodes, v)) {
-      var removeEdge = function (e) {
-        self.removeEdge(self._edgeObjs[e]);
+      var removeEdge = (e) => {
+        this.removeEdge(this._edgeObjs[e]);
       };
       delete this._nodes[v];
       if (this._isCompound) {
         this._removeFromParentsChildList(v);
         delete this._parent[v];
-        _.each(this.children(v), function (child) {
-          self.setParent(child);
+        _.each(this.children(v), (child) => {
+          this.setParent(child);
         });
         delete this._children[v];
       }
@@ -178,17 +170,23 @@ export class Graph {
   }
   setParent(v, parent) {
     if (!this._isCompound) {
-      throw new Error('Cannot set parent in a non-compound graph');
+      throw new Error("Cannot set parent in a non-compound graph");
     }
 
     if (_.isUndefined(parent)) {
       parent = GRAPH_NODE;
     } else {
       // Coerce parent to string
-      parent += '';
-      for (var ancestor = parent; !_.isUndefined(ancestor); ancestor = this.parent(ancestor)) {
+      parent += "";
+      for (
+        var ancestor = parent;
+        !_.isUndefined(ancestor);
+        ancestor = this.parent(ancestor)
+      ) {
         if (ancestor === v) {
-          throw new Error('Setting ' + parent + ' as parent of ' + v + ' would create a cycle');
+          throw new Error(
+            `Setting ${parent} as parent of ${v} would create a cycle`,
+          );
         }
       }
 
@@ -266,13 +264,13 @@ export class Graph {
     copy.setGraph(this.graph());
 
     var self = this;
-    _.each(this._nodes, function (value, v) {
+    _.each(this._nodes, (value, v) => {
       if (filter(v)) {
         copy.setNode(v, value);
       }
     });
 
-    _.each(this._edgeObjs, function (e) {
+    _.each(this._edgeObjs, (e) => {
       // @ts-expect-error
       if (copy.hasNode(e.v) && copy.hasNode(e.w)) {
         copy.setEdge(e, self.edge(e));
@@ -293,7 +291,7 @@ export class Graph {
     }
 
     if (this._isCompound) {
-      _.each(copy.nodes(), function (v) {
+      _.each(copy.nodes(), (v) => {
         copy.setParent(v, findParent(v));
       });
     }
@@ -315,13 +313,12 @@ export class Graph {
     return _.values(this._edgeObjs);
   }
   setPath(vs, value) {
-    var self = this;
     var args = arguments;
-    _.reduce(vs, function (v, w) {
+    _.reduce(vs, (v, w) => {
       if (args.length > 1) {
-        self.setEdge(v, w, value);
+        this.setEdge(v, w, value);
       } else {
-        self.setEdge(v, w);
+        this.setEdge(v, w);
       }
       return w;
     });
@@ -336,7 +333,7 @@ export class Graph {
     var valueSpecified = false;
     var arg0 = arguments[0];
 
-    if (typeof arg0 === 'object' && arg0 !== null && 'v' in arg0) {
+    if (typeof arg0 === "object" && arg0 !== null && "v" in arg0) {
       v = arg0.v;
       w = arg0.w;
       name = arg0.name;
@@ -354,10 +351,10 @@ export class Graph {
       }
     }
 
-    v = '' + v;
-    w = '' + w;
+    v = `${v}`;
+    w = `${w}`;
     if (!_.isUndefined(name)) {
-      name = '' + name;
+      name = `${name}`;
     }
 
     var e = edgeArgsToId(this._isDirected, v, w, name);
@@ -369,7 +366,7 @@ export class Graph {
     }
 
     if (!_.isUndefined(name) && !this._isMultigraph) {
-      throw new Error('Cannot set a named edge when isMultigraph = false');
+      throw new Error("Cannot set a named edge when isMultigraph = false");
     }
 
     // It didn't exist, so we need to create it.
@@ -378,7 +375,9 @@ export class Graph {
     this.setNode(w);
 
     // @ts-expect-error
-    this._edgeLabels[e] = valueSpecified ? value : this._defaultEdgeLabelFn(v, w, name);
+    this._edgeLabels[e] = valueSpecified
+      ? value
+      : this._defaultEdgeLabelFn(v, w, name);
 
     var edgeObj = edgeArgsToObj(this._isDirected, v, w, name);
     // Ensure we add undirected edges in a consistent way.
@@ -434,9 +433,7 @@ export class Graph {
       if (!u) {
         return edges;
       }
-      return _.filter(edges, function (edge) {
-        return edge.v === u;
-      });
+      return _.filter(edges, (edge) => edge.v === u);
     }
   }
   outEdges(v, w) {
@@ -446,9 +443,7 @@ export class Graph {
       if (!w) {
         return edges;
       }
-      return _.filter(edges, function (edge) {
-        return edge.w === w;
-      });
+      return _.filter(edges, (edge) => edge.w === w);
     }
   }
   nodeEdges(v, w) {
@@ -480,19 +475,25 @@ function decrementOrRemoveEntry(map, k) {
 }
 
 function edgeArgsToId(isDirected, v_, w_, name) {
-  var v = '' + v_;
-  var w = '' + w_;
+  var v = `${v_}`;
+  var w = `${w_}`;
   if (!isDirected && v > w) {
     var tmp = v;
     v = w;
     w = tmp;
   }
-  return v + EDGE_KEY_DELIM + w + EDGE_KEY_DELIM + (_.isUndefined(name) ? DEFAULT_EDGE_NAME : name);
+  return (
+    v +
+    EDGE_KEY_DELIM +
+    w +
+    EDGE_KEY_DELIM +
+    (_.isUndefined(name) ? DEFAULT_EDGE_NAME : name)
+  );
 }
 
 function edgeArgsToObj(isDirected, v_, w_, name) {
-  var v = '' + v_;
-  var w = '' + w_;
+  var v = `${v_}`;
+  var w = `${w_}`;
   if (!isDirected && v > w) {
     var tmp = v;
     v = w;

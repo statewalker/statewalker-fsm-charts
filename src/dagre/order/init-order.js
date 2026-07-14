@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { initOrder };
 
@@ -15,17 +15,9 @@ export { initOrder };
  */
 function initOrder(g) {
   var visited = {};
-  var simpleNodes = _.filter(g.nodes(), function (v) {
-    return !g.children(v).length;
-  });
-  var maxRank = _.max(
-    _.map(simpleNodes, function (v) {
-      return g.node(v).rank;
-    })
-  );
-  var layers = _.map(_.range(maxRank + 1), function () {
-    return [];
-  });
+  var simpleNodes = _.filter(g.nodes(), (v) => !g.children(v).length);
+  var maxRank = _.max(_.map(simpleNodes, (v) => g.node(v).rank));
+  var layers = _.map(_.range(maxRank + 1), () => []);
 
   function dfs(v) {
     if (_.has(visited, v)) return;
@@ -35,9 +27,7 @@ function initOrder(g) {
     _.forEach(g.successors(v), dfs);
   }
 
-  var orderedVs = _.sortBy(simpleNodes, function (v) {
-    return g.node(v).rank;
-  });
+  var orderedVs = _.sortBy(simpleNodes, (v) => g.node(v).rank);
   _.forEach(orderedVs, dfs);
 
   return layers;

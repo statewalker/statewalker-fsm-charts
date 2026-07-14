@@ -2,8 +2,8 @@ export let _: any = {
   constant: (value: any) => () => value,
 };
 export function setLodash(lib: any) {
-  _ = lib;  
+  _ = lib;
 }
-export function getLodash() { 
+export function getLodash() {
   return _;
 }

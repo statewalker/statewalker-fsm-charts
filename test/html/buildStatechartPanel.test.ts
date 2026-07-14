@@ -1,6 +1,6 @@
-import fs from "fs/promises";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
+import fs from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { process } from "../data/process.checkout.js";
 import { describe, expect, it } from "../deps.js";
 
@@ -20,7 +20,7 @@ describe("buildStatechartsPanel", () => {
     let control = "";
     try {
       control = await fs.readFile(controlFileName, "utf-8");
-    } catch (error) {
+    } catch (_error) {
       control = "";
     }
 

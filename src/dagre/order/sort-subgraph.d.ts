@@ -2,7 +2,7 @@ export function sortSubgraph(
   g: any,
   v: any,
   cg: any,
-  biasRight: any
+  biasRight: any,
 ): {
   vs: any[];
 };

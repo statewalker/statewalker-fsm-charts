@@ -27,6 +27,6 @@ export function serializeAttrs(
     return String(value)
       .replaceAll(/</gim, "&lt;")
       .replaceAll(/>/gim, "&gt;")
-      .replaceAll(/"/gim, "&qout;");
+      .replaceAll(/"/gim, "&quot;");
   }
 }

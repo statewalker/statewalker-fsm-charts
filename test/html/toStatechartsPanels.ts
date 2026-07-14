@@ -19,7 +19,7 @@ export function toStatechart(config: FsmStateConfig): {
     stateTextPadding: [14, 16],
     transitionsFontSize: 12,
     transitionsTextPadding: 6,
-    getTransitionLabel: (from: string, event: string, to: string) => {
+    getTransitionLabel: (_from: string, event: string, _to: string) => {
       return event;
     },
   });

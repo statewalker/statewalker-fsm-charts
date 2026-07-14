@@ -1,8 +1,8 @@
-import { _ } from '../../lodash-es/index.ts';
-import * as alg from '../../graphlib/alg/index.js';
-import { simplify } from '../util.js';
-import { feasibleTree } from './feasible-tree.js';
-import { longestPath, slack } from './util.js';
+import * as alg from "../../graphlib/alg/index.js";
+import { _ } from "../../lodash-es/index.ts";
+import { simplify } from "../util.js";
+import { feasibleTree } from "./feasible-tree.js";
+import { longestPath, slack } from "./util.js";
 
 export { networkSimplex };
 
@@ -67,7 +67,7 @@ function networkSimplex(g) {
 function initCutValues(t, g) {
   var vs = alg.postorder(t, t.nodes());
   vs = vs.slice(0, vs.length - 1);
-  _.forEach(vs, function (v) {
+  _.forEach(vs, (v) => {
     assignCutValue(t, g, v);
   });
 }
@@ -99,7 +99,7 @@ function calcCutValue(t, g, child) {
 
   cutValue = graphEdge.weight;
 
-  _.forEach(g.nodeEdges(child), function (e) {
+  _.forEach(g.nodeEdges(child), (e) => {
     var isOutEdge = e.v === child,
       other = isOutEdge ? e.w : e.v;
 
@@ -130,7 +130,7 @@ function dfsAssignLowLim(tree, visited, nextLim, v, parent) {
   var label = tree.node(v);
 
   visited[v] = true;
-  _.forEach(tree.neighbors(v), function (w) {
+  _.forEach(tree.neighbors(v), (w) => {
     if (!_.has(visited, w)) {
       nextLim = dfsAssignLowLim(tree, visited, nextLim, w, v);
     }
@@ -149,9 +149,7 @@ function dfsAssignLowLim(tree, visited, nextLim, v, parent) {
 }
 
 function leaveEdge(tree) {
-  return _.find(tree.edges(), function (e) {
-    return tree.edge(e).cutvalue < 0;
-  });
+  return _.find(tree.edges(), (e) => tree.edge(e).cutvalue < 0);
 }
 
 function enterEdge(t, g, edge) {
@@ -178,16 +176,14 @@ function enterEdge(t, g, edge) {
     flip = true;
   }
 
-  var candidates = _.filter(g.edges(), function (edge) {
-    return (
+  var candidates = _.filter(
+    g.edges(),
+    (edge) =>
       flip === isDescendant(t, t.node(edge.v), tailLabel) &&
-      flip !== isDescendant(t, t.node(edge.w), tailLabel)
-    );
-  });
+      flip !== isDescendant(t, t.node(edge.w), tailLabel),
+  );
 
-  return _.minBy(candidates, function (edge) {
-    return slack(g, edge);
-  });
+  return _.minBy(candidates, (edge) => slack(g, edge));
 }
 
 function exchangeEdges(t, g, e, f) {
@@ -201,12 +197,10 @@ function exchangeEdges(t, g, e, f) {
 }
 
 function updateRanks(t, g) {
-  var root = _.find(t.nodes(), function (v) {
-    return !g.node(v).parent;
-  });
+  var root = _.find(t.nodes(), (v) => !g.node(v).parent);
   var vs = alg.preorder(t, root);
   vs = vs.slice(1);
-  _.forEach(vs, function (v) {
+  _.forEach(vs, (v) => {
     var parent = t.node(v).parent,
       edge = g.edge(v, parent),
       flipped = false;
@@ -216,7 +210,8 @@ function updateRanks(t, g) {
       flipped = true;
     }
 
-    g.node(v).rank = g.node(parent).rank + (flipped ? edge.minlen : -edge.minlen);
+    g.node(v).rank =
+      g.node(parent).rank + (flipped ? edge.minlen : -edge.minlen);
   });
 }
 
@@ -231,6 +226,6 @@ function isTreeEdge(tree, u, v) {
  * Returns true if the specified node is descendant of the root node per the
  * assigned low and lim attributes in the tree.
  */
-function isDescendant(tree, vLabel, rootLabel) {
+function isDescendant(_tree, vLabel, rootLabel) {
   return rootLabel.low <= vLabel.lim && vLabel.lim <= rootLabel.lim;
 }

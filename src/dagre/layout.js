@@ -1,113 +1,111 @@
-import { _ } from '../lodash-es/index.ts';
-import { Graph } from '../graphlib/index.js';
-import { addBorderSegments } from './add-border-segments.js';
-import * as coordinateSystem from './coordinate-system.js';
-import * as acyclic from './acyclic.js';
-import * as normalize from './normalize.js';
-import { rank } from './rank/index.js';
-import * as nestingGraph from './nesting-graph.js';
-import { order } from './order/index.js';
-import { parentDummyChains } from './parent-dummy-chains.js';
-import { position } from './position/index.js';
-import * as util from './util.js';
+import { Graph } from "../graphlib/index.js";
+import { _ } from "../lodash-es/index.ts";
+import * as acyclic from "./acyclic.js";
+import { addBorderSegments } from "./add-border-segments.js";
+import * as coordinateSystem from "./coordinate-system.js";
+import * as nestingGraph from "./nesting-graph.js";
+import * as normalize from "./normalize.js";
+import { order } from "./order/index.js";
+import { parentDummyChains } from "./parent-dummy-chains.js";
+import { position } from "./position/index.js";
+import { rank } from "./rank/index.js";
+import * as util from "./util.js";
 
 export { layout };
 
 function layout(g, opts) {
-  var time = opts && opts.debugTiming ? util.time : util.notime;
-  time('layout', function () {
-    var layoutGraph = time('  buildLayoutGraph', function () {
-      return buildLayoutGraph(g);
-    });
-    time('  runLayout', function () {
+  var time = opts?.debugTiming ? util.time : util.notime;
+  time("layout", () => {
+    var layoutGraph = time("  buildLayoutGraph", () => buildLayoutGraph(g));
+    time("  runLayout", () => {
       runLayout(layoutGraph, time);
     });
-    time('  updateInputGraph', function () {
+    time("  updateInputGraph", () => {
       updateInputGraph(g, layoutGraph);
     });
   });
 }
 
 function runLayout(g, time) {
-  time('    makeSpaceForEdgeLabels', function () {
+  time("    makeSpaceForEdgeLabels", () => {
     makeSpaceForEdgeLabels(g);
   });
-  time('    removeSelfEdges', function () {
+  time("    removeSelfEdges", () => {
     removeSelfEdges(g);
   });
-  time('    acyclic', function () {
+  time("    acyclic", () => {
     acyclic.run(g);
   });
-  time('    nestingGraph.run', function () {
+  time("    nestingGraph.run", () => {
     nestingGraph.run(g);
   });
-  time('    rank', function () {
+  time("    rank", () => {
     rank(util.asNonCompoundGraph(g));
   });
-  time('    injectEdgeLabelProxies', function () {
+  time("    injectEdgeLabelProxies", () => {
     injectEdgeLabelProxies(g);
   });
-  time('    removeEmptyRanks', function () {
+  time("    removeEmptyRanks", () => {
     util.removeEmptyRanks(g);
   });
-  time('    nestingGraph.cleanup', function () {
+  time("    nestingGraph.cleanup", () => {
     nestingGraph.cleanup(g);
   });
-  time('    normalizeRanks', function () {
+  time("    normalizeRanks", () => {
     util.normalizeRanks(g);
   });
-  time('    assignRankMinMax', function () {
+  time("    assignRankMinMax", () => {
     assignRankMinMax(g);
   });
-  time('    removeEdgeLabelProxies', function () {
+  time("    removeEdgeLabelProxies", () => {
     removeEdgeLabelProxies(g);
   });
-  time('    normalize.run', function () {
+  time("    normalize.run", () => {
     normalize.run(g);
   });
-  time('    parentDummyChains', function () {
+  time("    parentDummyChains", () => {
     parentDummyChains(g);
   });
-  time('    addBorderSegments', function () {
+  time("    addBorderSegments", () => {
     addBorderSegments(g);
   });
-  time('    order', function () {
+  time("    order", () => {
     order(g);
   });
-  time('    insertSelfEdges', function () {
+  time("    insertSelfEdges", () => {
     insertSelfEdges(g);
   });
-  time('    adjustCoordinateSystem', function () {
+  time("    adjustCoordinateSystem", () => {
     coordinateSystem.adjust(g);
   });
-  time('    position', function () {
+  time("    position", () => {
     position(g);
   });
-  time('    positionSelfEdges', function () {
+  time("    positionSelfEdges", () => {
     positionSelfEdges(g);
   });
-  time('    removeBorderNodes', function () {
+  time("    removeBorderNodes", () => {
     removeBorderNodes(g);
   });
-  time('    normalize.undo', function () {
+  time("    normalize.undo", () => {
     normalize.undo(g);
   });
-  time('    fixupEdgeLabelCoords', function () {
+  time("    fixupEdgeLabelCoords", () => {
     fixupEdgeLabelCoords(g);
   });
-  time('    undoCoordinateSystem', function () {
+  time("    undoCoordinateSystem", () => {
     coordinateSystem.undo(g);
   });
-  time('    translateGraph', function () {
+  time("    translateGraph", () => {
     translateGraph(g);
   });
-  time('    assignNodeIntersects', function () {
+  time("    assignNodeIntersects", () => {
     assignNodeIntersects(g);
   });
-  time('    reversePoints', function () {
+  time("    reversePoints", () => {
     reversePointsForReversedEdges(g);
   });
-  time('    acyclic.undo', function () {
+  time("    acyclic.undo", () => {
     acyclic.undo(g);
   });
 }
@@ -119,7 +117,7 @@ function runLayout(g, time) {
  * attributes can influence layout.
  */
 function updateInputGraph(inputGraph, layoutGraph) {
-  _.forEach(inputGraph.nodes(), function (v) {
+  _.forEach(inputGraph.nodes(), (v) => {
     var inputLabel = inputGraph.node(v);
     var layoutLabel = layoutGraph.node(v);
 
@@ -134,12 +132,12 @@ function updateInputGraph(inputGraph, layoutGraph) {
     }
   });
 
-  _.forEach(inputGraph.edges(), function (e) {
+  _.forEach(inputGraph.edges(), (e) => {
     var inputLabel = inputGraph.edge(e);
     var layoutLabel = layoutGraph.edge(e);
 
     inputLabel.points = layoutLabel.points;
-    if (_.has(layoutLabel, 'x')) {
+    if (_.has(layoutLabel, "x")) {
       inputLabel.x = layoutLabel.x;
       inputLabel.y = layoutLabel.y;
     }
@@ -149,21 +147,21 @@ function updateInputGraph(inputGraph, layoutGraph) {
   inputGraph.graph().height = layoutGraph.graph().height;
 }
 
-var graphNumAttrs = ['nodesep', 'edgesep', 'ranksep', 'marginx', 'marginy'];
-var graphDefaults = { ranksep: 50, edgesep: 20, nodesep: 50, rankdir: 'tb' };
-var graphAttrs = ['acyclicer', 'ranker', 'rankdir', 'align'];
-var nodeNumAttrs = ['width', 'height'];
+var graphNumAttrs = ["nodesep", "edgesep", "ranksep", "marginx", "marginy"];
+var graphDefaults = { ranksep: 50, edgesep: 20, nodesep: 50, rankdir: "tb" };
+var graphAttrs = ["acyclicer", "ranker", "rankdir", "align"];
+var nodeNumAttrs = ["width", "height"];
 var nodeDefaults = { width: 0, height: 0 };
-var edgeNumAttrs = ['minlen', 'weight', 'width', 'height', 'labeloffset'];
+var edgeNumAttrs = ["minlen", "weight", "width", "height", "labeloffset"];
 var edgeDefaults = {
   minlen: 1,
   weight: 1,
   width: 0,
   height: 0,
   labeloffset: 10,
-  labelpos: 'r',
+  labelpos: "r",
 };
-var edgeAttrs = ['labelpos'];
+var edgeAttrs = ["labelpos"];
 
 /*
  * Constructs a new graph from the input graph, which can be used for layout.
@@ -176,20 +174,33 @@ function buildLayoutGraph(inputGraph) {
   var graph = canonicalize(inputGraph.graph());
 
   g.setGraph(
-    _.merge({}, graphDefaults, selectNumberAttrs(graph, graphNumAttrs), _.pick(graph, graphAttrs))
+    _.merge(
+      {},
+      graphDefaults,
+      selectNumberAttrs(graph, graphNumAttrs),
+      _.pick(graph, graphAttrs),
+    ),
   );
 
-  _.forEach(inputGraph.nodes(), function (v) {
+  _.forEach(inputGraph.nodes(), (v) => {
     var node = canonicalize(inputGraph.node(v));
-    g.setNode(v, _.defaults(selectNumberAttrs(node, nodeNumAttrs), nodeDefaults));
+    g.setNode(
+      v,
+      _.defaults(selectNumberAttrs(node, nodeNumAttrs), nodeDefaults),
+    );
     g.setParent(v, inputGraph.parent(v));
   });
 
-  _.forEach(inputGraph.edges(), function (e) {
+  _.forEach(inputGraph.edges(), (e) => {
     var edge = canonicalize(inputGraph.edge(e));
     g.setEdge(
       e,
-      _.merge({}, edgeDefaults, selectNumberAttrs(edge, edgeNumAttrs), _.pick(edge, edgeAttrs))
+      _.merge(
+        {},
+        edgeDefaults,
+        selectNumberAttrs(edge, edgeNumAttrs),
+        _.pick(edge, edgeAttrs),
+      ),
     );
   });
 
@@ -207,11 +218,11 @@ function buildLayoutGraph(inputGraph) {
 function makeSpaceForEdgeLabels(g) {
   var graph = g.graph();
   graph.ranksep /= 2;
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
     edge.minlen *= 2;
-    if (edge.labelpos.toLowerCase() !== 'c') {
-      if (graph.rankdir === 'TB' || graph.rankdir === 'BT') {
+    if (edge.labelpos.toLowerCase() !== "c") {
+      if (graph.rankdir === "TB" || graph.rankdir === "BT") {
         edge.width += edge.labeloffset;
       } else {
         edge.height += edge.labeloffset;
@@ -227,20 +238,20 @@ function makeSpaceForEdgeLabels(g) {
  * label's position.
  */
 function injectEdgeLabelProxies(g) {
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
     if (edge.width && edge.height) {
       var v = g.node(e.v);
       var w = g.node(e.w);
       var label = { rank: (w.rank - v.rank) / 2 + v.rank, e: e };
-      util.addDummyNode(g, 'edge-proxy', label, '_ep');
+      util.addDummyNode(g, "edge-proxy", label, "_ep");
     }
   });
 }
 
 function assignRankMinMax(g) {
   var maxRank = 0;
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     var node = g.node(v);
     if (node.borderTop) {
       node.minRank = g.node(node.borderTop).rank;
@@ -253,9 +264,9 @@ function assignRankMinMax(g) {
 }
 
 function removeEdgeLabelProxies(g) {
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     var node = g.node(v);
-    if (node.dummy === 'edge-proxy') {
+    if (node.dummy === "edge-proxy") {
       g.edge(node.e).labelRank = node.rank;
       g.removeNode(v);
     }
@@ -282,12 +293,12 @@ function translateGraph(g) {
     maxY = Math.max(maxY, y + h / 2);
   }
 
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     getExtremes(g.node(v));
   });
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
-    if (_.has(edge, 'x')) {
+    if (_.has(edge, "x")) {
       getExtremes(edge);
     }
   });
@@ -295,22 +306,22 @@ function translateGraph(g) {
   minX -= marginX;
   minY -= marginY;
 
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     var node = g.node(v);
     node.x -= minX;
     node.y -= minY;
   });
 
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
-    _.forEach(edge.points, function (p) {
+    _.forEach(edge.points, (p) => {
       p.x -= minX;
       p.y -= minY;
     });
-    if (_.has(edge, 'x')) {
+    if (_.has(edge, "x")) {
       edge.x -= minX;
     }
-    if (_.has(edge, 'y')) {
+    if (_.has(edge, "y")) {
       edge.y -= minY;
     }
   });
@@ -320,7 +331,7 @@ function translateGraph(g) {
 }
 
 function assignNodeIntersects(g) {
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
     var nodeV = g.node(e.v);
     var nodeW = g.node(e.w);
@@ -339,17 +350,17 @@ function assignNodeIntersects(g) {
 }
 
 function fixupEdgeLabelCoords(g) {
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
-    if (_.has(edge, 'x')) {
-      if (edge.labelpos === 'l' || edge.labelpos === 'r') {
+    if (_.has(edge, "x")) {
+      if (edge.labelpos === "l" || edge.labelpos === "r") {
         edge.width -= edge.labeloffset;
       }
       switch (edge.labelpos) {
-        case 'l':
+        case "l":
           edge.x -= edge.width / 2 + edge.labeloffset;
           break;
-        case 'r':
+        case "r":
           edge.x += edge.width / 2 + edge.labeloffset;
           break;
       }
@@ -358,7 +369,7 @@ function fixupEdgeLabelCoords(g) {
 }
 
 function reversePointsForReversedEdges(g) {
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
     if (edge.reversed) {
       edge.points.reverse();
@@ -367,7 +378,7 @@ function reversePointsForReversedEdges(g) {
 }
 
 function removeBorderNodes(g) {
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     if (g.children(v).length) {
       var node = g.node(v);
       var t = g.node(node.borderTop);
@@ -382,15 +393,15 @@ function removeBorderNodes(g) {
     }
   });
 
-  _.forEach(g.nodes(), function (v) {
-    if (g.node(v).dummy === 'border') {
+  _.forEach(g.nodes(), (v) => {
+    if (g.node(v).dummy === "border") {
       g.removeNode(v);
     }
   });
 }
 
 function removeSelfEdges(g) {
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     if (e.v === e.w) {
       var node = g.node(e.v);
       if (!node.selfEdges) {
@@ -404,15 +415,15 @@ function removeSelfEdges(g) {
 
 function insertSelfEdges(g) {
   var layers = util.buildLayerMatrix(g);
-  _.forEach(layers, function (layer) {
+  _.forEach(layers, (layer) => {
     var orderShift = 0;
-    _.forEach(layer, function (v, i) {
+    _.forEach(layer, (v, i) => {
       var node = g.node(v);
       node.order = i + orderShift;
-      _.forEach(node.selfEdges, function (selfEdge) {
+      _.forEach(node.selfEdges, (selfEdge) => {
         util.addDummyNode(
           g,
-          'selfedge',
+          "selfedge",
           {
             width: selfEdge.label.width,
             height: selfEdge.label.height,
@@ -421,7 +432,7 @@ function insertSelfEdges(g) {
             e: selfEdge.e,
             label: selfEdge.label,
           },
-          '_se'
+          "_se",
         );
       });
       delete node.selfEdges;
@@ -430,9 +441,9 @@ function insertSelfEdges(g) {
 }
 
 function positionSelfEdges(g) {
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     var node = g.node(v);
-    if (node.dummy === 'selfedge') {
+    if (node.dummy === "selfedge") {
       var selfNode = g.node(node.e.v);
       var x = selfNode.x + selfNode.width / 2;
       var y = selfNode.y;
@@ -459,7 +470,7 @@ function selectNumberAttrs(obj, attrs) {
 
 function canonicalize(attrs) {
   var newAttrs = {};
-  _.forEach(attrs, function (v, k) {
+  _.forEach(attrs, (v, k) => {
     newAttrs[k.toLowerCase()] = v;
   });
   return newAttrs;

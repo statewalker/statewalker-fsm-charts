@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { crossCount };
 
@@ -32,19 +32,18 @@ function twoLayerCrossCount(g, northLayer, southLayer) {
   // their head in the south layer.
   var southPos = _.zipObject(
     southLayer,
-    _.map(southLayer, function (v, i) {
-      return i;
-    })
+    _.map(southLayer, (_v, i) => i),
   );
   var southEntries = _.flatten(
-    _.map(northLayer, function (v) {
-      return _.sortBy(
-        _.map(g.outEdges(v), function (e) {
-          return { pos: southPos[e.w], weight: g.edge(e).weight };
-        }),
-        'pos'
-      );
-    })
+    _.map(northLayer, (v) =>
+      _.sortBy(
+        _.map(g.outEdges(v), (e) => ({
+          pos: southPos[e.w],
+          weight: g.edge(e).weight,
+        })),
+        "pos",
+      ),
+    ),
   );
 
   // Build the accumulator tree
@@ -52,15 +51,13 @@ function twoLayerCrossCount(g, northLayer, southLayer) {
   while (firstIndex < southLayer.length) firstIndex <<= 1;
   var treeSize = 2 * firstIndex - 1;
   firstIndex -= 1;
-  var tree = _.map(new Array(treeSize), function () {
-    return 0;
-  });
+  var tree = _.map(new Array(treeSize), () => 0);
 
   // Calculate the weighted crossings
   var cc = 0;
   _.forEach(
     // @ts-expect-error
-    southEntries.forEach(function (entry) {
+    southEntries.forEach((entry) => {
       var index = entry.pos + firstIndex;
       tree[index] += entry.weight;
       var weightSum = 0;
@@ -75,7 +72,7 @@ function twoLayerCrossCount(g, northLayer, southLayer) {
         tree[index] += entry.weight;
       }
       cc += entry.weight * weightSum;
-    })
+    }),
   );
 
   return cc;

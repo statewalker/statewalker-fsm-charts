@@ -101,13 +101,13 @@ export function buildStatechartSvg({
         x2: number,
         y2: number,
       ) {
-        path.push("C" + round(x0, y0, x1, y1, x2, y2).join(","));
+        path.push(`C${round(x0, y0, x1, y1, x2, y2).join(",")}`);
       },
       moveTo(x: number, y: number) {
-        path.push("M" + round(x, y).join(","));
+        path.push(`M${round(x, y).join(",")}`);
       },
       lineTo(x: number, y: number) {
-        path.push("L" + round(x, y).join(","));
+        path.push(`L${round(x, y).join(",")}`);
       },
       closePath() {
         path.push("Z");

@@ -15,7 +15,7 @@ export default defineConfig((options: Options) => ({
   noExternal: [],
   format: ["esm"],
   ...options,
-  esbuildOptions(options, context) {
+  esbuildOptions(options, _context) {
     options.target = "es2020";
   },
 }));

@@ -1,6 +1,6 @@
-import { feasibleTree } from './feasible-tree.js';
-import { networkSimplex } from './network-simplex.js';
-import { longestPath } from './util.js';
+import { feasibleTree } from "./feasible-tree.js";
+import { networkSimplex } from "./network-simplex.js";
+import { longestPath } from "./util.js";
 
 export { rank };
 
@@ -25,13 +25,13 @@ export { rank };
  */
 function rank(g) {
   switch (g.graph().ranker) {
-    case 'network-simplex':
+    case "network-simplex":
       networkSimplexRanker(g);
       break;
-    case 'tight-tree':
+    case "tight-tree":
       tightTreeRanker(g);
       break;
-    case 'longest-path':
+    case "longest-path":
       longestPathRanker(g);
       break;
     default:

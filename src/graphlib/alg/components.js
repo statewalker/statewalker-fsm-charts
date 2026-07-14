@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { components };
 
@@ -15,7 +15,7 @@ function components(g) {
     _.each(g.predecessors(v), dfs);
   }
 
-  _.each(g.nodes(), function (v) {
+  _.each(g.nodes(), (v) => {
     cmpt = [];
     dfs(v);
     if (cmpt.length) {

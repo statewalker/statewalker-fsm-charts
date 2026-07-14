@@ -22,7 +22,7 @@ export class RuntimeStatechartApi {
   }
 
   close() {
-    Object.values(this._registry).forEach((r) => r && r());
+    Object.values(this._registry).forEach((r) => r?.());
     this._registry = {};
     this._transitionsClickListeners = {};
     this._statesClickListeners = {};
@@ -195,17 +195,13 @@ export class RuntimeStatechartApi {
   }
 
   _addStateModifier(cssSelector: string, modifier: string = "selected") {
-    this._applyStateModifier(
-      cssSelector,
-      modifier,
-      (elm, cls) => elm && elm.classList.add(cls),
+    this._applyStateModifier(cssSelector, modifier, (elm, cls) =>
+      elm?.classList.add(cls),
     );
   }
   _removeStateModifier(cssSelector: string, modifier: string = "selected") {
-    this._applyStateModifier(
-      cssSelector,
-      modifier,
-      (elm, cls) => elm && elm.classList.remove(cls),
+    this._applyStateModifier(cssSelector, modifier, (elm, cls) =>
+      elm?.classList.remove(cls),
     );
   }
   _applyStateModifier(
@@ -228,20 +224,16 @@ export class RuntimeStatechartApi {
   }
 
   _addTransitionsModifier(cssSelector: string, modifier: string = "selected") {
-    this._applyTransitionsModifier(
-      cssSelector,
-      modifier,
-      (elm, cls) => elm && elm.classList.add(cls),
+    this._applyTransitionsModifier(cssSelector, modifier, (elm, cls) =>
+      elm?.classList.add(cls),
     );
   }
   _removeTransitionsModifier(
     cssSelector: string,
     modifier: string = "selected",
   ) {
-    this._applyTransitionsModifier(
-      cssSelector,
-      modifier,
-      (elm, cls) => elm && elm.classList.remove(cls),
+    this._applyTransitionsModifier(cssSelector, modifier, (elm, cls) =>
+      elm?.classList.remove(cls),
     );
   }
   _applyTransitionsModifier(

@@ -13,4 +13,4 @@ export function write(g: any): {
   }[];
 };
 export function read(json: any): Graph;
-import { Graph } from './graph.js';
+import { Graph } from "./graph.js";

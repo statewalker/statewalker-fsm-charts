@@ -1,4 +1,4 @@
-import { type DomSection } from "./buildSections.js";
+import type { DomSection } from "./buildSections.js";
 import { getStatesDescriptions } from "./getStatesDescriptions.js";
 
 export function getStateDescriptionRenderer(options: {
@@ -19,7 +19,7 @@ export function getStateDescriptionRenderer(options: {
 
     const elm = renderSections({
       section,
-      deep: (section) => false, // section.state !== options.rootStateKey, // ???
+      deep: (_section) => false, // section.state !== options.rootStateKey, // ???
       header: (section) => {
         if (section.state === stateKey) {
           return section.title || section.state;
@@ -35,7 +35,7 @@ export function getStateDescriptionRenderer(options: {
 
 export function renderSections<T extends DomSection>({
   section,
-  deep = (s) => true,
+  deep = (_s) => true,
   header = (section) => section.header?.cloneNode(true) as Node,
 }: {
   section: T;

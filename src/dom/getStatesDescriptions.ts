@@ -1,9 +1,9 @@
 import {
   buildSections,
+  type DomSection,
   findSection,
   visitSectionNodes,
   vistSections,
-  type DomSection,
 } from "./buildSections.js";
 
 export type StateDescriptionSection = DomSection & {

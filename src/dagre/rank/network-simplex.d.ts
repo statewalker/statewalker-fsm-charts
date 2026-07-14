@@ -13,4 +13,3 @@ declare function calcCutValue(t: any, g: any, child: any): number;
 declare function leaveEdge(tree: any): any;
 declare function enterEdge(t: any, g: any, edge: any): any;
 declare function exchangeEdges(t: any, g: any, e: any, f: any): void;
-export {};

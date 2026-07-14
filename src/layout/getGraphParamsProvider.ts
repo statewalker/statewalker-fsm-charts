@@ -1,6 +1,4 @@
-import type { Dimensions } from "../types/Dimensions.js";
 import type { GraphParamsProvider } from "../types/GraphParamsProvider.js";
-import { Label } from "../types/Label.js";
 import type { Padding } from "../types/Padding.js";
 import { getPadding } from "../utils/getPadding.js";
 import { getLabelDimensions } from "./getLabelDimensions.js";
@@ -20,7 +18,7 @@ export function getGraphParamsProvider({
   transitionsFontSize = fontSize,
   transitionsTextPadding = 0,
   getStateLabel = (state: string) => state,
-  getTransitionLabel = (fromState: string, event: string, toState: string) =>
+  getTransitionLabel = (_fromState: string, event: string, _toState: string) =>
     event,
 }: {
   fontSize?: number;

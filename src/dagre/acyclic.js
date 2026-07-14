@@ -1,22 +1,21 @@
-import { _ } from '../lodash-es/index.ts';
-import { greedyFAS } from './greedy-fas.js';
+import { _ } from "../lodash-es/index.ts";
+import { greedyFAS } from "./greedy-fas.js";
 
 export { run, undo };
 
 function run(g) {
-  var fas = g.graph().acyclicer === 'greedy' ? greedyFAS(g, weightFn(g)) : dfsFAS(g);
-  _.forEach(fas, function (e) {
+  var fas =
+    g.graph().acyclicer === "greedy" ? greedyFAS(g, weightFn(g)) : dfsFAS(g);
+  _.forEach(fas, (e) => {
     var label = g.edge(e);
     g.removeEdge(e);
     label.forwardName = e.name;
     label.reversed = true;
-    g.setEdge(e.w, e.v, label, _.uniqueId('rev'));
+    g.setEdge(e.w, e.v, label, _.uniqueId("rev"));
   });
 
   function weightFn(g) {
-    return function (e) {
-      return g.edge(e).weight;
-    };
+    return (e) => g.edge(e).weight;
   }
 }
 
@@ -31,7 +30,7 @@ function dfsFAS(g) {
     }
     visited[v] = true;
     stack[v] = true;
-    _.forEach(g.outEdges(v), function (e) {
+    _.forEach(g.outEdges(v), (e) => {
       if (_.has(stack, e.w)) {
         fas.push(e);
       } else {
@@ -46,7 +45,7 @@ function dfsFAS(g) {
 }
 
 function undo(g) {
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var label = g.edge(e);
     if (label.reversed) {
       g.removeEdge(e);

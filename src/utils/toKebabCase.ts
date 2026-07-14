@@ -4,7 +4,7 @@ export function toKebabCase(str?: string): string {
   // Transform to kebab:
   str = str.replace(
     /([^A-Z]?)([A-Z])/g,
-    (_, a, b) => a.toLowerCase() + "-" + b.toLowerCase()
+    (_, a, b) => `${a.toLowerCase()}-${b.toLowerCase()}`,
   );
   return str;
 

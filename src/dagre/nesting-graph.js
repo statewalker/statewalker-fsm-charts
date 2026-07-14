@@ -1,5 +1,5 @@
-import { _ } from '../lodash-es/index.ts';
-import * as util from './util.js';
+import { _ } from "../lodash-es/index.ts";
+import * as util from "./util.js";
 
 export { run, cleanup };
 
@@ -27,7 +27,7 @@ export { run, cleanup };
  * Graphs."
  */
 function run(g) {
-  var root = util.addDummyNode(g, 'root', {}, '_root');
+  var root = util.addDummyNode(g, "root", {}, "_root");
   var depths = treeDepths(g);
   var height = _.max(_.values(depths)) - 1; // Note: depths is an Object not an array
   var nodeSep = 2 * height + 1;
@@ -35,7 +35,7 @@ function run(g) {
   g.graph().nestingRoot = root;
 
   // Multiply minlen by nodeSep to align nodes on non-border ranks.
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     g.edge(e).minlen *= nodeSep;
   });
 
@@ -43,7 +43,7 @@ function run(g) {
   var weight = sumWeights(g) + 1;
 
   // Create border nodes and link them up
-  _.forEach(g.children(), function (child) {
+  _.forEach(g.children(), (child) => {
     dfs(g, root, nodeSep, weight, height, depths, child);
   });
 
@@ -61,8 +61,8 @@ function dfs(g, root, nodeSep, weight, height, depths, v) {
     return;
   }
 
-  var top = util.addBorderNode(g, '_bt');
-  var bottom = util.addBorderNode(g, '_bb');
+  var top = util.addBorderNode(g, "_bt");
+  var bottom = util.addBorderNode(g, "_bb");
   var label = g.node(v);
 
   g.setParent(top, v);
@@ -70,7 +70,7 @@ function dfs(g, root, nodeSep, weight, height, depths, v) {
   g.setParent(bottom, v);
   label.borderBottom = bottom;
 
-  _.forEach(children, function (child) {
+  _.forEach(children, (child) => {
     dfs(g, root, nodeSep, weight, height, depths, child);
 
     var childNode = g.node(child);
@@ -101,34 +101,28 @@ function treeDepths(g) {
   var depths = {};
   function dfs(v, depth) {
     var children = g.children(v);
-    if (children && children.length) {
-      _.forEach(children, function (child) {
+    if (children?.length) {
+      _.forEach(children, (child) => {
         dfs(child, depth + 1);
       });
     }
     depths[v] = depth;
   }
-  _.forEach(g.children(), function (v) {
+  _.forEach(g.children(), (v) => {
     dfs(v, 1);
   });
   return depths;
 }
 
 function sumWeights(g) {
-  return _.reduce(
-    g.edges(),
-    function (acc, e) {
-      return acc + g.edge(e).weight;
-    },
-    0
-  );
+  return _.reduce(g.edges(), (acc, e) => acc + g.edge(e).weight, 0);
 }
 
 function cleanup(g) {
   var graphLabel = g.graph();
   g.removeNode(graphLabel.nestingRoot);
   delete graphLabel.nestingRoot;
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var edge = g.edge(e);
     if (edge.nestingEdge) {
       g.removeEdge(e);

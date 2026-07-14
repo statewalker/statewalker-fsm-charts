@@ -1,16 +1,12 @@
-import { _ } from '../../lodash-es/index.ts';
-import * as util from '../util.js';
+import { _ } from "../../lodash-es/index.ts";
+import * as util from "../util.js";
 
 export { sort };
 
 function sort(entries, biasRight) {
-  var parts = util.partition(entries, function (entry) {
-    return _.has(entry, 'barycenter');
-  });
+  var parts = util.partition(entries, (entry) => _.has(entry, "barycenter"));
   var sortable = parts.lhs,
-    unsortable = _.sortBy(parts.rhs, function (entry) {
-      return -entry.i;
-    }),
+    unsortable = _.sortBy(parts.rhs, (entry) => -entry.i),
     vs = [],
     sum = 0,
     weight = 0,
@@ -20,7 +16,7 @@ function sort(entries, biasRight) {
 
   vsIndex = consumeUnsortable(vs, unsortable, vsIndex);
 
-  _.forEach(sortable, function (entry) {
+  _.forEach(sortable, (entry) => {
     vsIndex += entry.vs.length;
     vs.push(entry.vs);
     sum += entry.barycenter * entry.weight;
@@ -47,7 +43,7 @@ function consumeUnsortable(vs, unsortable, index) {
 }
 
 function compareWithBias(bias) {
-  return function (entryV, entryW) {
+  return (entryV, entryW) => {
     if (entryV.barycenter < entryW.barycenter) {
       return -1;
     } else if (entryV.barycenter > entryW.barycenter) {

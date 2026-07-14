@@ -1,4 +1,4 @@
-import { _ } from '../../lodash-es/index.ts';
+import { _ } from "../../lodash-es/index.ts";
 
 export { tarjan };
 
@@ -16,7 +16,7 @@ function tarjan(g) {
     });
     stack.push(v);
 
-    g.successors(v).forEach(function (w) {
+    g.successors(v).forEach((w) => {
       if (!_.has(visited, w)) {
         dfs(w);
         entry.lowlink = Math.min(entry.lowlink, visited[w].lowlink);
@@ -37,7 +37,7 @@ function tarjan(g) {
     }
   }
 
-  g.nodes().forEach(function (v) {
+  g.nodes().forEach((v) => {
     if (!_.has(visited, v)) {
       dfs(v);
     }

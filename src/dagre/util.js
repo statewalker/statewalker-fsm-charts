@@ -1,5 +1,5 @@
-import { _ } from '../lodash-es/index.ts';
-import { Graph } from '../graphlib/index.js';
+import { Graph } from "../graphlib/index.js";
+import { _ } from "../lodash-es/index.ts";
 
 export {
   addDummyNode,
@@ -38,10 +38,10 @@ function addDummyNode(g, type, attrs, name) {
  */
 function simplify(g) {
   var simplified = new Graph().setGraph(g.graph());
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     simplified.setNode(v, g.node(v));
   });
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     var simpleLabel = simplified.edge(e.v, e.w) || { weight: 0, minlen: 1 };
     var label = g.edge(e);
     simplified.setEdge(e.v, e.w, {
@@ -53,22 +53,24 @@ function simplify(g) {
 }
 
 function asNonCompoundGraph(g) {
-  var simplified = new Graph({ multigraph: g.isMultigraph() }).setGraph(g.graph());
-  _.forEach(g.nodes(), function (v) {
+  var simplified = new Graph({ multigraph: g.isMultigraph() }).setGraph(
+    g.graph(),
+  );
+  _.forEach(g.nodes(), (v) => {
     if (!g.children(v).length) {
       simplified.setNode(v, g.node(v));
     }
   });
-  _.forEach(g.edges(), function (e) {
+  _.forEach(g.edges(), (e) => {
     simplified.setEdge(e, g.edge(e));
   });
   return simplified;
 }
 
 function successorWeights(g) {
-  var weightMap = _.map(g.nodes(), function (v) {
+  var weightMap = _.map(g.nodes(), (v) => {
     var sucs = {};
-    _.forEach(g.outEdges(v), function (e) {
+    _.forEach(g.outEdges(v), (e) => {
       sucs[e.w] = (sucs[e.w] || 0) + g.edge(e).weight;
     });
     return sucs;
@@ -77,9 +79,9 @@ function successorWeights(g) {
 }
 
 function predecessorWeights(g) {
-  var weightMap = _.map(g.nodes(), function (v) {
+  var weightMap = _.map(g.nodes(), (v) => {
     var preds = {};
-    _.forEach(g.inEdges(v), function (e) {
+    _.forEach(g.inEdges(v), (e) => {
       preds[e.v] = (preds[e.v] || 0) + g.edge(e).weight;
     });
     return preds;
@@ -103,7 +105,9 @@ function intersectRect(rect, point) {
   var h = rect.height / 2;
 
   if (!dx && !dy) {
-    throw new Error('Not possible to find intersection inside of the rectangle');
+    throw new Error(
+      "Not possible to find intersection inside of the rectangle",
+    );
   }
 
   var sx, sy;
@@ -131,10 +135,8 @@ function intersectRect(rect, point) {
  * function will produce a matrix with the ids of each node.
  */
 function buildLayerMatrix(g) {
-  var layering = _.map(_.range(maxRank(g) + 1), function () {
-    return [];
-  });
-  _.forEach(g.nodes(), function (v) {
+  var layering = _.map(_.range(maxRank(g) + 1), () => []);
+  _.forEach(g.nodes(), (v) => {
     var node = g.node(v);
     var rank = node.rank;
     if (!_.isUndefined(rank)) {
@@ -149,14 +151,10 @@ function buildLayerMatrix(g) {
  * rank(v) >= 0 and at least one node w has rank(w) = 0.
  */
 function normalizeRanks(g) {
-  var min = _.min(
-    _.map(g.nodes(), function (v) {
-      return g.node(v).rank;
-    })
-  );
-  _.forEach(g.nodes(), function (v) {
+  var min = _.min(_.map(g.nodes(), (v) => g.node(v).rank));
+  _.forEach(g.nodes(), (v) => {
     var node = g.node(v);
-    if (_.has(node, 'rank')) {
+    if (_.has(node, "rank")) {
       node.rank -= min;
     }
   });
@@ -164,14 +162,10 @@ function normalizeRanks(g) {
 
 function removeEmptyRanks(g) {
   // Ranks may not start at 0, so we need to offset them
-  var offset = _.min(
-    _.map(g.nodes(), function (v) {
-      return g.node(v).rank;
-    })
-  );
+  var offset = _.min(_.map(g.nodes(), (v) => g.node(v).rank));
 
   var layers = [];
-  _.forEach(g.nodes(), function (v) {
+  _.forEach(g.nodes(), (v) => {
     var rank = g.node(v).rank - offset;
     if (!layers[rank]) {
       layers[rank] = [];
@@ -181,11 +175,11 @@ function removeEmptyRanks(g) {
 
   var delta = 0;
   var nodeRankFactor = g.graph().nodeRankFactor;
-  _.forEach(layers, function (vs, i) {
+  _.forEach(layers, (vs, i) => {
     if (_.isUndefined(vs) && i % nodeRankFactor !== 0) {
       --delta;
     } else if (delta) {
-      _.forEach(vs, function (v) {
+      _.forEach(vs, (v) => {
         g.node(v).rank += delta;
       });
     }
@@ -201,17 +195,17 @@ function addBorderNode(g, prefix, rank, order) {
     node.rank = rank;
     node.order = order;
   }
-  return addDummyNode(g, 'border', node, prefix);
+  return addDummyNode(g, "border", node, prefix);
 }
 
 function maxRank(g) {
   return _.max(
-    _.map(g.nodes(), function (v) {
+    _.map(g.nodes(), (v) => {
       var rank = g.node(v).rank;
       if (!_.isUndefined(rank)) {
         return rank;
       }
-    })
+    }),
   );
 }
 
@@ -222,7 +216,7 @@ function maxRank(g) {
  */
 function partition(collection, fn) {
   var result = { lhs: [], rhs: [] };
-  _.forEach(collection, function (value) {
+  _.forEach(collection, (value) => {
     if (fn(value)) {
       result.lhs.push(value);
     } else {
@@ -241,10 +235,10 @@ function time(name, fn) {
   try {
     return fn();
   } finally {
-    console.log(name + ' time: ' + (_.now() - start) + 'ms');
+    console.log(`${name} time: ${_.now() - start}ms`);
   }
 }
 
-function notime(name, fn) {
+function notime(_name, fn) {
   return fn();
 }

@@ -29,7 +29,7 @@ export function serializeProcessConfig(config: FsmStateConfig | undefined) {
         if (i > 0) {
           lines[lines.length - 1] += ",";
         }
-        visit(states[i], lines, shift + "    ");
+        visit(states[i], lines, `${shift}    `);
       }
       lines.push(`${shift}  ]`);
     }

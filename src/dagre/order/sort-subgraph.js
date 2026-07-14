@@ -1,7 +1,7 @@
-import { _ } from '../../lodash-es/index.ts';
-import { barycenter } from './barycenter.js';
-import { resolveConflicts } from './resolve-conflicts.js';
-import { sort } from './sort.js';
+import { _ } from "../../lodash-es/index.ts";
+import { barycenter } from "./barycenter.js";
+import { resolveConflicts } from "./resolve-conflicts.js";
+import { sort } from "./sort.js";
 
 export { sortSubgraph };
 
@@ -13,17 +13,15 @@ function sortSubgraph(g, v, cg, biasRight) {
   var subgraphs = {};
 
   if (bl) {
-    movable = _.filter(movable, function (w) {
-      return w !== bl && w !== br;
-    });
+    movable = _.filter(movable, (w) => w !== bl && w !== br);
   }
 
   var barycenters = barycenter(g, movable);
-  _.forEach(barycenters, function (entry) {
+  _.forEach(barycenters, (entry) => {
     if (g.children(entry.v).length) {
       var subgraphResult = sortSubgraph(g, entry.v, cg, biasRight);
       subgraphs[entry.v] = subgraphResult;
-      if (_.has(subgraphResult, 'barycenter')) {
+      if (_.has(subgraphResult, "barycenter")) {
         mergeBarycenters(entry, subgraphResult);
       }
     }
@@ -39,12 +37,13 @@ function sortSubgraph(g, v, cg, biasRight) {
     if (g.predecessors(bl).length) {
       var blPred = g.node(g.predecessors(bl)[0]),
         brPred = g.node(g.predecessors(br)[0]);
-      if (!_.has(result, 'barycenter')) {
+      if (!_.has(result, "barycenter")) {
         result.barycenter = 0;
         result.weight = 0;
       }
       result.barycenter =
-        (result.barycenter * result.weight + blPred.order + brPred.order) / (result.weight + 2);
+        (result.barycenter * result.weight + blPred.order + brPred.order) /
+        (result.weight + 2);
       result.weight += 2;
     }
   }
@@ -53,14 +52,14 @@ function sortSubgraph(g, v, cg, biasRight) {
 }
 
 function expandSubgraphs(entries, subgraphs) {
-  _.forEach(entries, function (entry) {
+  _.forEach(entries, (entry) => {
     entry.vs = _.flatten(
-      entry.vs.map(function (v) {
+      entry.vs.map((v) => {
         if (subgraphs[v]) {
           return subgraphs[v].vs;
         }
         return v;
-      })
+      }),
     );
   });
 }
